@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 19:38:15 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/17 20:23:28 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int		convert_base(unsigned long nb, int sizeb, char *base, t_pars *pars)
 {
-	char		tmp[80];
-	int		i;
+	char			tmp[80];
+	int				i;
 	unsigned long	nb2;
-	int		size;
+	int				size;
 
 	if (nb == 0 && pars->precision_bool && pars->precision_val == 0)
 		return (print_unsigned_digit("", 0, pars));
@@ -40,10 +40,10 @@ int		convert_base(unsigned long nb, int sizeb, char *base, t_pars *pars)
 
 int		my_itoa(int nb, t_pars *pars)
 {
-	char		tmp[80];
-	int		i;
+	char			tmp[80];
+	int				i;
 	unsigned int	nb2;
-	int		size;
+	int				size;
 
 	if (nb >= 0)
 		return (convert_base(nb, 10, "0123456789", pars));
@@ -62,7 +62,7 @@ int		my_itoa(int nb, t_pars *pars)
 	print_signed_digit(tmp, size, pars);
 }
 
-int	ft_printf_print2(t_pars *pars, va_list *param)
+int		ft_printf_print2(t_pars *pars, va_list *param)
 {
 	char	c[2];
 
@@ -82,7 +82,7 @@ int	ft_printf_print2(t_pars *pars, va_list *param)
 	return (0);
 }
 
-int	ft_printf_print(t_pars *pars, va_list *param)
+int		ft_printf_print(t_pars *pars, va_list *param)
 {
 	if (pars->convert_char == 's')
 		return (print_string(va_arg(*param, char*), pars, "(null)", ""));

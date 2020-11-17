@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 18:49:37 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/17 20:21:29 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	my_atoi(char *str, int *i)
 {
 	unsigned int	nb;
-	int			neg;
+	int				neg;
 
 	neg = 1;
 	nb = 0;
@@ -81,7 +81,7 @@ void		init_struct(t_pars *pars)
 	pars->field_width_val = 0;
 }
 
-int		ft_printf_parsing(char *str, va_list *param, int *count)
+int			ft_printf_parsing(char *str, va_list *param, int *count)
 {
 	t_pars	pars;
 	int		i;
