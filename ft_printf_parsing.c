@@ -6,29 +6,16 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 08:31:53 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/17 18:49:37 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
-#include <stdarg.h>
 
-typedef struct	s_pars
-{
-	int boundary_left;
-	int zero_padded;
-	int precision_bool;
-	int precision_val;
-	int field_width_val;
-	char convert_char;
-	char *todisplay;
-}		t_pars;
+#include "ft_printf.h"
 
-int ft_printf_print(t_pars *pars, va_list *param);
-
-static int		my_atoi(char *str, int *i)
+static int	my_atoi(char *str, int *i)
 {
 	unsigned int	nb;
-	int		neg;
+	int			neg;
 
 	neg = 1;
 	nb = 0;
@@ -46,7 +33,7 @@ static int		my_atoi(char *str, int *i)
 	return (nb * neg);
 }
 
-static int		second_pars(char *str, int i, t_pars *pars, va_list *param)
+static int	second_pars(char *str, int i, t_pars *pars, va_list *param)
 {
 	if (str[i] <= '9' && str[i] >= '1')
 		pars->field_width_val = my_atoi(str, &i);
@@ -71,7 +58,7 @@ static int		second_pars(char *str, int i, t_pars *pars, va_list *param)
 		i++;
 	else
 		return (i);
-	return (second_pars(str, i , pars, param));
+	return (second_pars(str, i, pars, param));
 }
 
 static int	first_pars(char *str, int i, t_pars *pars)
@@ -80,25 +67,28 @@ static int	first_pars(char *str, int i, t_pars *pars)
 		pars->boundary_left = 1;
 	else if (str[i] == '0')
 		pars->zero_padded = 1;
-	else if (str[i] == ' ')
-	{}
 	else
 		return (i);
 	return (first_pars(str, i + 1, pars));
 }
 
+void		init_struct(t_pars *pars)
+{
+	pars->boundary_left = 0;
+	pars->zero_padded = 0;
+	pars->precision_bool = 0;
+	pars->precision_val = 0;
+	pars->field_width_val = 0;
+}
+
 int		ft_printf_parsing(char *str, va_list *param, int *count)
 {
 	t_pars	pars;
-	int	i;
-	int	tmp;
+	int		i;
+	int		tmp;
 	va_list	param2;
 
-	pars.boundary_left = 0;
-	pars.zero_padded = 0;
-	pars.precision_bool = 0;
-	pars.precision_val = 0;
-	pars.field_width_val = 0;
+	init_struct(&pars);
 	i = 0;
 	va_copy(param2, *param);
 	if ((tmp = first_pars(str, 1, &pars)) == -1)
@@ -107,10 +97,11 @@ int		ft_printf_parsing(char *str, va_list *param, int *count)
 	if ((tmp = second_pars(&str[i], 0, &pars, &param2)) == -1)
 		return (0);
 	i += tmp;
-	if (str[i] != 'u' && str[i] != 'i' && str[i] != 'p' && str[i] != '%' && str[i] != 'c' &&
-			str[i] != 's' && str[i] != 'd' && str[i] != 'x' && str[i] != 'X')
+	if (str[i] != 'u' && str[i] != 'i' && str[i] != 'p'
+			&& str[i] != '%' && str[i] != 'c' && str[i] != 's'
+			&& str[i] != 'd' && str[i] != 'x' && str[i] != 'X')
 		return (0);
-	pars.convert_char = str[i++];	
+	pars.convert_char = str[i++];
 	*count += ft_printf_print(&pars, &param2);
 	va_copy(*param, param2);
 	return (i);
