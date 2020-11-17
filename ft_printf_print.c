@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/16 17:56:03 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/17 07:27:38 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,24 @@ int	print_string(char *str, t_pars *pars)
 	return (max + i - 1);
 }
 
+void	putchar_hex(int i)
+{
+		write(1, &"0123456789abcdef"[i], 1);
+}
+
+int	print_addr_hexa(unsigned long pt, int base, int i)
+{
+	int	tmp;
+	if (i < 12)
+		tmp = (print_addr_hexa(pt / base, base, i + 1));
+	else
+		tmp = i;
+	putchar_hex(pt % 16);
+	return (tmp);
+}
+
+
+
 int	convert(t_pars *pars, va_list *param)
 {
 	//static char	*nullstr = "(null)";
@@ -177,7 +195,7 @@ int	convert(t_pars *pars, va_list *param)
 	if (pars->convert_char == 'u')
 		return (convert_base(va_arg(*param, unsigned int), 10, "0123456789", pars));
 	if (pars->convert_char == 'p')
-		return (convert_base((long)va_arg(*param, unsigned long), 16, "0123456789abcdef", pars));
+		return (print_addr_hexa(va_arg(*param, unsigned long), 16, 1));//, 16, "0123456789abcdef", pars));
 
 	return (0);
 }

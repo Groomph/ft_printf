@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/16 17:52:32 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/16 22:44:40 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -71,7 +71,7 @@ static int		second_pars(char *str, int i, t_pars *pars, va_list *param)
 		i++;
 	else
 		return (i);
-	second_pars(str, i , pars, param);
+	return (second_pars(str, i , pars, param));
 }
 
 static int	first_pars(char *str, int i, t_pars *pars)
@@ -84,7 +84,7 @@ static int	first_pars(char *str, int i, t_pars *pars)
 	{}
 	else
 		return (i);
-	first_pars(str, i + 1, pars);
+	return (first_pars(str, i + 1, pars));
 }
 
 int		ft_printf_parsing(char *str, va_list *param, int *count)
