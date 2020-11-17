@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 20:23:28 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/17 22:34:42 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		my_itoa(int nb, t_pars *pars)
 		tmp[i--] = nb2 % 10 + '0';
 		nb2 /= 10;
 	}
-	print_signed_digit(tmp, size, pars);
+	return (print_signed_digit(tmp, size, pars));
 }
 
 int		ft_printf_print2(t_pars *pars, va_list *param)
