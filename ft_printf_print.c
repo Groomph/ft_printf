@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 07:27:38 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/17 09:18:05 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,58 +28,17 @@ typedef struct	s_pars
 	char *todisplay;
 }		t_pars;
 
-int	my_strcpy(char *str, t_pars *pars);
-/*
-static int		my_atoi(char *str, int *i)
-{
-	unsigned int	nb;
-	int		neg;
-
-	neg = 1;
-	nb = 0;
-	if (str[*i] == '-')
-	{
-		neg = -1;
-		(*i)++;
-	}
-	while (str[*i] >= '0' && str[*i] <= '9')
-	{
-		nb *= 10;
-		nb += str[*i] - '0';
-		(*i)++;
-	}
-	return (nb * neg);
-}
-
-char	*my_itoa(int nb)
-{
-	char		*tmp;
-	int		i;
-	unsigned int	nb2;
-	
-	i = nb < 0 ? 2 : 1;
-	nb2 = nb < 0 ? -nb : nb;
-	while (nb2 /= 10)
-		i++;
-	if (!(tmp = malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	tmp[i--] = '\0';
-	nb2 = nb < 0 ? -nb : nb;
-	while (nb2)
-	{
-		tmp[i--] = nb2 % 10 + '0';
-		nb2 /= 10;
-	}
-	if (nb < 0)
-		tmp[0] = '-';
-	return (tmp);
-}
-*/
 int	print_digit(char *str, int size, t_pars *pars)
 {
 	int	i;
 
 	i = 0;
+	if (str[0] == '-')
+	{
+		write(1, "-", 1);
+		str = &str[1];
+		
+	}
 	if (str[0] == '0' && str[1] == '\0' && pars->precision_bool && pars->precision_val == '0')
 	{
 		str[0] = '\0';
@@ -135,7 +94,7 @@ int	print_null(t_pars *pars, char *strnull)
 	if (pars->precision_val >= 6)
 }
 */
-int	print_string(char *str, t_pars *pars)
+int	print_string(char *str, t_pars *pars, char *strnull, char *strvide)
 {
 	int	i;
 	int	max;
@@ -143,9 +102,9 @@ int	print_string(char *str, t_pars *pars)
 	max = 0;
 	i = 0;
 	if (!str && (pars->precision_val >= 6 || !pars->precision_bool))
-		str = &"(null)";
+		str = strnull;
 	else if (!str)
-		str = &"";
+		str = strvide;
 	while (str[max])
 		max++;
 	if (pars->precision_bool)
@@ -163,29 +122,44 @@ int	print_string(char *str, t_pars *pars)
 	return (max + i - 1);
 }
 
-void	putchar_hex(int i)
+int	print_addr_hexa(unsigned long pt, int base, int i, t_pars *pars)
 {
-		write(1, &"0123456789abcdef"[i], 1);
-}
+	int	max;
+	int	ind;
+	ind = 0;
+	max = 12;
 
-int	print_addr_hexa(unsigned long pt, int base, int i)
-{
-	int	tmp;
+	if (i == 1)
+	{
+		pars->zero_padded ? write(1, "0x", 2) : write(1, "0x", 0);
+		if (pars->precision_bool)
+			max = 12 < pars->precision_val ? pars->precision_val : 12;
+		while (max + ind++ + 2 < pars->field_width_val && !pars->boundary_left)		
+			pars->zero_padded ? write(1, "0", 1) : write(1, " ", 1);
+		ind--;
+		pars->zero_padded ? write(1, "", 0) : write(1, "0x", 2);
+		while (ind++ < max - 12)		
+			write(1, "0", 1);
+		ind += pars->boundary_left ? 0 : 13;
+	}
 	if (i < 12)
-		tmp = (print_addr_hexa(pt / base, base, i + 1));
-	else
-		tmp = i;
-	putchar_hex(pt % 16);
-	return (tmp);
+		(print_addr_hexa(pt / base, base, i + 1, pars));
+	write(1, &"0123456789abcdef"[pt % 16], 1);	
+	while (i == 1 && max + ind++ + 2 <= pars->field_width_val && pars->boundary_left)
+		write(1, " ", 1);
+	ind += pars->boundary_left ? 12 : 0;
+	return (ind);
 }
 
 
 
 int	convert(t_pars *pars, va_list *param)
 {
+	char	c[2];
+
 	//static char	*nullstr = "(null)";
 	if (pars->convert_char == 's')
-		return (print_string(va_arg(*param, char*), pars));
+		return (print_string(va_arg(*param, char*), pars, "(null)", ""));
 	if (pars->convert_char == 'x')
 		return (convert_base(va_arg(*param, unsigned int), 16, "0123456789abcdef", pars));
 	if (pars->convert_char == 'X')
@@ -195,8 +169,18 @@ int	convert(t_pars *pars, va_list *param)
 	if (pars->convert_char == 'u')
 		return (convert_base(va_arg(*param, unsigned int), 10, "0123456789", pars));
 	if (pars->convert_char == 'p')
-		return (print_addr_hexa(va_arg(*param, unsigned long), 16, 1));//, 16, "0123456789abcdef", pars));
-
+		return (print_addr_hexa(va_arg(*param, unsigned long), 16, 1, pars));
+	if (pars->convert_char == 'c')
+	{
+		c[0] = (char)va_arg(*param, int);
+		c[1] = '\0';
+		return (print_string(c, pars, "", ""));
+	}
+	if (pars->convert_char == '%')
+	{
+		write(1, &"%", 1);
+		return (1);
+	}
 	return (0);
 }
 

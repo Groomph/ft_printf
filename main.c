@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/16 17:49:58 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/17 09:09:59 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ int ft_printf(const char *str, ...);
 int main(void)
 {
 	char *str = "Classique///Coucou bande de nouille\n";
-	char *str2 = "INT///Coucou bande %-10.6d nouille %i\n";
+	char *str2 = "INT///Coucou bande %0-10.6i nouille %i\n";
 	char *str3 = "HEXA///Coucou bande %x nouille %x\n";
 	char *str4 = "STRING///Coucou bande %s %s\n";
 	char *str5 = "ADDRESS///Coucou bande %-p\n";
-	char *str7 = "ADDRESS///Coucou bande %20p\n";
-	char *str8 = "ADDRESS///Coucou bande %.20p\n";
-	char *str9 = "ADDRESS///Coucou bande %20.20p\n";
+	char *str7 = "ADDRESS///Coucou bande %-2p\n";
+	char *str8 = "ADDRESS///Coucou bande %-1p\n";
+	char *str9 = "ADDRESS///Coucou bande %-20.20p\n";
+	char *str10 = "char///Couco%-2c ban%%de de %3c\n";
 	char *str6 = "UNSIGNEDINT///Coucou bande %u\n";
 	int	i = 0;
 	int	i2 = 0;
@@ -32,8 +33,8 @@ int main(void)
 	i2 = ft_printf(str);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
-	i = printf(str2, 222, 23);
-	i2 = ft_printf(str2, 222, 23);
+	i = printf(str2, -222, -23);
+	i2 = ft_printf(str2, -222, -23);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 	
 	i = printf(str3, 10, 10, -2222, -233);
@@ -44,7 +45,7 @@ int main(void)
 	i2 = ft_printf(str4, NULL, "aled", "dur");
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
-	char *p = NULL;
+	int *p = NULL;
 	p = &i;
 
 	i = printf(str6, -999);
@@ -67,5 +68,8 @@ int main(void)
 	i2 = ft_printf(str9, p);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 	
+	i = printf(str10, 'U', 'Q');
+	i2 = ft_printf(str10, 'U', 'Q');
+	printf("printf: %d    ft_printf: %d\n", i, i2);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/16 22:44:40 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/17 08:31:53 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -107,7 +107,7 @@ int		ft_printf_parsing(char *str, va_list *param, int *count)
 	if ((tmp = second_pars(&str[i], 0, &pars, &param2)) == -1)
 		return (0);
 	i += tmp;
-	if (str[i] != 'u' && str[i] != 'i' && str[i] != 'p' &&
+	if (str[i] != 'u' && str[i] != 'i' && str[i] != 'p' && str[i] != '%' && str[i] != 'c' &&
 			str[i] != 's' && str[i] != 'd' && str[i] != 'x' && str[i] != 'X')
 		return (0);
 	pars.convert_char = str[i++];	
