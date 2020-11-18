@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 16:56:17 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/18 12:14:55 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int main(void)
 	char *str2 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
 	char *str3 = "HEXA///Coucou bande %-20.0x nouille %-10x\n";
 	char *str4 = "STRING///Coucou bande %s %s\n";
+	char *str11 = "%s";
 	char *str5 = "ADDRESS///Coucou bande %-p\n";
 	char *str7 = "ADDRESS///Coucou bande %-2p\n";
 	char *str8 = "ADDRESS///Coucou bande %-1p\n";
@@ -45,6 +46,10 @@ int main(void)
 	i2 = ft_printf(str4, NULL, "aled", "dur");
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
+	i = printf(str11, "testing testing", "dur");
+	i2 = ft_printf(str11, "testing testing", "dur");
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+	
 	int *p = NULL;
 	p = &i;
 
