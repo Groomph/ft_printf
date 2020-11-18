@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 20:21:29 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/18 14:41:29 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static int	second_pars(char *str, int i, t_pars *pars, va_list *param)
 		{
 			i++;
 			pars->precision_val = va_arg(*param, int);
+			pars->precision_bool = pars->precision_val < 0 ? 0 : pars->precision_bool;
 		}
 		else
 			pars->precision_val = my_atoi(str, &i);
@@ -81,6 +82,8 @@ void		init_struct(t_pars *pars)
 	pars->field_width_val = 0;
 }
 
+#include <stdio.h>
+
 int			ft_printf_parsing(char *str, va_list *param, int *count)
 {
 	t_pars	pars;
@@ -102,6 +105,7 @@ int			ft_printf_parsing(char *str, va_list *param, int *count)
 			&& str[i] != 'd' && str[i] != 'x' && str[i] != 'X')
 		return (0);
 	pars.convert_char = str[i++];
+//printf("%d %d %d %d %d...\n\n", pars.boundary_left, pars.zero_padded, pars.precision_bool, pars.precision_val, pars.field_width_val);
 	*count += ft_printf_print(&pars, &param2);
 	va_copy(*param, param2);
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 19:37:58 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/18 15:00:44 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,31 @@ int		print_signed_digit(char tab[], int size, t_pars *pars)
 	int	i;
 	int	max;
 
-	i = 1;
+	pars->field_width_val--;
+	i = 0;
 	max = size < pars->precision_val ? pars->precision_val : size;
-	if (!pars->boundary_left)
+	if (!pars->boundary_left && !pars->zero_padded)
 	{
 		while (i++ + max < pars->field_width_val)
 			write(1, " ", 1);
 		i--;
+		write(1, "-", 1);
 	}
-	write(1, "-", 1);
-	while (i++ + size < pars->precision_val)
+	else if (pars->zero_padded)
+	{
+		write(1, "-", 1);
+		while (i++ + max < pars->field_width_val)
+			write(1, "0", 1);
+		i--;
+	}
+	else	
+		write(1, "-", 1);
+	while (i++ + size < pars->field_width_val - pars->precision_val)
 		write(1, "0", 1);
 	write(1, tab, size);
 	i--;
 	while (pars->boundary_left && i++ + size < pars->field_width_val)
-		write(1, " ", 1);
+		pars->zero_padded ? write(1, "0", 1): write(1, " ", 1);
 	return (i + size - 1);
 }
 
@@ -51,11 +61,11 @@ int		print_unsigned_digit(char *str, int size, t_pars *pars)
 		write(1, str, size);
 		i--;
 		while (i++ + size < pars->field_width_val)
-			write(1, " ", 1);
+		pars->zero_padded ? write(1, "0", 1): write(1, " ", 1);
 		return (size + i - 1);
 	}
-	while (i++ < pars->field_width_val - pars->precision_val)
-		write(1, " ", 1);
+	while (i++ < pars->field_width_val - size)
+		pars->zero_padded ? write(1, "0", 1): write(1, " ", 1);
 	i--;
 	while (i2++ + size < pars->precision_val)
 		write(1, "0", 1);
@@ -63,17 +73,15 @@ int		print_unsigned_digit(char *str, int size, t_pars *pars)
 	return (size + i + i2 - 1);
 }
 
-int		print_string(char *str, t_pars *pars, char *strnull, char *strvide)
+int		print_string(char *str, t_pars *pars, char *strnull)
 {
 	int	i;
 	int	max;
 
 	max = 0;
 	i = 0;
-	if (!str && (pars->precision_val >= 6 || !pars->precision_bool))
+	if (!str)
 		str = strnull;
-	else if (!str)
-		str = strvide;
 	while (str[max])
 		max++;
 	if (pars->precision_bool)

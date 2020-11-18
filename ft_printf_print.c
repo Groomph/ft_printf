@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 22:34:42 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/18 13:48:15 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		ft_printf_print2(t_pars *pars, va_list *param)
 	{
 		c[0] = (char)va_arg(*param, int);
 		c[1] = '\0';
-		return (print_string(c, pars, "", ""));
+		return (print_string(c, pars, ""));
 	}
 	if (pars->convert_char == '%')
 	{
@@ -85,7 +85,7 @@ int		ft_printf_print2(t_pars *pars, va_list *param)
 int		ft_printf_print(t_pars *pars, va_list *param)
 {
 	if (pars->convert_char == 's')
-		return (print_string(va_arg(*param, char*), pars, "(null)", ""));
+		return (print_string(va_arg(*param, char*), pars, "(null)"));
 	if (pars->convert_char == 'x')
 	{
 		return (convert_base(va_arg(*param, unsigned long),

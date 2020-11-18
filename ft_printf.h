@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/17 20:27:27 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/18 13:00:58 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				print_signed_digit(char tab[],
 int				print_unsigned_digit(char *str,
 									int size, t_pars *pars);
 int				print_string(char *str, t_pars *pars,
-									char *strnull, char *strvide);
+									char *strnull);
 int				print_addr_hexa(unsigned long pt,
 									int base, int i, t_pars *pars);
 #endif
