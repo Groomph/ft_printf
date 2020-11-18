@@ -6,43 +6,58 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/18 15:00:44 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/18 18:22:32 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int		print_signed_digit(char tab[], int size, t_pars *pars)
+		
+int		print_signed_boundary_no(char tab[], int size, t_pars *pars)
 {
 	int	i;
-	int	max;
+	int	i2;
+	int	maxprint;
 
-	pars->field_width_val--;
 	i = 0;
-	max = size < pars->precision_val ? pars->precision_val : size;
-	if (!pars->boundary_left && !pars->zero_padded)
-	{
-		while (i++ + max < pars->field_width_val)
-			write(1, " ", 1);
-		i--;
-		write(1, "-", 1);
-	}
-	else if (pars->zero_padded)
+	i2 = 0;
+	maxprint = size < pars->precision_val ? pars->precision_val : size;
+	if (pars->zero_padded)
 	{
 		write(1, "-", 1);
-		while (i++ + max < pars->field_width_val)
+		while (i++ + maxprint < pars->field_width_val)
 			write(1, "0", 1);
-		i--;
 	}
-	else	
+	else
+	{
+		while (i++ + maxprint < pars->field_width_val)
+			write(1, " ", 1);
 		write(1, "-", 1);
-	while (i++ + size < pars->field_width_val - pars->precision_val)
+	}
+	i--;
+	while (i2++ + size < maxprint)
 		write(1, "0", 1);
 	write(1, tab, size);
+	return (i + i2 + size);
+}
+
+int		print_signed_boundary(char tab[], int size, t_pars *pars)
+{
+	int	i;
+	int	maxprint;
+
+	pars->field_width_val--;
+	if (!pars->boundary_left)
+		return (print_signed_boundary_no(tab, size, pars));
+	i = 0;
+	maxprint = size < pars->precision_val ? pars->precision_val : size;
+	write(1, "-", 1);
+	while (i++ + size <  maxprint)
+			write(1, "0", 1);
+	write(1, tab, size);
 	i--;
-	while (pars->boundary_left && i++ + size < pars->field_width_val)
-		pars->zero_padded ? write(1, "0", 1): write(1, " ", 1);
-	return (i + size - 1);
+	while (i++ + size < pars->field_width_val)
+	write(1, " ", 1);
+	return (i + size);
 }
 
 int		print_unsigned_digit(char *str, int size, t_pars *pars)
@@ -61,7 +76,7 @@ int		print_unsigned_digit(char *str, int size, t_pars *pars)
 		write(1, str, size);
 		i--;
 		while (i++ + size < pars->field_width_val)
-		pars->zero_padded ? write(1, "0", 1): write(1, " ", 1);
+			write(1, " ", 1);
 		return (size + i - 1);
 	}
 	while (i++ < pars->field_width_val - size)
@@ -94,7 +109,7 @@ int		print_string(char *str, t_pars *pars, char *strnull)
 		return (max - 1);
 	}
 	while (i++ + max < pars->field_width_val)
-		write(1, " ", 1);
+		pars->zero_padded ? write(1, "0", 1): write(1, " ", 1);
 	write(1, str, max);
 	return (max + i - 1);
 }

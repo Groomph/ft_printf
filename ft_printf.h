@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/18 13:00:58 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/18 16:16:36 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				ft_printf_parsing(char *str,
 									va_list *param, int *count);
 int				ft_printf_print(t_pars *pars,
 									va_list *param);
-int				print_signed_digit(char tab[],
+int				print_signed_boundary(char tab[],
 									int size, t_pars *pars);
 int				print_unsigned_digit(char *str,
 									int size, t_pars *pars);

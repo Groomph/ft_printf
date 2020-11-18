@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/18 14:32:27 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/18 15:17:59 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int main(void)
 {
 //	char *str = "Classique///Coucou bande de nouille\n";
 //	char *str2 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
-	/*char *str20 = "%07d";
-	char *str21 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
+	char *str20 = "hi low";
+/*	char *str21 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
 	char *str22 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
 	char *str3 = "HEXA///Coucou bande %-20.0x nouille %-10x\n";
 	char *str4 = "STRING///Coucou bande %s %s\n";
@@ -41,14 +41,14 @@ int main(void)
 //	i2 = ft_printf(str2, -300000, 23);
 //	printf("printf: %d    ft_printf: %d\n", i, i2);
 	
-	i = printf("%07d...\n", -54);
-	i2 = ft_printf("%07d...\n", -54);
+	i = printf("%-09s", str20);
+	i2 = ft_printf("%-09s", str20);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
-	
+	/*
 	i = printf("%04d...\n", -532);
 	i2 = ft_printf("%04d...\n", -532);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
-/*	
+
 	i = printf(str3, 1, 0, -2222, -233);
 	i2 = ft_printf(str3, 1, 0, -2222, -233);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
