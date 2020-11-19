@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 22:11:37 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/19 22:58:32 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ int		print_add_null(t_pars *pars)
 void	print_addr_recurs(unsigned long pt)
 {
 	if (pt)
+	{
 		print_addr_recurs(pt / 16);
-	write(1, &"0123456789abcdef"[pt % 16], 1);
+		write(1, &"0123456789abcdef"[pt % 16], 1);
+	}
 }
 
 int		print_addr_boundary(unsigned long pt, t_pars *pars, int size, int maxprint)
@@ -48,9 +50,9 @@ int		print_addr_boundary(unsigned long pt, t_pars *pars, int size, int maxprint)
 	write(1, "0x", 2);
 	while (i++ + size < maxprint)
 		write(1, "0", 1);
-	i += size;
+	i += size - 1;
 	print_addr_recurs(pt);
-	while (i++ <= pars->field_width_val)
+	while (i++ < pars->field_width_val)
 		write(1, " ", 1);
 	return (i - 1);
 }
@@ -96,8 +98,9 @@ int		print_addr_hexa(unsigned long pt, t_pars *pars)
 	size = 1;
 	while (temp /= 16)
 		size++;
+	maxprint = size;
 	if (pars->precision_bool && size < pars->precision_val)
-		maxprint = size;
+		maxprint = pars->precision_val;
 	if (pars->boundary_left)
 		return (print_addr_boundary(pt, pars, size, maxprint));
 	else if (pars->zero_padded)

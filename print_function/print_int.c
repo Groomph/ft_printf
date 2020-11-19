@@ -6,7 +6,7 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/11/19 22:14:53 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/19 22:42:44 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,10 @@ int	print_unsigned_digit(char *str, int size, t_pars *pars)
 */
 	if (pars->boundary_left)
 		return (print_unsigned_digit_boundary(str, size, pars, maxprint));
-	while (pars->zero_padded && i++ + maxprint < pars->field_width_val)
+	while (i++ + maxprint < pars->field_width_val && !pars->precision_bool && pars->zero_padded)
 		write(1, "0", 1);
-	while (!pars->zero_padded && i++ + maxprint < pars->field_width_val)
+	i--;
+	while (i++ + maxprint < pars->field_width_val)
 		write(1, " ", 1);
 	i--;
 	while (i2++ + size < maxprint)
