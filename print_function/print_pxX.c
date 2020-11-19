@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 22:58:32 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/19 23:23:44 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		print_addr_boundary(unsigned long pt, t_pars *pars, int size, int maxprint)
 {
 	int	i;
 
-	i = 2;
+	i = 0;
 	write(1, "0x", 2);
 	while (i++ + size < maxprint)
 		write(1, "0", 1);
@@ -54,27 +54,29 @@ int		print_addr_boundary(unsigned long pt, t_pars *pars, int size, int maxprint)
 	print_addr_recurs(pt);
 	while (i++ < pars->field_width_val)
 		write(1, " ", 1);
-	return (i - 1);
+	return (i + 1);
 }
 
 int		print_addr_zeropadded(unsigned long pt, t_pars *pars, int size)
 {
 	int	i;
 
-	i = 2;
+	i = 0;
 	write(1, "0x", 2);
 	while (size + i++ < pars->field_width_val)
 		write(1, "0", 1);
 	i += size;	
 	print_addr_recurs(pt);
-	return (i - 1);
+	return (i + 1);
 }
-
+#include <stdio.h>
 int		print_addr(unsigned long pt, t_pars *pars, int size, int maxprint)
 {
 	int	i;
-
-	i = 2;
+	printf("%ld\n", pt);
+	printf("%i\n", pars->field_width_val);
+	printf("%i\n", pars->precision_val);
+	i = 0;
 	while (maxprint + i++ < pars->field_width_val)
 		write(1, " ", 1);
 	i--;
@@ -83,7 +85,7 @@ int		print_addr(unsigned long pt, t_pars *pars, int size, int maxprint)
 		write(1, "0", 1);
 	i += size;	
 	print_addr_recurs(pt);
-	return (i - 1);
+	return (i + 1);
 }
 
 int		print_addr_hexa(unsigned long pt, t_pars *pars)
