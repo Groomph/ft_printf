@@ -2,6 +2,7 @@ SRCS	= ft_printf.c \
 	  ft_printf_parsing.c \
 	  ft_printf_print.c \
 	  ft_printf_print2.c \
+	  ft_printf_print_int.c \
 
 OBJS	= ${SRCS:.c=.o}
 

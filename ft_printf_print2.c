@@ -6,88 +6,30 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 15:24:51 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/19 17:58:59 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 		
-int		print_signed_boundary_no(char tab[], int size, t_pars *pars)
+int		print_char_null(t_pars *pars)
 {
-	int	i;
-	int	i2;
+	int i;
 	int	maxprint;
 
 	i = 0;
-	i2 = 0;
-	maxprint = size < pars->precision_val ? pars->precision_val : size;
-	if (pars->zero_padded && !pars->precision_bool)
-	{
-		write(1, "-", 1);
-		while (i++ + maxprint < pars->field_width_val)
-			write(1, "0", 1);
-	}
-	else
-	{
-		while (i++ + maxprint < pars->field_width_val)
-			write(1, " ", 1);
-		write(1, "-", 1);
-	}
-	i--;
-	while (i2++ + size < maxprint)
-		write(1, "0", 1);
-	write(1, tab, size);
-	return (i + i2 + size);
-}
-
-int		print_signed_boundary(char tab[], int size, t_pars *pars)
-{
-	int	i;
-	int	maxprint;
-
-	pars->field_width_val--;
-	if (!pars->boundary_left)
-		return (print_signed_boundary_no(tab, size, pars));
-	i = 0;
-	maxprint = size < pars->precision_val ? pars->precision_val : size;
-	write(1, "-", 1);
-	while (i++ + size <  maxprint)
-			write(1, "0", 1);
-	write(1, tab, size);
-	i--;
-	while (i++ + size < pars->field_width_val)
-	write(1, " ", 1);
-	return (i + size);
-}
-
-int		print_unsigned_digit(char *str, int size, t_pars *pars)
-{
-	int	i;
-	int	i2;
-	int	maxprint;
-
-	i = 0;
-	i2 = 0;
-	maxprint = size < pars->precision_val ? pars->precision_val : size;
-	if (pars->precision_bool == 0)
-		pars->precision_val = 1;
+	maxprint = 1 < pars->precision_val ? pars->precision_val : 1;
 	if (pars->boundary_left)
 	{
-		while (i++ + size < maxprint)
-			write(1, "0", 1);
-		write(1, str, size);
-		i--;
-		while (i++ + size < pars->field_width_val)
+		write(1, "\0", 1);
+		while (maxprint++ < pars->field_width_val)
 			write(1, " ", 1);
-		return (size + i - 1);
+		return (maxprint - 1);
 	}
-	while (i++ + maxprint< pars->field_width_val)
-		pars->zero_padded && !pars->precision_bool ? write(1, "0", 1): write(1, " ", 1);
-	i--;
-	while (i2++ + size < maxprint)
-		write(1, "0", 1);
-	write(1, str, size);
-	return (size + i + i2 - 1);
+	while (i++ + maxprint < pars->field_width_val)
+			write(1, " ", 1);
+	write(1, "\0", 1);
+	return (maxprint + i - 1);
 }
 
 int		print_string(char *str, t_pars *pars, char *strnull)
@@ -151,7 +93,7 @@ int		print_addr_boundary(unsigned long pt, int i, t_pars *pars)
 			write(1, "0", 1);
 		i2 += 9;
 	}
-	if (i < 9)
+	if (i < 9 && pt)
 		(print_addr_boundary(pt / 16, i + 1, pars));
 	write(1, &"0123456789abcdef"[pt % 16], 1);
 	while (i == 1 && i2++ + 2 <= pars->field_width_val)
@@ -159,30 +101,36 @@ int		print_addr_boundary(unsigned long pt, int i, t_pars *pars)
 	return (i2);
 }
 
-int		print_addr_hexa(unsigned long pt, int i2, int i, t_pars *pars)
+int		print_addr_hexa(unsigned long pt, int limit, int i, t_pars *pars)
 {
+	int	i2;
 	int	maxprint;
-	
+	unsigned long temp;
+
+	i2 = 0;
 	if (i == 1 && !pt)	
 		return (print_add_null(pars));
 	else if (pars->boundary_left)
 		return (print_addr_boundary(pt, i, pars));
 	else if (i == 1)
 	{
+		temp = pt;
+		while (temp /= 16)
+			limit++;
 		pars->zero_padded ? write(1, "0x", 2) : write(1, "", 0);
-		maxprint = 9 < pars->precision_val ?	pars->precision_val : 9;
+		maxprint = limit < pars->precision_val ?	pars->precision_val : limit;
 		while (maxprint + i2++ + 2 < pars->field_width_val)
 			pars->zero_padded ? write(1, "0", 1) : write(1, " ", 1);
 		i2--;
 		pars->zero_padded ? write(1, "", 0) : write(1, "0x", 2);
-		while (i2++ < maxprint - 9)
+		while (i2++ < maxprint - limit)
 			write(1, "0", 1);
-		i2 += 9;
+		i2 += limit;
 	}
-	if (i < 9)
-		(print_addr_hexa(pt / 16, 0, i + 1, pars));
+	if (i < limit)
+		(print_addr_hexa(pt / 16, limit, i + 1, pars));
 	write(1, &"0123456789abcdef"[pt % 16], 1);
-	while (i == 1 && i2++ + 9 < pars->field_width_val)
+	while (i == 1 && i2++ + limit < pars->field_width_val)
 		write(1, " ", 1);
-	return (i2 += pars->boundary_left ? 9 : 0);
+	return (i2 += pars->boundary_left ? limit : 0);
 }
