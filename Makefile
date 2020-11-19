@@ -1,8 +1,11 @@
+PRINT_PATH	= print_function/
+
 SRCS	= ft_printf.c \
 	  ft_printf_parsing.c \
-	  ft_printf_print.c \
-	  ft_printf_print2.c \
-	  ft_printf_print_int.c \
+	  ${PRINT_PATH}ft_printf_print.c \
+	  ${PRINT_PATH}print_cs.c \
+	  ${PRINT_PATH}print_pxX.c \
+	  ${PRINT_PATH}print_int.c \
 
 OBJS	= ${SRCS:.c=.o}
 
