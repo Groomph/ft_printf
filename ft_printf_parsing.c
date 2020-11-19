@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 15:38:13 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/19 16:04:59 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ static int	second_pars(char *str, int i, t_pars *pars, va_list *param)
 	else if (str[i] == '*')
 	{
 		pars->field_width_val = va_arg(*param, int);
-		if (pars->field_width_val < 0) //fraichement ajouté
+		if (pars->field_width_val < 0)
+		{
+			pars->boundary_left = 1;
 			pars->field_width_val *= -1;
+		}
 		i++;
 	}
 	else if (str[i] == '.')
