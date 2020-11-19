@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 16:04:59 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/19 16:20:40 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int			ft_printf_parsing(char *str, va_list *param, int *count)
 			&& str[i] != '%' && str[i] != 'c' && str[i] != 's'
 			&& str[i] != 'd' && str[i] != 'x' && str[i] != 'X')
 		return (0);
-	pars.convert_char = str[i++];
+	pars.convert_char = str[i];
+	i++;
 //printf("%d %d %d %d %d...\n\n", pars.boundary_left, pars.zero_padded, pars.precision_bool, pars.precision_val, pars.field_width_val);
 	*count += ft_printf_print(&pars, &param2);
 	va_copy(*param, param2);

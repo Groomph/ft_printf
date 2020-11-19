@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 15:26:35 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/19 16:33:56 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int		ft_printf_print2(t_pars *pars, va_list *param)
 	if (pars->convert_char == 'c')
 	{
 		c[0] = (char)va_arg(*param, int);
+		if (c[0] == '\0')
+			return (print_char_null);
 		c[1] = '\0';
 		return (print_string(c, pars, ""));
 	}
