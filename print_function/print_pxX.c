@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 23:23:44 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/19 23:51:39 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int		print_add_null(t_pars *pars)
 	write(1, "0x", 2);
 	while (i2++ < maxprint)
 		write(1 , "0", 1);
-	if (pars)
-	while (i++ < pars->field_width_val && pars->boundary_left)
+	while (i++ + maxprint < pars->field_width_val && pars->boundary_left)
 		write(1, " ", 1);
 	return (i - 1 + i2 - 1);	
 }
@@ -46,7 +45,7 @@ int		print_addr_boundary(unsigned long pt, t_pars *pars, int size, int maxprint)
 {
 	int	i;
 
-	i = 0;
+	i = 2;
 	write(1, "0x", 2);
 	while (i++ + size < maxprint)
 		write(1, "0", 1);
@@ -54,7 +53,7 @@ int		print_addr_boundary(unsigned long pt, t_pars *pars, int size, int maxprint)
 	print_addr_recurs(pt);
 	while (i++ < pars->field_width_val)
 		write(1, " ", 1);
-	return (i + 1);
+	return (i - 1);
 }
 
 int		print_addr_zeropadded(unsigned long pt, t_pars *pars, int size)
@@ -69,23 +68,19 @@ int		print_addr_zeropadded(unsigned long pt, t_pars *pars, int size)
 	print_addr_recurs(pt);
 	return (i + 1);
 }
-#include <stdio.h>
 int		print_addr(unsigned long pt, t_pars *pars, int size, int maxprint)
 {
 	int	i;
-	printf("%ld\n", pt);
-	printf("%i\n", pars->field_width_val);
-	printf("%i\n", pars->precision_val);
 	i = 0;
-	while (maxprint + i++ < pars->field_width_val)
+	while (maxprint + i++ + 2 < pars->field_width_val)
 		write(1, " ", 1);
-	i--;
+	i++;
 	write(1, "0x", 2);
-	while (i++ + size < maxprint)
+	while (i++ + size < maxprint + 2)
 		write(1, "0", 1);
 	i += size;	
 	print_addr_recurs(pt);
-	return (i + 1);
+	return (i - 1);
 }
 
 int		print_addr_hexa(unsigned long pt, t_pars *pars)
