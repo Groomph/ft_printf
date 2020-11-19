@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/18 14:41:29 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/19 15:38:13 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static int	second_pars(char *str, int i, t_pars *pars, va_list *param)
 	else if (str[i] == '*')
 	{
 		pars->field_width_val = va_arg(*param, int);
+		if (pars->field_width_val < 0) //fraichement ajouté
+			pars->field_width_val *= -1;
 		i++;
 	}
 	else if (str[i] == '.')
@@ -50,10 +52,10 @@ static int	second_pars(char *str, int i, t_pars *pars, va_list *param)
 		{
 			i++;
 			pars->precision_val = va_arg(*param, int);
-			pars->precision_bool = pars->precision_val < 0 ? 0 : pars->precision_bool;
 		}
 		else
 			pars->precision_val = my_atoi(str, &i);
+		pars->precision_bool = pars->precision_val < 0 ? 0 : pars->precision_bool;
 	}
 	else if (str[i] == ' ')
 		i++;
