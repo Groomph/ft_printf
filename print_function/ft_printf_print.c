@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 22:15:57 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/20 00:29:39 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,16 @@ int		ft_printf_print2(t_pars *pars, va_list *param)
 		if (c[0] == '\0')
 			return (print_char_null(pars));
 		c[1] = '\0';
+		if (pars->precision_val == 0 && pars->precision_bool)
+			pars->precision_val = 1;
 		return (print_string(c, pars, ""));
 	}
 	if (pars->convert_char == '%')
+	{
+		if (pars->precision_val == 0 && pars->precision_bool)
+			pars->precision_val = 1;
 		return (print_string("%", pars, ""));
+	}
 	return (0);
 }
 
@@ -87,19 +93,19 @@ int		ft_printf_print(t_pars *pars, va_list *param)
 		return (print_string(va_arg(*param, char*), pars, "(null)"));
 	if (pars->convert_char == 'x')
 	{
-		return (convert_base(va_arg(*param, unsigned long),
+		return (convert_base(va_arg(*param, unsigned int),
 			16, "0123456789abcdef", pars));
 	}
 	if (pars->convert_char == 'X')
 	{
-		return (convert_base(va_arg(*param, unsigned long),
+		return (convert_base(va_arg(*param, unsigned int),
 			16, "0123456789ABCDEF", pars));
 	}
 	if (pars->convert_char == 'd' || pars->convert_char == 'i')
 		return (my_itoa(va_arg(*param, int), pars));
 	if (pars->convert_char == 'u')
 	{
-		return (convert_base(va_arg(*param, unsigned long),
+		return (convert_base(va_arg(*param, unsigned int),
 			10, "0123456789", pars));
 	}
 	return (ft_printf_print2(pars, param));

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 22:17:58 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/19 23:58:19 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct	s_pars
 	char		convert_char;
 	char		*todisplay;
 }				t_pars;
+
+int				ft_printf(const char *str, ...);
 
 int				ft_printf_parsing(char *str,
 									va_list *param, int *count);

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 23:40:53 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/20 00:27:16 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,13 @@ int main(void)
 	char *str6 = "UNSIGNEDINT///Coucou %-.0ubande %-10u\n";
 */	int	i = 0;
 	int	i2 = 0;
-	
+	int a = 18;
+	i = printf("%*i, %*d, %*d, %*d, %*d, %*d, %*u, %*x, %*X\n", a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0);
+	i2 = ft_printf("%*i, %*d, %*d, %*d, %*d, %*d, %*u, %*x, %*X\n", a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0);
+		
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+
+
 /*	i = printf(str);
 	i2 = ft_printf(str);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
@@ -40,7 +46,7 @@ int main(void)
 //	i = printf(str2, -300000, 23);
 //	i2 = ft_printf(str2, -300000, 23);
 //	printf("printf: %d    ft_printf: %d\n", i, i2);
-	
+/*	
 	i = printf("%20.9p\n", NULL);
 	i2 = ft_printf("%20.9p\n", NULL);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
@@ -52,7 +58,7 @@ int main(void)
 	i = printf("%020.9p\n", NULL);
 	i2 = ft_printf("%020.9p\n", NULL);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
-	/*
+*/	/*
 	i = printf("%04d...\n", -532);
 	i2 = ft_printf("%04d...\n", -532);
 	printf("printf: %d    ft_printf: %d\n", i, i2);

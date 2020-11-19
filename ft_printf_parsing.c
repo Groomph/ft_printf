@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 16:20:40 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/20 00:03:57 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void		init_struct(t_pars *pars)
 	pars->precision_val = 0;
 	pars->field_width_val = 0;
 }
-
-#include <stdio.h>
 
 int			ft_printf_parsing(char *str, va_list *param, int *count)
 {
