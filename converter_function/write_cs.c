@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 17:05:55 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/20 19:15:47 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	write_string(t_buffer *buf, char *str, char *strnull)
 
 	if (!str)
 		str = strnull;
-	sizetoprint = my_strlen(str);
+	sizetoprint = my_strlentencule(str);
 	if (buf->pars.precision_bool && sizetoprint > buf->pars.precision_val)
 		sizetoprint = buf->pars.precision_val;
 	if (buf->pars.boundary_left)
@@ -42,7 +42,10 @@ void	write_string(t_buffer *buf, char *str, char *strnull)
 	}
 	else
 	{
-		write_char_buffer(buf, ' ', buf->pars.field_width_val - sizetoprint);
+		if (buf->pars.zero_padded)
+			write_char_buffer(buf, '0', buf->pars.field_width_val - sizetoprint);
+		else
+			write_char_buffer(buf, ' ', buf->pars.field_width_val - sizetoprint);
 		write_str_buffer(buf, str, sizetoprint);
 	}
 }

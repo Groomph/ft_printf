@@ -6,13 +6,13 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:17:09 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 17:51:44 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/20 17:57:41 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int	my_strlen(char *str)
+int	my_strlentencule(char *str)
 {
 	int	i;
 	

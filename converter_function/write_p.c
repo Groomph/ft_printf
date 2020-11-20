@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 17:09:54 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/20 19:08:53 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ void		write_addr_null(t_buffer *buf)
 		write_char_buffer(buf, ' ', space_toprint);
 }
 
-void	write_addr_recurs(t_buffer *buf, unsigned long pt)
+void	write_addr_recurs(t_buffer *buf, unsigned long pt, int i)
 {
-	if (pt)
-	{
-		write_addr_recurs(buf, pt / 16);
-		write_char_buffer(buf, "0123456789abcdef"[pt % 16], 1);
-	}
+	if (pt / 16)
+		write_addr_recurs(buf, pt / 16, i + 1);
+	write_char_buffer(buf, "0123456789abcdef"[pt % 16], 1);
 }
 
 void		write_addr_boundary(t_buffer *buf, unsigned long pt, int size)
@@ -49,11 +47,11 @@ void		write_addr_boundary(t_buffer *buf, unsigned long pt, int size)
 	maxprint = size;
 	if (buf->pars.precision_bool && size < buf->pars.precision_val)
 		maxprint = buf->pars.precision_val;
-	space_toprint = buf->pars.field_width_val - maxprint;
-	_0_toprint = maxprint - size;
+	space_toprint = buf->pars.field_width_val - maxprint - 2;
+	_0_toprint = maxprint - size - 2;
 	write_str_buffer(buf, "0x", 2);
 	write_char_buffer(buf, '0', _0_toprint);
-	write_addr_recurs(buf, pt);
+	write_addr_recurs(buf, pt, 0);
 	write_char_buffer(buf, ' ', space_toprint);
 }
 
@@ -64,7 +62,7 @@ void		write_addr_zeropadded(t_buffer *buf, unsigned long pt, int size)
 	write_str_buffer(buf, "0x", 2);
 	_0_toprint = buf->pars.field_width_val - size;	
 	write_char_buffer(buf, '0', _0_toprint);
-	write_addr_recurs(buf, pt);
+	write_addr_recurs(buf, pt, 0);
 }
 
 void		write_addr(t_buffer *buf, unsigned long pt, int size)
@@ -77,11 +75,11 @@ void		write_addr(t_buffer *buf, unsigned long pt, int size)
 	if (buf->pars.precision_bool && size < buf->pars.precision_val)
 		maxprint = buf->pars.precision_val;
 	space_toprint = buf->pars.field_width_val - maxprint - 2;
-	_0_toprint = maxprint + 2 - size;
+	_0_toprint = maxprint - size;
 	write_char_buffer(buf, ' ', space_toprint);
 	write_str_buffer(buf, "0x", 2);
 	write_char_buffer(buf, '0', _0_toprint);
-	write_addr_recurs(buf, pt);
+	write_addr_recurs(buf, pt, 0);
 }
 
 void		write_addr_hexa(t_buffer *buf, unsigned long pt)

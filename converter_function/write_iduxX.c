@@ -6,7 +6,7 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/11/20 17:17:10 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/20 18:47:50 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	write_signed_boundary_no(t_buffer *buf, char tab[], int size)
 	if (buf->pars.precision_bool && size < buf->pars.precision_val)
 	       maxprint = buf->pars.precision_val;
 	_0_toprint = maxprint - size;
-	space_toprint = buf->pars.field_width_val - maxprint;
+	space_toprint = buf->pars.field_width_val - maxprint - 1;
 	if (buf->pars.zero_padded && !buf->pars.precision_bool)
 	{
 		write_char_buffer(buf, '-', 1);
-		write_char_buffer(buf, '0', buf->pars.field_width_val - size);
+		write_char_buffer(buf, '0', space_toprint);
 	}
 	else
 	{
@@ -46,10 +46,10 @@ void	write_signed_boundary(t_buffer *buf, char tab[], int size)
 	if (!buf->pars.boundary_left)
 		return (write_signed_boundary_no(buf, tab, size));
 	maxprint = size;
-	if (buf->pars.precision_val)
+	if (buf->pars.precision_bool && size < buf->pars.precision_val)
 		maxprint = buf->pars.precision_val;
 	_0_toprint = maxprint - size;
-	space_toprint = buf->pars.field_width_val - maxprint;
+	space_toprint = buf->pars.field_width_val - maxprint - 1;
 	write_char_buffer(buf, '-', 1);
 	write_char_buffer(buf, '0', _0_toprint);
 	write_str_buffer(buf, tab, size);
@@ -84,10 +84,15 @@ void	write_unsigned_digit(t_buffer *buf, char *str, int size)
 	if (buf->pars.precision_bool && size < buf->pars.precision_val)
 		maxprint = buf->pars.precision_val;
 	if (!buf->pars.precision_bool && buf->pars.zero_padded)
-		_0_toprint = buf->pars.field_width_val - maxprint;
+	{
+		_0_toprint = buf->pars.field_width_val - size;
+		space_toprint = 0;
+	}
 	else
+	{
 		_0_toprint = maxprint - size;
-	space_toprint = buf->pars.field_width_val - maxprint;
+		space_toprint = buf->pars.field_width_val - maxprint;
+	}
 	write_char_buffer(buf, ' ', space_toprint);
 	write_char_buffer(buf, '0', _0_toprint);
 	write_str_buffer(buf, str, size);

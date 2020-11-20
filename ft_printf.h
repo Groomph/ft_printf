@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 17:05:31 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/20 18:07:05 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void				write_addr_hexa(t_buffer *buf, unsigned long pt);
 ****************   buffer_utils.c   ****************
 */
 
-int				my_strlen(char *str);
+int				my_strlentencule(char *str);
 int				my_utoa_len(unsigned long nb, int sizebase);
 
 #endif

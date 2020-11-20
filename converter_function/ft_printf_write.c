@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 17:05:40 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/20 19:16:21 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		ft_printf_print2(t_buffer *buf, va_list *param)
 	{
 		c[0] = (char)va_arg(*param, int);
 		if (c[0] == '\0')
-			write_char_null(buf);
+			return (write_char_null(buf));
 		c[1] = '\0';
 		if (buf->pars.precision_val == 0 && buf->pars.precision_bool)
 			buf->pars.precision_val = 1;
