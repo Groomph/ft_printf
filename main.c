@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 00:27:16 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/20 17:49:50 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int ft_printf(const char *str, ...);
 
 int main(void)
 {
-//	char *str = "Classique///Coucou bande de nouille\n";
+	char *str = "Classique///Coucou bande de nouille\n";
 //	char *str2 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
-	char *str20 = "hi low";
-/*	char *str21 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
-	char *str22 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
+//	char *str20 = "hi low";
+	char *str21 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
+/*	char *str22 = "INT///Coucou bande %0-10.6i nouille %010.6i\n";
 	char *str3 = "HEXA///Coucou bande %-20.0x nouille %-10x\n";
 	char *str4 = "STRING///Coucou bande %s %s\n";
 	char *str11 = "%s";
@@ -30,7 +30,7 @@ int main(void)
 	char *str9 = "ADDRESS///Coucou bande %-20.20p\n";
 	char *str10 = "char///Couco%-2c ban%%de de %3c\n";
 	char *str6 = "UNSIGNEDINT///Coucou %-.0ubande %-10u\n";
-*/	int	i = 0;
+	*/int	i = 0;
 	int	i2 = 0;
 	int a = 18;
 	i = printf("%*i, %*d, %*d, %*d, %*d, %*d, %*u, %*x, %*X\n", a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0, a, 0);
@@ -39,10 +39,10 @@ int main(void)
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
 
-/*	i = printf(str);
-	i2 = ft_printf(str);
-	printf("printf: %d    ft_printf: %d\n", i, i2);
-*/
+//	i = printf(str21, 20, 20 ,20);
+//	i2 = ft_printf(str21, 20, 20, 20);
+//	printf("printf: %d    ft_printf: %d\n", i, i2);
+
 //	i = printf(str2, -300000, 23);
 //	i2 = ft_printf(str2, -300000, 23);
 //	printf("printf: %d    ft_printf: %d\n", i, i2);
