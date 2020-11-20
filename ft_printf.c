@@ -6,33 +6,62 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 06:22:19 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 16:25:21 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/20 15:26:04 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+void		print_buffer(t_buffer *buf, int fd)
+{
+		write(fd, buf->buf, buf->i);
+		buf->totalsize += buf->i;
+		buf->i = 0;
+}
+
+void		write_str_buffer(t_buffer *buf, char *str, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		buf->buf[buf->i++] = str[i++];
+		if (buf->i == BUFFER_SIZE)
+			print_buffer(buf, 1);
+	}
+}
+
+void		write_char_buffer(t_buffer *buf, char c, int nb)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < nb)
+	{
+		buf->buf[buf->i++] = c;
+		if (buf->i == BUFFER_SIZE)
+			print_buffer(buf, 1);
+	}
+}	
+
 int	ft_printf(const char *str, ...)
 {
 	int		i;
 	va_list	param;
-	int		count;
 	int		tmp;
+	t_buffer	buf;
 
 	i = 0;
-	count = 0;
 	tmp = 0;
 	va_start(param, str);
+	buf.i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
-			tmp = ft_printf_parsing((char*)&str[i], &param, &count);
+			tmp = ft_printf_parsing((char*)&str[i], &buf, &param);
 		if (tmp == 0)
-		{
-			write(1, &str[i], 1);
-			i++;
-			count++;
-		}
+			write_char_buffer(&buf, str[i++], 1);
 		else
 		{
 			while (str[i] && tmp > 0)
@@ -43,5 +72,6 @@ int	ft_printf(const char *str, ...)
 		}
 	}
 	va_end(param);
-	return (count);
+	print_buffer(&buf, 1);
+	return (buf.totalsize);
 }

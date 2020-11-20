@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/19 23:58:19 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/20 17:05:31 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdarg.h>
 # include <unistd.h>
 
+# define BUFFER_SIZE 100
+
 typedef struct	s_pars
 {
 	int			boundary_left;
@@ -24,27 +26,55 @@ typedef struct	s_pars
 	int			precision_val;
 	int			field_width_val;
 	char		convert_char;
-	char		*todisplay;
 }				t_pars;
+
+typedef struct	s_buffer
+{
+	int			i;
+	int			totalsize;
+	char		buf[BUFFER_SIZE];
+	t_pars			pars;
+}				t_buffer;
 
 int				ft_printf(const char *str, ...);
 
 int				ft_printf_parsing(char *str,
-									va_list *param, int *count);
-int				ft_printf_print(t_pars *pars,
-									va_list *param);
+							t_buffer *buf, va_list *param);
+void				ft_printf_print(t_buffer *buf, va_list *param);
 /*
-****************   ft_printf_print_int.c   ****************
-*/
-int				print_signed_boundary(char tab[],
-									int size, t_pars *pars);
-int				print_unsigned_digit(char *str,
-									int size, t_pars *pars);
-/*
-****************   ft_printf_print2.c   ****************
+****************   buffer   ****************
 */
 
-int				print_char_null(t_pars *pars);
-int				print_string(char *str, t_pars *pars, char *strnull);
-int				print_addr_hexa(unsigned long pt, t_pars *pars);
+void				write_str_buffer(t_buffer *buf,
+							char *str, int size);
+void				write_char_buffer(t_buffer *buf,
+							char c, int nb);
+
+/*
+****************   print_iduxX.c   ****************
+*/
+void				write_signed_boundary(t_buffer *buf, char tab[],
+							int size);
+void				write_unsigned_digit(t_buffer *buf, char *str,
+							int size);
+/*
+****************   print_cs.c   ****************
+*/
+
+void				write_char_null(t_buffer *buf);
+void				write_string(t_buffer *buf, char *str, char *strnull);
+
+/*
+****************   print_p.c   ****************
+*/
+
+void				write_addr_hexa(t_buffer *buf, unsigned long pt);
+
+/*
+****************   buffer_utils.c   ****************
+*/
+
+int				my_strlen(char *str);
+int				my_utoa_len(unsigned long nb, int sizebase);
+
 #endif

@@ -1,11 +1,12 @@
-PRINT_PATH	= print_function/
+WRITE_PATH	= converter_function/
 
 SRCS	= ft_printf.c \
 	  ft_printf_parsing.c \
-	  ${PRINT_PATH}ft_printf_print.c \
-	  ${PRINT_PATH}print_cs.c \
-	  ${PRINT_PATH}print_pxX.c \
-	  ${PRINT_PATH}print_int.c \
+	  ${WRITE_PATH}ft_printf_write.c \
+	  ${WRITE_PATH}write_cs.c \
+	  ${WRITE_PATH}write_p.c \
+	  ${WRITE_PATH}write_iduxX.c \
+	  ${WRITE_PATH}write_utils.c
 
 OBJS	= ${SRCS:.c=.o}
 
