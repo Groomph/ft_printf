@@ -6,93 +6,88 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 19:08:53 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/22 21:41:48 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-void		write_addr_null(t_buffer *buf)
+void		write_addr_null(t_flags *flags)
 {
 	int	maxprint;
 	int	space_toprint;
 	int	_0_toprint;
 
 	maxprint = 3;
-	if (buf->pars.precision_bool)
-	       maxprint = buf->pars.precision_val + 2;
-	space_toprint = buf->pars.field_width_val - maxprint;
+	if (flags->precision_bool)
+	       maxprint = flags->precision_val + 2;
+	space_toprint = flags->field_width_val - maxprint;
 	_0_toprint = maxprint - 2;
-	if (!buf->pars.boundary_left)
-		write_char_buffer(buf, ' ', space_toprint);
-	write_str_buffer(buf, "0x", 2);
-	write_char_buffer(buf, '0', _0_toprint);
-	if (buf->pars.boundary_left)
-		write_char_buffer(buf, ' ', space_toprint);
+	if (!flags->boundary_left)
+		write_char_buffer(' ', space_toprint);
+	write_str_buffer("0x", 2);
+	write_char_buffer('0', _0_toprint);
+	if (flags->boundary_left)
+		write_char_buffer(' ', space_toprint);
 }
 
-void	write_addr_recurs(t_buffer *buf, unsigned long pt, int i)
-{
-	if (pt / 16)
-		write_addr_recurs(buf, pt / 16, i + 1);
-	write_char_buffer(buf, "0123456789abcdef"[pt % 16], 1);
-}
-
-void		write_addr_boundary(t_buffer *buf, unsigned long pt, int size)
+void		write_addr_boundary(t_flags *flags, unsigned long pt, int size)
 {
 	int	maxprint;
 	int	space_toprint;
 	int	_0_toprint;
 
 	maxprint = size;
-	if (buf->pars.precision_bool && size < buf->pars.precision_val)
-		maxprint = buf->pars.precision_val;
-	space_toprint = buf->pars.field_width_val - maxprint - 2;
+	if (flags->precision_bool && size < flags->precision_val)
+		maxprint = flags->precision_val;
+	space_toprint = flags->field_width_val - maxprint - 2;
 	_0_toprint = maxprint - size - 2;
-	write_str_buffer(buf, "0x", 2);
-	write_char_buffer(buf, '0', _0_toprint);
-	write_addr_recurs(buf, pt, 0);
-	write_char_buffer(buf, ' ', space_toprint);
+	write_str_buffer("0x", 2);
+	write_char_buffer('0', _0_toprint);
+	write_base_recurs(pt, "0123456789abcdef", 16, 50);
+	write_char_buffer(' ', space_toprint);
 }
 
-void		write_addr_zeropadded(t_buffer *buf, unsigned long pt, int size)
+void		write_addr_zeropadded(t_flags *flags, unsigned long pt, int size)
 {
 	int	_0_toprint;
 
-	write_str_buffer(buf, "0x", 2);
-	_0_toprint = buf->pars.field_width_val - size;	
-	write_char_buffer(buf, '0', _0_toprint);
-	write_addr_recurs(buf, pt, 0);
+	write_str_buffer("0x", 2);
+	_0_toprint = flags->field_width_val - size;	
+	write_char_buffer('0', _0_toprint);
+	write_base_recurs(pt, "0123456789abcdef", 16, 50);
 }
 
-void		write_addr(t_buffer *buf, unsigned long pt, int size)
+void		write_addr(t_flags *flags, unsigned long pt, int size)
 {
 	int maxprint;
 	int space_toprint;
 	int _0_toprint;
 	
 	maxprint = size;
-	if (buf->pars.precision_bool && size < buf->pars.precision_val)
-		maxprint = buf->pars.precision_val;
-	space_toprint = buf->pars.field_width_val - maxprint - 2;
+	if (flags->precision_bool && size < flags->precision_val)
+		maxprint = flags->precision_val;
+	space_toprint = flags->field_width_val - maxprint - 2;
 	_0_toprint = maxprint - size;
-	write_char_buffer(buf, ' ', space_toprint);
-	write_str_buffer(buf, "0x", 2);
-	write_char_buffer(buf, '0', _0_toprint);
-	write_addr_recurs(buf, pt, 0);
+	write_char_buffer(' ', space_toprint);
+	write_str_buffer("0x", 2);
+	write_char_buffer('0', _0_toprint);
+	write_base_recurs(pt, "0123456789abcdef", 16, 50);
 }
 
-void		write_addr_hexa(t_buffer *buf, unsigned long pt)
+void		write_p(va_list *param, t_flags *flags)
 {
-	int	size;
+	unsigned long	pt;
+	int		size;
 	
+	pt = va_arg(*param, unsigned long);
 	if (!pt)	
-		return (write_addr_null(buf));
-	size = my_utoa_len(pt, 16);
-	if (buf->pars.boundary_left)
-		write_addr_boundary(buf, pt, size);
-	else if (buf->pars.zero_padded)
-		write_addr_zeropadded(buf, pt, size);
+		return (write_addr_null(flags));
+	size = my_utoa_len(pt, 16, NULL);
+	if (flags->boundary_left)
+		write_addr_boundary(flags, pt, size);
+	else if (flags->zero_padded)
+		write_addr_zeropadded(flags, pt, size);
 	else
-		write_addr(buf, pt, size);
+		write_addr(flags, pt, size);
 }

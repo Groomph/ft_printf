@@ -1,9 +1,10 @@
 WRITE_PATH	= converter_function/
 
 SRCS	= ft_printf.c \
+	  ft_print_buffer.c \
 	  ft_printf_parsing.c \
-	  ${WRITE_PATH}ft_printf_write.c \
-	  ${WRITE_PATH}write_cs.c \
+	  ${WRITE_PATH}lobby_write.c \
+	  ${WRITE_PATH}write_csPCT.c \
 	  ${WRITE_PATH}write_p.c \
 	  ${WRITE_PATH}write_iduxX.c \
 	  ${WRITE_PATH}write_utils.c

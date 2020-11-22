@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 18:07:05 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/22 22:17:01 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@
 
 # define BUFFER_SIZE 100
 
-typedef struct	s_pars
+typedef	struct	s_buffer
+{
+	int			i;
+	int			totalsize;
+	char		bufstr[BUFFER_SIZE];
+}				t_buffer;
+
+typedef struct	s_flags
 {
 	int			boundary_left;
 	int			zero_padded;
@@ -26,55 +33,47 @@ typedef struct	s_pars
 	int			precision_val;
 	int			field_width_val;
 	char		convert_char;
-}				t_pars;
+}				t_flags;
 
-typedef struct	s_buffer
+typedef struct	s_converter
 {
-	int			i;
-	int			totalsize;
-	char		buf[BUFFER_SIZE];
-	t_pars			pars;
-}				t_buffer;
+	void			(*pt_function)(va_list *param, t_flags *flags);
+	char			c;
+}				t_converter;
 
 int				ft_printf(const char *str, ...);
+int				ft_printf_parsing(char *str, va_list *param);
+void				lobby_write_buffer(va_list *param, t_flags *flags);
 
-int				ft_printf_parsing(char *str,
-							t_buffer *buf, va_list *param);
-void				ft_printf_print(t_buffer *buf, va_list *param);
 /*
 ****************   buffer   ****************
 */
 
-void				write_str_buffer(t_buffer *buf,
-							char *str, int size);
-void				write_char_buffer(t_buffer *buf,
-							char c, int nb);
+void				print_buffer(int fd);
+void				write_str_buffer(char *str, int size);
+void				write_char_buffer(char c, int nb);
+int				send_totalsize(void);
+void				init_buffer(void);
 
 /*
-****************   print_iduxX.c   ****************
-*/
-void				write_signed_boundary(t_buffer *buf, char tab[],
-							int size);
-void				write_unsigned_digit(t_buffer *buf, char *str,
-							int size);
-/*
-****************   print_cs.c   ****************
+****************   print_iduxXcs%p.c   ****************
 */
 
-void				write_char_null(t_buffer *buf);
-void				write_string(t_buffer *buf, char *str, char *strnull);
-
-/*
-****************   print_p.c   ****************
-*/
-
-void				write_addr_hexa(t_buffer *buf, unsigned long pt);
+void				write_di(va_list *param, t_flags *flags);
+void				write_u(va_list *param, t_flags *flags);
+void				write_x(va_list *param, t_flags *flags);
+void				write_X(va_list *param, t_flags *flags);
+void				write_c(va_list *param, t_flags *flags);
+void				write_s(va_list *param, t_flags *flags);
+void				write_PCT(t_flags *flags);
+void				write_p(va_list *param, t_flags *flags);
 
 /*
 ****************   buffer_utils.c   ****************
 */
 
-int				my_strlentencule(char *str);
-int				my_utoa_len(unsigned long nb, int sizebase);
+void				write_base_recurs(unsigned long pt, char *base, int sizeb, int sizetopr);
+int				my_my_strlen(char *str);
+int				my_utoa_len(unsigned long nb, int sizebase, t_flags *flags);
 
 #endif

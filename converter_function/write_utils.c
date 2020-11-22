@@ -6,13 +6,21 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:17:09 by romain            #+#    #+#             */
-/*   Updated: 2020/11/20 17:57:41 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/22 21:43:44 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int	my_strlentencule(char *str)
+void	write_base_recurs(unsigned long pt, char *base, int sizeb, int sizetopr)
+{
+	if (pt / sizeb)
+		write_base_recurs(pt / sizeb, base, sizeb, sizetopr - 1);
+	if (sizetopr > 0)
+		write_char_buffer(base[pt % sizeb], 1);
+}
+
+int	my_my_strlen(char *str)
 {
 	int	i;
 	
@@ -22,10 +30,12 @@ int	my_strlentencule(char *str)
 	return (i);
 }
 
-int	my_utoa_len(unsigned long nb, int sizebase)
+int	my_utoa_len(unsigned long nb, int sizebase, t_flags *flags)
 {
 	int	i;
-
+		
+	if (flags && flags->precision_bool && flags->precision_val == 0 && nb == 0)
+		return (0);
 	i = 1;
 	while (nb /= sizebase)
 		i++;
