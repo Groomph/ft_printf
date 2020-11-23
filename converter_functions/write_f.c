@@ -6,12 +6,12 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 22:18:35 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 23:04:39 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
-
+#include <stdio.h>
 void	write_lobby_double(double doub, t_flags *flags)
 {
 	long int	intpart;
@@ -26,18 +26,36 @@ void	write_lobby_double(double doub, t_flags *flags)
 		doub += 0.5;
 	intpart = (long int)doub;
 	write_base_recurs(intpart, "0123456789", 10, 50);
-	if (limit > 0)
-		write_char_buffer('.', 1);
+	if (limit == 0)
+		return ;
+	write_char_buffer('.', 1);
+	doub -= intpart;
 	while (++i < limit)
 	{
+		doub *= 10;	
+		if (i + 1 == limit)
+			doub += 0.5;
+	}
+	intpart = doub;
+	write_base_recurs(intpart, "0123456789", 10, limit);
+	/*
 		doub -= intpart;
 		doub *= 10;
-		if (i < limit - 1)
+		if (i + 1 < limit)
 			intpart = (long int)doub;
 		else
 			intpart = (long int)(doub + 0.5);
+		//printf("%li\n", intpart);
+		//write_base_recurs(intpart, "0123456789", 10, 50);
+		if (intpart == 10)
+		{
+			write_str_buffer("test", 4);
+			write_str_buffer(&"00102030405060708090"[2], 2);
+			i++;
+		}
+		else
 		write_char_buffer("0123456789"[intpart], 1);
-	}
+	}*/
 }
 
 void	write_double_pos(double doub, t_flags *flags, int sizetoprint)
