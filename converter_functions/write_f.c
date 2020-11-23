@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 22:06:42 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 22:16:14 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	write_lobby_double(double doub, t_flags *flags)
 			intpart = doub;
 		else
 			intpart = doub + 0.5;
-		write_base_recurs(intpart, "0123456789", 10, 1);
+		write_char_buffer("0123456789"[intpart], 1);
 	}
 }
 
@@ -104,7 +104,10 @@ void	write_f(va_list *param, t_flags *flags)
 	else
 		sizetoprint += 7;
 	if (doub < 0)
-		write_double_neg(-doub, flags, sizetoprint + 1);
+		{
+			doub *= -1;
+			write_double_neg(-doub, flags, sizetoprint + 1);
+		}
 	else
 		write_double_pos(doub, flags, sizetoprint);
 }
