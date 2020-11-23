@@ -6,14 +6,14 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/11/23 04:20:45 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 04:49:13 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-static void	signed_nobound(t_flags *flags, unsigned long nb, char *base,
-								int sizeb)
+static void		signed_nobound(t_flags *flags, unsigned long nb, char *base,
+																	int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;
@@ -40,8 +40,8 @@ static void	signed_nobound(t_flags *flags, unsigned long nb, char *base,
 	write_base_recurs(nb, base, sizeb, sizetoprint);
 }
 
-static void	signed_bound(t_flags *flags, unsigned long nb, char *base,
-								int sizeb)
+static void		signed_bound(t_flags *flags, unsigned long nb, char *base,
+																int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;
@@ -65,8 +65,8 @@ static void	signed_bound(t_flags *flags, unsigned long nb, char *base,
 	}
 }
 
-static void	unsigned_bound(t_flags *flags, unsigned long nb, char *base,
-								int sizeb)
+static void		unsigned_bound(t_flags *flags, unsigned long nb, char *base,
+																int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;
@@ -84,7 +84,8 @@ static void	unsigned_bound(t_flags *flags, unsigned long nb, char *base,
 	write_char_buffer(' ', space_toprint);
 }
 
-void	unsigned_noboun(t_flags *flags, unsigned long nb, char *base, int sizeb)
+void			unsigned_noboun(t_flags *flags, unsigned long nb, char *base,
+																int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;
@@ -113,7 +114,7 @@ void	unsigned_noboun(t_flags *flags, unsigned long nb, char *base, int sizeb)
 	}
 }
 
-void	write_di(va_list *param, t_flags *flags)
+void			write_di(va_list *param, t_flags *flags)
 {
 	int	nb;
 

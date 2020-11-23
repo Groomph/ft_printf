@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 00:17:02 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 04:38:58 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static void	write_string(t_flags *flags, char *str, char *strnull)
 	if (!str)
 		str = strnull;
 	sizetoprint = my_my_strlen(str);
-	spacing = flags->field_width_val - sizetoprint;
 	if (flags->precision_bool && sizetoprint > flags->precision_val)
 		sizetoprint = flags->precision_val;
+	spacing = flags->field_width_val - sizetoprint;
 	if (flags->boundary_left)
 	{
 		write_str_buffer(str, sizetoprint);

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 03:56:48 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 04:44:17 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ static void		write_addr(t_flags *flags, unsigned long pt, int size)
 	write_base_recurs(pt, "0123456789abcdef", 16, 50);
 }
 
-void		write_p(va_list *param, t_flags *flags)
+void			write_p(va_list *param, t_flags *flags)
 {
 	unsigned long	pt;
-	int		size;
+	int				size;
 
 	pt = va_arg(*param, unsigned long);
 	if (!pt)
