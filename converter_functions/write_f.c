@@ -6,15 +6,16 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 23:04:39 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 23:34:13 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 #include <stdio.h>
-void	write_lobby_double(double doub, t_flags *flags)
+
+void	write_lobby_pos(double doub, t_flags *flags)
 {
-	long int	intpart;
+	unsigned long long int	intpart;
 	int			i;
 	int			limit;
 
@@ -24,6 +25,89 @@ void	write_lobby_double(double doub, t_flags *flags)
 		limit = flags->precision_val;
 	if (limit == 0)
 		doub += 0.5;
+	intpart = (long long int)doub;
+	write_base_recurs(intpart, "0123456789", 10, 50);
+	if (limit == 0)
+		return ;
+	write_char_buffer('.', 1);
+	doub -= intpart;
+	while (++i < limit)
+	{
+		doub *= 10;	
+		if (i + 1 == limit)
+				doub += 0.5;
+	}
+	intpart = doub;
+	write_base_recurs(intpart, "0123456789", 10, limit);
+}
+
+
+
+
+void	write_lobby_neg(double doub, t_flags *flags)
+{
+
+	unsigned long long int	intpart;
+	int			i;
+	int			limit;
+
+	i = -1;
+	limit = 6;
+	if (flags->bw_flags & PRECIS)
+		limit = flags->precision_val;
+	if (limit == 0)
+		doub -= 0.5;
+	intpart = (unsigned long long int)(doub * -1);
+	write_base_recurs(intpart, "0123456789", 10, 50);
+	if (limit == 0)
+		return ;
+	write_char_buffer('.', 1);
+	doub -= intpart;
+	while (++i < limit)
+	{
+		doub *= 10;	
+		if (i + 1 == limit)
+				doub -= 0.5;
+	}
+	intpart = (unsigned long long)(doub * -1);
+	write_base_recurs(intpart, "0123456789", 10, limit);
+}
+
+
+
+
+
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	long long int	intpart;
+	int			i;
+	int			limit;
+
+	i = -1;
+	limit = 6;
+	if (flags->bw_flags & PRECIS)
+		limit = flags->precision_val;
+	if (limit == 0)
+	{
+		if (limit >= 0)	
+			doub += 0.5;
+		else
+			doub -= 0.5;
+	}	
 	intpart = (long int)doub;
 	write_base_recurs(intpart, "0123456789", 10, 50);
 	if (limit == 0)
@@ -34,11 +118,16 @@ void	write_lobby_double(double doub, t_flags *flags)
 	{
 		doub *= 10;	
 		if (i + 1 == limit)
-			doub += 0.5;
+		{
+			if (limit >= 0)	
+				doub += 0.5;
+			else
+				doub -= 0.5;
+		}	
 	}
 	intpart = doub;
 	write_base_recurs(intpart, "0123456789", 10, limit);
-	/*
+	
 		doub -= intpart;
 		doub *= 10;
 		if (i + 1 < limit)
@@ -55,14 +144,14 @@ void	write_lobby_double(double doub, t_flags *flags)
 		}
 		else
 		write_char_buffer("0123456789"[intpart], 1);
-	}*/
-}
+	}
+}*/
 
 void	write_double_pos(double doub, t_flags *flags, int sizetoprint)
 {
 	if (flags->bw_flags & MINUS)
 	{
-		write_lobby_double(doub, flags);
+		write_lobby_pos(doub, flags);
 		write_char_buffer(' ', flags->field_width_val - sizetoprint);
 	}
 	else
@@ -71,7 +160,7 @@ void	write_double_pos(double doub, t_flags *flags, int sizetoprint)
 			write_char_buffer('0', flags->field_width_val - sizetoprint);
 		else
 			write_char_buffer(' ', flags->field_width_val - sizetoprint);
-		write_lobby_double(doub, flags);
+		write_lobby_pos(doub, flags);
 	}
 }
 
@@ -90,7 +179,7 @@ void	write_double_neg_nobound(double doub, t_flags *flags, int sizetoprint)
 		write_char_buffer(' ', space_toprint);
 		write_char_buffer('-', 1);
 	}
-	write_lobby_double(doub, flags);
+	write_lobby_neg(doub, flags);
 }
 
 void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
@@ -103,7 +192,7 @@ void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
 	{
 		space_toprint = flags->field_width_val - sizetoprint;
 		write_char_buffer('-', 1);
-		write_lobby_double(doub, flags);
+		write_lobby_neg(doub, flags);
 		write_char_buffer(' ', space_toprint);
 	}
 }
@@ -122,10 +211,7 @@ void	write_f(va_list *param, t_flags *flags)
 	else
 		sizetoprint += 7;
 	if (doub < 0)
-		{
-			doub *= -1;
-			write_double_neg(-doub, flags, sizetoprint + 1);
-		}
+		write_double_neg(doub, flags, sizetoprint + 1);
 	else
 		write_double_pos(doub, flags, sizetoprint);
 }
