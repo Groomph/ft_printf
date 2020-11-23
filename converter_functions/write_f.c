@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 21:08:14 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 21:34:22 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	write_lobby_double(double doub, t_flags *flags)
 	{
 		doub -= intpart;
 		doub *= 10;
-		if (i < flags->precision_val - 1)
+		if (i < limit - 1)
 			intpart = doub;
 		else
 			intpart = doub + 0.5;
