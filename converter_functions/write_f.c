@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 20:28:36 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 20:51:02 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	write_lobby_double(double doub, t_flags *flags)
 		flags->precision_val = 6;
 	intpart = doub;
 	write_base_recurs(intpart, "0123456789", 10, 50);
-	write_char_buffer('.', 1);
+	if (flags->bw_flags & PRECIS && flags->precision_val > 0)
+		write_char_buffer('.', 1);
 	while (++i < flags->precision_val)
 	{
 		doub -= intpart;
@@ -95,7 +96,7 @@ void	write_f(va_list *param, t_flags *flags)
 	tmp = doub < 0 ? -doub : doub;
 	sizetoprint = my_utoa_len(tmp, 10, NULL);
 	if (flags->bw_flags & PRECIS)
-	       	sizetoprint += flags->precision_val == 0 ? -1 : 1 + flags->precision_val;
+	       	sizetoprint += flags->precision_val == 0 ? 0 : 1 + flags->precision_val;
 	else
 		sizetoprint += 7;
 	if (doub < 0)
