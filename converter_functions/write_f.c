@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/24 00:44:45 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/24 00:48:31 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	write_lobby_pos(double doub, t_flags *flags)
 	while (++i < limit)
 		multi *= 10;
 	doub *= multi;
-	if (limit < 16)
 		doub += 0.5;
 	intpart = doub;
 	write_base_recurs(intpart, "0123456789", 10, limit);
