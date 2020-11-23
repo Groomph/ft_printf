@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 23:34:13 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/24 00:08:15 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,83 +15,63 @@
 
 void	write_lobby_pos(double doub, t_flags *flags)
 {
-	unsigned long long int	intpart;
+	long long int	intpart;
+	long long int	multi;
 	int			i;
 	int			limit;
 
 	i = -1;
 	limit = 6;
+	multi = 1;
 	if (flags->bw_flags & PRECIS)
 		limit = flags->precision_val;
 	if (limit == 0)
 		doub += 0.5;
-	intpart = (long long int)doub;
+	intpart = doub;
 	write_base_recurs(intpart, "0123456789", 10, 50);
 	if (limit == 0)
 		return ;
 	write_char_buffer('.', 1);
-	doub -= intpart;
+	doub += intpart;
 	while (++i < limit)
-	{
-		doub *= 10;	
-		if (i + 1 == limit)
-				doub += 0.5;
-	}
+		multi *= 10;
+	doub *= multi;
+	doub += 0.5;
 	intpart = doub;
 	write_base_recurs(intpart, "0123456789", 10, limit);
 }
 
 
-
-
 void	write_lobby_neg(double doub, t_flags *flags)
 {
-
-	unsigned long long int	intpart;
+	long long int	intpart;
+	long long int	multi;
 	int			i;
 	int			limit;
 
 	i = -1;
 	limit = 6;
+	multi = 1;
 	if (flags->bw_flags & PRECIS)
 		limit = flags->precision_val;
 	if (limit == 0)
 		doub -= 0.5;
-	intpart = (unsigned long long int)(doub * -1);
+	intpart = doub;
+	intpart *= -1;
 	write_base_recurs(intpart, "0123456789", 10, 50);
 	if (limit == 0)
 		return ;
 	write_char_buffer('.', 1);
-	doub -= intpart;
+	doub += intpart;
 	while (++i < limit)
-	{
-		doub *= 10;	
-		if (i + 1 == limit)
-				doub -= 0.5;
-	}
-	intpart = (unsigned long long)(doub * -1);
+		multi *= 10;
+	doub *= multi;
+	doub -= 0.5;
+	intpart = doub;
+	intpart *= -1;
 	write_base_recurs(intpart, "0123456789", 10, limit);
 }
-
-
-
-
-
-
 /*
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	long long int	intpart;
 	int			i;
