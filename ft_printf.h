@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 14:08:44 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/23 14:53:07 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,18 @@
 
 # define BUFFER_SIZE 100
 
+# define MINUS (1U << 1)
+# define ZERO (1U << 2)
+# define PRECIS (1U << 3) 
+# define SPACE (1U << 4)
+# define CROISI (1U << 5)
+# define PLUS (1U << 6)
+
+# define LL (1U << 10)
+# define LLLL (1U << 11)
+# define HH (1U << 12)
+# define HHHH (1U << 13)
+
 typedef	struct	s_buffer
 {
 	int			i;
@@ -27,13 +39,14 @@ typedef	struct	s_buffer
 
 typedef struct	s_flags
 {
-	int			boundary_left;
-	int			zero_padded;
-	int			precision_bool;
+	int			bw_flags;
 	int			precision_val;
 	int			field_width_val;
 	char		convert_char;
 }				t_flags;
+//	int			boundary_left;
+//	int			zero_padded;
+//	int			precision_bool;
 
 typedef struct	s_converter
 {

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 14:07:28 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/23 15:03:22 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static int	second_flags(const char *str, int i, t_flags *flags, va_list *param)
 static int	first_flags(const char *str, int i, t_flags *flags)
 {
 	if (str[i] == '-')
-		flags->boundary_left = 1;
+		flags->bw_flags |= MINUS;
 	else if (str[i] == '0')
-		flags->zero_padded = 1;
+		flags->bw_flags |= ZERO;
 	else
 		return (i);
 	return (first_flags(str, i + 1, flags));
@@ -38,9 +38,7 @@ static int	first_flags(const char *str, int i, t_flags *flags)
 
 static void	init_flags_struct(t_flags *flags)
 {
-	flags->boundary_left = 0;
-	flags->zero_padded = 0;
-	flags->precision_bool = 0;
+	flags->bw_flags = 0;
 	flags->precision_val = 0;
 	flags->field_width_val = 0;
 	flags->convert_char = 0;

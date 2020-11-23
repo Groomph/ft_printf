@@ -6,7 +6,7 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/11/23 04:49:13 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/23 15:24:17 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static void		signed_nobound(t_flags *flags, unsigned long nb, char *base,
 
 	sizetoprint = my_utoa_len(nb, sizeb, flags);
 	maxprint = sizetoprint;
-	if (flags->precision_bool && sizetoprint < flags->precision_val)
+	if (flags->bw_flags & PRECIS && sizetoprint < flags->precision_val)
 		maxprint = flags->precision_val;
 	zero_toprint = maxprint - sizetoprint;
 	space_toprint = flags->field_width_val - maxprint - 1;
-	if (flags->zero_padded && !flags->precision_bool)
+	if (flags->bw_flags & ZERO && !(flags->bw_flags & PRECIS))
 	{
 		write_char_buffer('-', 1);
 		write_char_buffer('0', space_toprint);
@@ -49,12 +49,12 @@ static void		signed_bound(t_flags *flags, unsigned long nb, char *base,
 	int	sizetoprint;
 
 	sizetoprint = my_utoa_len(nb, sizeb, flags);
-	if (!flags->boundary_left)
+	if (!(flags->bw_flags & MINUS))
 		signed_nobound(flags, nb, base, sizeb);
 	else
 	{
 		maxprint = sizetoprint;
-		if (flags->precision_bool && sizetoprint < flags->precision_val)
+		if (flags->bw_flags & PRECIS && sizetoprint < flags->precision_val)
 			maxprint = flags->precision_val;
 		zero_toprint = maxprint - sizetoprint;
 		space_toprint = flags->field_width_val - maxprint - 1;
@@ -75,7 +75,7 @@ static void		unsigned_bound(t_flags *flags, unsigned long nb, char *base,
 
 	sizetoprint = my_utoa_len(nb, sizeb, flags);
 	maxprint = sizetoprint;
-	if (flags->precision_bool && sizetoprint < flags->precision_val)
+	if (flags->bw_flags & PRECIS && sizetoprint < flags->precision_val)
 		maxprint = flags->precision_val;
 	zero_toprint = maxprint - sizetoprint;
 	space_toprint = flags->field_width_val - maxprint;
@@ -92,16 +92,16 @@ void			unsigned_noboun(t_flags *flags, unsigned long nb, char *base,
 	int	space_toprint;
 	int	sizetoprint;
 
-	if (flags->boundary_left)
+	if (flags->bw_flags & MINUS)
 		unsigned_bound(flags, nb, base, sizeb);
 	else
 	{
 		sizetoprint = my_utoa_len(nb, sizeb, flags);
 		maxprint = sizetoprint;
-		if (flags->precision_bool && sizetoprint < flags->precision_val)
+		if (flags->bw_flags & PRECIS && sizetoprint < flags->precision_val)
 			maxprint = flags->precision_val;
 		space_toprint = 0;
-		if (!flags->precision_bool && flags->zero_padded)
+		if (!(flags->bw_flags & PRECIS) && flags->bw_flags & ZERO)
 			zero_toprint = flags->field_width_val - sizetoprint;
 		else
 		{

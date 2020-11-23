@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 14:08:10 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/23 15:02:24 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	field_width(t_flags *flags, va_list *param, const char *str)
 		flags->field_width_val = va_arg(*param, int);
 		if (flags->field_width_val < 0)
 		{
-			flags->boundary_left = 1;
+			flags->bw_flags |= MINUS;
 			flags->field_width_val *= -1;
 		}
 		return (1);
@@ -57,7 +57,6 @@ int	precision(t_flags *flags, va_list *param, const char *str)
 	int	i;
 
 	i = 1;
-	flags->precision_bool = 1;
 	if (str[i] == '*')
 	{
 		i++;
@@ -65,6 +64,9 @@ int	precision(t_flags *flags, va_list *param, const char *str)
 	}
 	else
 		flags->precision_val = my_atoi(str, &i);
-	flags->precision_bool = flags->precision_val < 0 ? 0 : flags->precision_bool;
+	if (flags->precision_val >= 0)
+		flags->bw_flags |= PRECIS;
+	else
+		flags->precision_val = 0;
 	return (i);
 }
