@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 06:22:19 by romain            #+#    #+#             */
-/*   Updated: 2020/11/22 22:15:36 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/23 14:06:09 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		print_buffer(int fd)
 		buf.i = 0;
 }
 
-void		write_str_buffer(char *str, int size)
+void		write_str_buffer(const char *str, int size)
 {
 	int	i2;
 

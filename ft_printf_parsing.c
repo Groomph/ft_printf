@@ -6,13 +6,13 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 03:52:28 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 14:07:28 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	second_flags(char *str, int i, t_flags *flags, va_list *param)
+static int	second_flags(const char *str, int i, t_flags *flags, va_list *param)
 {
 	if (str[i] == '*' || (str[i] <= '9' && str[i] >= '1'))
 		i += field_width(flags, param, &str[i]);
@@ -25,7 +25,7 @@ static int	second_flags(char *str, int i, t_flags *flags, va_list *param)
 	return (second_flags(str, i, flags, param));
 }
 
-static int	first_flags(char *str, int i, t_flags *flags)
+static int	first_flags(const char *str, int i, t_flags *flags)
 {
 	if (str[i] == '-')
 		flags->boundary_left = 1;
@@ -46,7 +46,7 @@ static void	init_flags_struct(t_flags *flags)
 	flags->convert_char = 0;
 }
 
-int			ft_printf_parsing(char *str, va_list *param)
+int			ft_printf_parsing(const char *str, va_list *param)
 {
 	int		i;
 	va_list		param2;
@@ -56,7 +56,8 @@ int			ft_printf_parsing(char *str, va_list *param)
 	va_copy(param2, *param);
 	i = first_flags(str, 1, &flags);
 	i += second_flags(&str[i], 0, &flags, &param2);
-	flags.convert_char = str[i++];
+	if (str[i])
+			flags.convert_char = str[i++];
 	if (!lobby_write_buffer(&param2, &flags))
 		write_str_buffer(str, i);
 	else

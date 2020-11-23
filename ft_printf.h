@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 04:25:49 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 14:08:44 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct	s_converter
 }				t_converter;
 
 int				ft_printf(const char *str, ...);
-int				ft_printf_parsing(char *str, va_list *param);
+int				ft_printf_parsing(const char *str, va_list *param);
 int				lobby_write_buffer(va_list *param,
 								t_flags *flags);
 
@@ -51,7 +51,7 @@ int				lobby_write_buffer(va_list *param,
 */
 
 void				print_buffer(int fd);
-void				write_str_buffer(char *str, int size);
+void				write_str_buffer(const char *str, int size);
 void				write_char_buffer(char c, int nb);
 int				send_totalsize(void);
 void				init_buffer(void);
@@ -60,8 +60,8 @@ void				init_buffer(void);
 ****************   parsing_functions.c   ****************
 */
 
-int				field_width(t_flags *flags, va_list *param, char *str);
-int				precision(t_flags *flags, va_list *param, char *str);
+int				field_width(t_flags *flags, va_list *param, const char *str);
+int				precision(t_flags *flags, va_list *param, const char *str);
 
 /*
 ****************   print_iduxXcs%p.c   ****************

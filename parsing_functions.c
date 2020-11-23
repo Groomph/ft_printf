@@ -6,13 +6,13 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 03:45:46 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 14:08:10 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	my_atoi(char *str, int *i)
+static int	my_atoi(const char *str, int *i)
 {
 	unsigned int	nb;
 	int				neg;
@@ -33,7 +33,7 @@ static int	my_atoi(char *str, int *i)
 	return (nb * neg);
 }
 
-int	field_width(t_flags *flags, va_list *param, char *str)
+int	field_width(t_flags *flags, va_list *param, const char *str)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ int	field_width(t_flags *flags, va_list *param, char *str)
 	return (i);
 }
 
-int	precision(t_flags *flags, va_list *param, char *str)
+int	precision(t_flags *flags, va_list *param, const char *str)
 {
 	int	i;
 
