@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/24 00:08:15 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/24 00:44:45 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	write_lobby_pos(double doub, t_flags *flags)
 {
-	long long int	intpart;
-	long long int	multi;
+	long int	intpart;
+	long int	multi;
 	int			i;
 	int			limit;
 
@@ -32,11 +32,12 @@ void	write_lobby_pos(double doub, t_flags *flags)
 	if (limit == 0)
 		return ;
 	write_char_buffer('.', 1);
-	doub += intpart;
+	doub -= intpart;
 	while (++i < limit)
 		multi *= 10;
 	doub *= multi;
-	doub += 0.5;
+	if (limit < 16)
+		doub += 0.5;
 	intpart = doub;
 	write_base_recurs(intpart, "0123456789", 10, limit);
 }
@@ -44,8 +45,8 @@ void	write_lobby_pos(double doub, t_flags *flags)
 
 void	write_lobby_neg(double doub, t_flags *flags)
 {
-	long long int	intpart;
-	long long int	multi;
+	long int	intpart;
+	long int	multi;
 	int			i;
 	int			limit;
 
@@ -55,20 +56,19 @@ void	write_lobby_neg(double doub, t_flags *flags)
 	if (flags->bw_flags & PRECIS)
 		limit = flags->precision_val;
 	if (limit == 0)
-		doub -= 0.5;
+		doub += 0.5;
 	intpart = doub;
-	intpart *= -1;
 	write_base_recurs(intpart, "0123456789", 10, 50);
 	if (limit == 0)
 		return ;
 	write_char_buffer('.', 1);
-	doub += intpart;
+	doub -= intpart;
 	while (++i < limit)
 		multi *= 10;
 	doub *= multi;
-	doub -= 0.5;
+	if (limit < 16)
+		doub += 0.5;
 	intpart = doub;
-	intpart *= -1;
 	write_base_recurs(intpart, "0123456789", 10, limit);
 }
 /*
@@ -180,17 +180,18 @@ void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
 void	write_f(va_list *param, t_flags *flags)
 {
 	double	doub;
-	long int	tmp;
+	int	neg;
 	int	sizetoprint;
 
 	doub = va_arg(*param, double);
-	tmp = doub < 0 ? -doub : doub;
-	sizetoprint = my_utoa_len(tmp, 10, NULL);
+	neg = doub < 0 ? 1 : 0;
+	doub = doub < 0 ? -doub : doub;
+	sizetoprint = my_utoa_len(doub, 10, NULL);
 	if (flags->bw_flags & PRECIS)
 	       	sizetoprint += flags->precision_val == 0 ? 0 : 1 + flags->precision_val;
 	else
 		sizetoprint += 7;
-	if (doub < 0)
+	if (neg)
 		write_double_neg(doub, flags, sizetoprint + 1);
 	else
 		write_double_pos(doub, flags, sizetoprint);
