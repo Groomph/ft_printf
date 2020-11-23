@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 20:47:18 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 21:09:53 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int main(void)
 */
 	int	i = 0;
 	int	i2 = 0;
-	double test = 3.4;
-	i = printf("printf:    %-4.0f\n", test);
-	i2 = ft_printf("ft_printf: %-4.0f\n", test);
+	double test = 322.45;
+	i = printf("printf:    %-4.*f\n", -18, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", -18, test);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
 
