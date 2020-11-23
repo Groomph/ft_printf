@@ -1,12 +1,14 @@
-WRITE_PATH	= converter_function/
+WRITE_PATH	= converter_functions/
 
 SRCS	= ft_printf.c \
 	  ft_print_buffer.c \
 	  ft_printf_parsing.c \
+	  parsing_functions.c \
 	  ${WRITE_PATH}lobby_write.c \
-	  ${WRITE_PATH}write_csPCT.c \
+	  ${WRITE_PATH}write_cspct.c \
 	  ${WRITE_PATH}write_p.c \
-	  ${WRITE_PATH}write_iduxX.c \
+	  ${WRITE_PATH}write_di.c \
+	  ${WRITE_PATH}write_ouxx.c \
 	  ${WRITE_PATH}write_utils.c
 
 OBJS	= ${SRCS:.c=.o}

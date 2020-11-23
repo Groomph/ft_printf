@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/22 22:17:01 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/23 03:46:33 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef struct	s_converter
 
 int				ft_printf(const char *str, ...);
 int				ft_printf_parsing(char *str, va_list *param);
-void				lobby_write_buffer(va_list *param, t_flags *flags);
+int				lobby_write_buffer(va_list *param,
+								t_flags *flags);
 
 /*
 ****************   buffer   ****************
@@ -56,24 +57,35 @@ int				send_totalsize(void);
 void				init_buffer(void);
 
 /*
+****************   parsing_functions.c   ****************
+*/
+
+int				field_width(t_flags *flags, va_list *param, char *str);
+int				precision(t_flags *flags, va_list *param, char *str);
+
+/*
 ****************   print_iduxXcs%p.c   ****************
 */
 
 void				write_di(va_list *param, t_flags *flags);
 void				write_u(va_list *param, t_flags *flags);
 void				write_x(va_list *param, t_flags *flags);
-void				write_X(va_list *param, t_flags *flags);
+void				write_xx(va_list *param, t_flags *flags);
 void				write_c(va_list *param, t_flags *flags);
 void				write_s(va_list *param, t_flags *flags);
-void				write_PCT(t_flags *flags);
+void				write_pct(t_flags *flags);
 void				write_p(va_list *param, t_flags *flags);
-
+void				write_o(va_list *param, t_flags *flags);
+void				unsigned_bound(t_flags *flags,
+				       unsigned long nb, char *base, int sizeb);
 /*
-****************   buffer_utils.c   ****************
+****************   write_utils.c   ****************
 */
 
-void				write_base_recurs(unsigned long pt, char *base, int sizeb, int sizetopr);
+void				write_base_recurs(unsigned long pt, char *base,
+						int sizeb, int sizetopr);
 int				my_my_strlen(char *str);
-int				my_utoa_len(unsigned long nb, int sizebase, t_flags *flags);
+int				my_utoa_len(unsigned long nb, int sizebase,
+								t_flags *flags);
 
 #endif
