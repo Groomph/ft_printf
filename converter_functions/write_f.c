@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 21:34:22 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 21:39:53 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	write_lobby_double(double doub, t_flags *flags)
 	limit = 6;
 	if (flags->bw_flags & PRECIS)
 		limit = flags->precision_val;
+	if (limit == 0)
+		doub += 0.5;
 	intpart = doub;
 	write_base_recurs(intpart, "0123456789", 10, 50);
 	if (limit > 0)
