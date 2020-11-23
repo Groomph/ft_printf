@@ -6,7 +6,7 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/11/23 03:55:05 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 04:20:45 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ static void	unsigned_bound(t_flags *flags, unsigned long nb, char *base,
 	write_char_buffer(' ', space_toprint);
 }
 
-static void	unsigned_noboun(t_flags *flags, unsigned long nb,
-							char *base, int sizeb)
+void	unsigned_noboun(t_flags *flags, unsigned long nb, char *base, int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;

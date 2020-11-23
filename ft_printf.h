@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 03:46:33 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 04:25:49 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void				write_s(va_list *param, t_flags *flags);
 void				write_pct(t_flags *flags);
 void				write_p(va_list *param, t_flags *flags);
 void				write_o(va_list *param, t_flags *flags);
-void				unsigned_bound(t_flags *flags,
+void				unsigned_noboun(t_flags *flags,
 				       unsigned long nb, char *base, int sizeb);
 /*
 ****************   write_utils.c   ****************
