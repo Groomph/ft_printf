@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 14:53:07 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 19:06:26 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,11 @@ typedef	struct	s_buffer
 
 typedef struct	s_flags
 {
-	int			bw_flags;
+	unsigned int		bw_flags;
 	int			precision_val;
 	int			field_width_val;
 	char		convert_char;
 }				t_flags;
-//	int			boundary_left;
-//	int			zero_padded;
-//	int			precision_bool;
 
 typedef struct	s_converter
 {
@@ -89,16 +86,18 @@ void				write_s(va_list *param, t_flags *flags);
 void				write_pct(t_flags *flags);
 void				write_p(va_list *param, t_flags *flags);
 void				write_o(va_list *param, t_flags *flags);
+void				write_n(va_list *param, t_flags *flags);
+void				write_f(va_list *param, t_flags *flags);
 void				unsigned_noboun(t_flags *flags,
 				       unsigned long nb, char *base, int sizeb);
 /*
 ****************   write_utils.c   ****************
 */
 
-void				write_base_recurs(unsigned long pt, char *base,
+void				write_base_recurs(unsigned long long pt, char *base,
 						int sizeb, int sizetopr);
 int				my_my_strlen(char *str);
-int				my_utoa_len(unsigned long nb, int sizebase,
+int				my_utoa_len(unsigned long long nb, int sizebase,
 								t_flags *flags);
 
 #endif

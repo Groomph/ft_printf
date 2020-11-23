@@ -6,13 +6,13 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:17:09 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 15:25:03 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 19:06:10 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-void	write_base_recurs(unsigned long pt, char *base, int sizeb, int sizetopr)
+void	write_base_recurs(unsigned long long pt, char *base, int sizeb, int sizetopr)
 {
 	if (pt / sizeb)
 		write_base_recurs(pt / sizeb, base, sizeb, sizetopr - 1);
@@ -30,7 +30,7 @@ int		my_my_strlen(char *str)
 	return (i);
 }
 
-int		my_utoa_len(unsigned long nb, int sizebase, t_flags *flags)
+int		my_utoa_len(unsigned long long nb, int sizebase, t_flags *flags)
 {
 	int	i;
 
