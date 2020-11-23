@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 22:16:14 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 22:18:35 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	write_lobby_double(double doub, t_flags *flags)
 		limit = flags->precision_val;
 	if (limit == 0)
 		doub += 0.5;
-	intpart = doub;
+	intpart = (long int)doub;
 	write_base_recurs(intpart, "0123456789", 10, 50);
 	if (limit > 0)
 		write_char_buffer('.', 1);
@@ -33,9 +33,9 @@ void	write_lobby_double(double doub, t_flags *flags)
 		doub -= intpart;
 		doub *= 10;
 		if (i < limit - 1)
-			intpart = doub;
+			intpart = (long int)doub;
 		else
-			intpart = doub + 0.5;
+			intpart = (long int)(doub + 0.5);
 		write_char_buffer("0123456789"[intpart], 1);
 	}
 }
