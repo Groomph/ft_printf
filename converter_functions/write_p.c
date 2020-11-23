@@ -6,13 +6,13 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/22 23:13:34 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 03:56:48 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-void		write_addr_null(t_flags *flags)
+static void		write_addr_null(t_flags *flags)
 {
 	int	maxprint;
 	int	space_toprint;
@@ -31,7 +31,8 @@ void		write_addr_null(t_flags *flags)
 		write_char_buffer(' ', space_toprint);
 }
 
-void		write_addr_boundary(t_flags *flags, unsigned long pt, int size)
+static void		write_addr_boundary(t_flags *flags, unsigned long pt,
+								int size)
 {
 	int	maxprint;
 	int	space_toprint;
@@ -48,7 +49,8 @@ void		write_addr_boundary(t_flags *flags, unsigned long pt, int size)
 	write_char_buffer(' ', space_toprint);
 }
 
-void		write_addr_zeropadded(t_flags *flags, unsigned long pt, int size)
+static void		write_addr_zeropadded(t_flags *flags, unsigned long pt,
+								int size)
 {
 	int	zero_toprint;
 
@@ -58,7 +60,7 @@ void		write_addr_zeropadded(t_flags *flags, unsigned long pt, int size)
 	write_base_recurs(pt, "0123456789abcdef", 16, 50);
 }
 
-void		write_addr(t_flags *flags, unsigned long pt, int size)
+static void		write_addr(t_flags *flags, unsigned long pt, int size)
 {
 	int maxprint;
 	int space_toprint;

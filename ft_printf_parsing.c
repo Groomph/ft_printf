@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 03:47:07 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 03:52:28 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	first_flags(char *str, int i, t_flags *flags)
 	return (first_flags(str, i + 1, flags));
 }
 
-void		init_flags_struct(t_flags *flags)
+static void	init_flags_struct(t_flags *flags)
 {
 	flags->boundary_left = 0;
 	flags->zero_padded = 0;

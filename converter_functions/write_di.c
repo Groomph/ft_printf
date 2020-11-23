@@ -6,13 +6,14 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/11/23 00:21:50 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 03:55:05 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-void	signed_nobound(t_flags *flags, unsigned long nb, char *base, int sizeb)
+static void	signed_nobound(t_flags *flags, unsigned long nb, char *base,
+								int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;
@@ -39,7 +40,8 @@ void	signed_nobound(t_flags *flags, unsigned long nb, char *base, int sizeb)
 	write_base_recurs(nb, base, sizeb, sizetoprint);
 }
 
-void	signed_bound(t_flags *flags, unsigned long nb, char *base, int sizeb)
+static void	signed_bound(t_flags *flags, unsigned long nb, char *base,
+								int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;
@@ -63,7 +65,8 @@ void	signed_bound(t_flags *flags, unsigned long nb, char *base, int sizeb)
 	}
 }
 
-void	unsigned_bound(t_flags *flags, unsigned long nb, char *base, int sizeb)
+static void	unsigned_bound(t_flags *flags, unsigned long nb, char *base,
+								int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;
@@ -81,7 +84,8 @@ void	unsigned_bound(t_flags *flags, unsigned long nb, char *base, int sizeb)
 	write_char_buffer(' ', space_toprint);
 }
 
-void	unsigned_noboun(t_flags *flags, unsigned long nb, char *base, int sizeb)
+static void	unsigned_noboun(t_flags *flags, unsigned long nb,
+							char *base, int sizeb)
 {
 	int	maxprint;
 	int	zero_toprint;
