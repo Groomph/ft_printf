@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 21:39:53 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/23 22:06:42 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	write_lobby_double(double doub, t_flags *flags)
 {
-	unsigned long int	intpart;
+	long int	intpart;
 	int			i;
 	int			limit;
 
@@ -93,7 +93,7 @@ void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
 void	write_f(va_list *param, t_flags *flags)
 {
 	double	doub;
-	unsigned long int	tmp;
+	long int	tmp;
 	int	sizetoprint;
 
 	doub = va_arg(*param, double);
