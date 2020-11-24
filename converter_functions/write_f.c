@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/24 23:14:20 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/25 00:38:42 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,32 +226,12 @@ void			pf_putdouble(t_printf *p)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int	str_rounder(char *str, int i)
 {
 	while (i >= 0 && (str[i] == '9' || str[i] == '.'))
 	{
 		if (str[i] == '9')
-			str[i--] == '0';
+			str[i--] = '0';
 	}
 	if (i < 0)
 		return (1);
@@ -266,13 +246,12 @@ void write_str(long long int intpart, char *pt, int i)
 	pt[i] = intpart % 10 + '0';
 }
 
-void	write_lobby_double(double doub, t_flags *flags)
+void	write_lobby_double(double doub, t_flags *flags, int size)
 {
 	long long int	intpart;
 	int		limit;
 	int		i;
 	char		temp[100];
-	int		size;
 
 	limit = 6;
 	if (flags->bw_flags & PRECIS)
@@ -316,7 +295,7 @@ void	write_double_pos(double doub, t_flags *flags, int sizetoprint)
 {
 	if (flags->bw_flags & MINUS)
 	{
-		write_lobby_double(doub, flags);
+		write_lobby_double(doub, flags, sizetoprint);
 		write_char_buffer(' ', flags->field_width_val - sizetoprint);
 	}
 	else
@@ -325,7 +304,7 @@ void	write_double_pos(double doub, t_flags *flags, int sizetoprint)
 			write_char_buffer('0', flags->field_width_val - sizetoprint);
 		else
 			write_char_buffer(' ', flags->field_width_val - sizetoprint);
-		write_lobby_double(doub, flags);
+		write_lobby_double(doub, flags, sizetoprint);
 	}
 }
 
@@ -344,7 +323,7 @@ void	write_double_neg_nobound(double doub, t_flags *flags, int sizetoprint)
 		write_char_buffer(' ', space_toprint);
 		write_char_buffer('-', 1);
 	}
-	write_lobby_double(doub, flags);
+	write_lobby_double(doub, flags, sizetoprint);
 }
 
 void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
@@ -357,7 +336,7 @@ void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
 	{
 		space_toprint = flags->field_width_val - sizetoprint;
 		write_char_buffer('-', 1);
-		write_lobby_double(doub, flags);
+		write_lobby_double(doub, flags, sizetoprint);
 		write_char_buffer(' ', space_toprint);
 	}
 }
@@ -365,13 +344,12 @@ void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
 void	write_f(va_list *param, t_flags *flags)
 {
 	double	doub;
-	int	neg;
 	int	sizetoprint;
 
 	doub = va_arg(*param, double);
 	//neg = doub < 0 ? 1 : 0;
 	//doub = doub < 0 ? -doub : doub;
-	sizetoprint = my_utoa_len(doub, 10, NULL);
+	sizetoprint = my_utoa_len(doub < 0.0 ? -doub : doub, 10, NULL);
 	if (flags->bw_flags & PRECIS)
 	       	sizetoprint += flags->precision_val == 0 ? 0 : 1 + flags->precision_val;
 	else
