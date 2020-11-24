@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/24 00:48:05 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/24 23:13:49 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,46 @@ int main(void)
 */
 	int	i = 0;
 	int	i2 = 0;
-	//double test = -2.8137310073157007;
-	//double test = -2.81373100731056789;
-	double test = 2.2509848058525606;
-	i = printf("printf:    %-4.*f\n", 16, test);
+	double test = -2.2150;
+	i = printf("\n\nprintf:    %-4.*f\n", 4, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 4, test);
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+
+	test = -2.8137310073157007;
+	i = printf("\n\nprintf:    %-4.*f\n", 16, test);
 	i2 = ft_printf("ft_printf: %-4.*f\n", 16, test);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
+
+	test = -2.8137310073157007000;
+	i = printf("\n\nprintf:    %-4.*f\n", 17, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 17, test);
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+
+	test = -2.813731007310567899999999999;
+	i = printf("\n\nprintf:    %-4.*f\n", 20, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 20, test);
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+
+	test = -2.2509848058525606000056;
+	i = printf("\n\nprintf:    %-4.*f\n", 40, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 40, test);
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+
+	test = -2.00050000500006000050000801;
+	i = printf("\n\nprintf:    %-4.*f\n", 4, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 4, test);
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+
+	test = -0;
+	i = printf("\n\nprintf:    %-4.*f\n", 4, -0.0);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 4, -0.0);
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+
+	test = 0;
+	i = printf("\n\nprintf:    %-4.*f\n", 4, 0.0);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 4, 0.0);
+	printf("printf: %d    ft_printf: %d\n", i, i2);
+
 
 
 
