@@ -11,6 +11,7 @@ SRCS	= ft_printf.c \
 	  ${WRITE_PATH}write_ouxx.c \
 	  ${WRITE_PATH}write_n.c \
 	  ${WRITE_PATH}write_f.c \
+	  ${WRITE_PATH}write_e.c \
 	  ${WRITE_PATH}write_utils.c
 
 OBJS	= ${SRCS:.c=.o}

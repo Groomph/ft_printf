@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/25 23:42:15 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/25 23:55:33 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	shift_add_digit_str(char *str, char c, int i)
 	}
 	else
 		tmp = c;
-	shift_add_digit_str(str, tmp, i + 1);
+	return (shift_add_digit_str(str, tmp, i + 1));
 }
 
 
