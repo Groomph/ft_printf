@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/25 00:48:20 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/25 02:02:59 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,8 +276,13 @@ void	write_lobby_double(double doub, t_flags *flags, int size)
 		limit = flags->precision_val;
 	if (!limit)
 		doub += 0.5;
-	intpart = doub < 0.0 ? -doub : doub;
+	intpart = doub;
+	size = my_utoa_len(intpart, 10, NULL);
 	write_str(intpart, temp, size - 1);
+//	printf("\n%i\n", size);
+//	write(1, "\n", 1);
+//	write(1, temp, size);
+//	write(1, "\n", 1);
 	if (!limit)
 	{
 		write_str_buffer(temp, size);
@@ -340,7 +345,7 @@ void	write_double_neg_nobound(double doub, t_flags *flags, int sizetoprint)
 		write_char_buffer(' ', space_toprint);
 		write_char_buffer('-', 1);
 	}
-	write_lobby_double(doub, flags, sizetoprint);
+	write_lobby_double(doub, flags, sizetoprint - 1);
 }
 
 void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
@@ -353,7 +358,7 @@ void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
 	{
 		space_toprint = flags->field_width_val - sizetoprint;
 		write_char_buffer('-', 1);
-		write_lobby_double(doub, flags, sizetoprint);
+		write_lobby_double(doub, flags, sizetoprint - 1);
 		write_char_buffer(' ', space_toprint);
 	}
 }
@@ -362,11 +367,13 @@ void	write_f(va_list *param, t_flags *flags)
 {
 	double	doub;
 	int	sizetoprint;
-
+	long long int	tmp;
 	doub = va_arg(*param, double);
 	//neg = doub < 0 ? 1 : 0;
 	//doub = doub < 0 ? -doub : doub;
-	sizetoprint = my_utoa_len(doub < 0.0 ? -doub : doub, 10, NULL);
+	tmp = doub < 0.0 || -0.0 ? (long long int)-doub : (long long int)doub;
+	sizetoprint = my_utoa_len(tmp, 10, NULL);
+//	printf("\n%d", sizetoprint);
 	if (flags->bw_flags & PRECIS)
 	       	sizetoprint += flags->precision_val == 0 ? 0 : 1 + flags->precision_val;
 	else
