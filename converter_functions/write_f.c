@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/25 04:33:08 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/25 05:11:16 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ void write_str(long long int intpart, char *pt, int i)
 	pt[i] = intpart % 10 + '0';
 }
 
-void	write_lobby_double(double doub, t_flags *flags)
+void	write_lobby_double(double doub, t_flags *flags, int isneg)
 {
 	long long int	intpart;
 	int		limit;
@@ -276,9 +276,15 @@ void	write_lobby_double(double doub, t_flags *flags)
 	if (flags->bw_flags & PRECIS)
 		limit = flags->precision_val;
 	intpart = doub;
-	//printf("test: %f\n", doub - intpart);
-	if (!limit && doub - intpart > 0.5)
+	if (!limit && doub - intpart > 0.5 && !intpart)
 	{
+	//printf("test: %f\n", doub - intpart);
+		doub += 0.5;
+		intpart = doub;
+	}
+	else if (!limit && doub - intpart >= 0.5 && intpart)
+	{
+	//printf("test: %f\n", doub - intpart);
 		doub += 0.5;
 		intpart = doub;
 	}
@@ -304,7 +310,7 @@ void	write_lobby_double(double doub, t_flags *flags)
 		doub -= intpart;
 		i++;
 	}
-	if (doub > 0.5)
+	if (doub >= 0.5)
 	{
 		if (str_rounder(temp, i + size - 1))
 			write_char_buffer('1', 1);
@@ -322,7 +328,7 @@ void	write_double_pos(double doub, t_flags *flags, int sizetoprint)
 {
 	if (flags->bw_flags & MINUS)
 	{
-		write_lobby_double(doub, flags);
+		write_lobby_double(doub, flags, 0);
 		write_char_buffer(' ', flags->field_width_val - sizetoprint);
 	}
 	else
@@ -331,7 +337,7 @@ void	write_double_pos(double doub, t_flags *flags, int sizetoprint)
 			write_char_buffer('0', flags->field_width_val - sizetoprint);
 		else
 			write_char_buffer(' ', flags->field_width_val - sizetoprint);
-		write_lobby_double(doub, flags);
+		write_lobby_double(doub, flags, 0);
 	}
 }
 
@@ -350,7 +356,7 @@ void	write_double_neg_nobound(double doub, t_flags *flags, int sizetoprint)
 		write_char_buffer(' ', space_toprint);
 		write_char_buffer('-', 1);
 	}
-	write_lobby_double(doub, flags);
+	write_lobby_double(doub, flags, 1);
 }
 
 void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
@@ -363,7 +369,7 @@ void	write_double_neg(double doub, t_flags *flags, int sizetoprint)
 	{
 		space_toprint = flags->field_width_val - sizetoprint;
 		write_char_buffer('-', 1);
-		write_lobby_double(doub, flags);
+		write_lobby_double(doub, flags, 1);
 		write_char_buffer(' ', space_toprint);
 	}
 }
