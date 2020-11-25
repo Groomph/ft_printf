@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/25 03:32:50 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/25 04:27:19 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,36 @@ int main(void)
 		
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 */
-	int	i = -0.0;
-	int	i2 = -0.0;
-	double test = 0.0;
+	int	i = -2.40;
+	int	i2 = -2.40;
+	double test = -2.56789;
 	    i = printf("printf:    %.*f\n", 3, test);
 	i2 = ft_printf("ft_printf: %.*f\n", 3, test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
-	test = -2.500;
+	test = -0.9999;
 	    i = printf("printf:    %.0f\n", test);
 	i2 = ft_printf("ft_printf: %.0f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
-	test = 303.37647788;
-	    i = printf("printf:    %-4.1f\n", test);
-	i2 = ft_printf("ft_printf: %-4.1f\n", test);
+	test = -0.0;
+	    i = printf("printf:    %4.4f\n", test);
+	i2 = ft_printf("ft_printf: %4.4f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 0.0;
+	    i = printf("printf:    %4.4f\n", test);
+	i2 = ft_printf("ft_printf: %4.4f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
-	test = 303.37647788;
-	    i = printf("printf:    %-4.2f\n", test);
-	i2 = ft_printf("ft_printf: %-4.2f\n", test);
+	test = -0.0001;
+	    i = printf("printf:    %-4.5f\n", test);
+	i2 = ft_printf("ft_printf: %-4.5f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+	test = 0.0001;
+	    i = printf("printf:    %-4.5f\n", test);
+	i2 = ft_printf("ft_printf: %-4.5f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 303.37647788;

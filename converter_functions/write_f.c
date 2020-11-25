@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/25 03:20:45 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/25 04:33:08 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,8 +276,12 @@ void	write_lobby_double(double doub, t_flags *flags)
 	if (flags->bw_flags & PRECIS)
 		limit = flags->precision_val;
 	intpart = doub;
+	//printf("test: %f\n", doub - intpart);
 	if (!limit && doub - intpart > 0.5)
+	{
 		doub += 0.5;
+		intpart = doub;
+	}
 	size = my_utoa_len(intpart, 10, NULL);
 	write_str(intpart, temp, size - 1);
 //	printf("\n%i\n", size);
@@ -371,21 +375,20 @@ int        ft_signbit_f(long double x)
 
 void	write_f(va_list *param, t_flags *flags)
 {
-	printf("teeeeesssst %X", (unsigned int)-0.0);
+	//printf("teeeeesssst %X", (unsigned int)-0.0);
 	double	doub;
 	int	sizetoprint;
-	long long int	tmp;
+	
 	doub = va_arg(*param, double);
 	//neg = doub < 0 ? 1 : 0;
 	//doub = doub < 0 ? -doub : doub;
-	tmp = doub < 0.0 || -0.0 ? (long long int)-doub : (long long int)doub;
-	sizetoprint = my_utoa_len(tmp, 10, NULL);
-//	printf("\n%d", sizetoprint);
+	sizetoprint = my_utoa_len(doub, 10, NULL);
+//	printf("\ntest: %f\n", (-0.0 + 1.2));
 	if (flags->bw_flags & PRECIS)
 	       	sizetoprint += flags->precision_val == 0 ? 0 : 1 + flags->precision_val;
 	else
 		sizetoprint += 7;
-	if (ft_signbit_f(doub) && doub < 0)
+	if ((doub <= 0.0/* || doub == 0.0*/) && ft_signbit_f(doub))
 		write_double_neg(-doub, flags, sizetoprint + 1);
 	else	
 		write_double_pos(doub, flags, sizetoprint);
