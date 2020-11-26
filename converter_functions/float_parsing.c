@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 01:56:43 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 02:24:45 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,41 +48,20 @@ static int	digit_str_rounder(char *str, int i)
 	return (0);
 }
 
-int	write_double_regular(long double doub, t_flags *flags, char *temp, int *arrondi)
+static int	write_double_decipart(long double doub, int *limit, char *temp, int *arrondi)
 {
-	long long int	intpart;
-	int		limit;
-	int		i;
-	int		size;
+	int	i;
+	int	size;
+	int	intpart;
 
-	limit = 6;
-	if (flags->bw_flags & PRECIS)
-		limit = flags->precision_val;
-	intpart = doub;
-	if (!limit && doub - intpart > 0.5 && intpart % 2 == 0)
-	{
-		doub += 0.5;
-		intpart = doub;
-	}
-	else if (!limit && doub - intpart >= 0.5 && intpart % 2 == 1)
-	{
-		doub += 0.5;
-		intpart = doub;
-	}
-	size = my_utoa_len(intpart, 10, NULL);
-	write_digit_str(intpart, temp, size - 1);
-	if (!limit)
-		return (size);
-	temp[size++] = '.';
-	doub -= intpart;
 	i = 0;
-	while (i < limit)
+	size = limit[0];
+	while (i < limit[1])
 	{
 		doub *= 10;
 		intpart = doub;
-		temp[size + i] = intpart + '0';
+		temp[size + i++] = intpart + '0';
 		doub -= intpart;
-		i++;
 	}
 	if (doub >= 0.5)
 	{
@@ -95,22 +74,39 @@ int	write_double_regular(long double doub, t_flags *flags, char *temp, int *arro
 	return (size + i);
 }
 
+int	write_double_regular(long double doub, t_flags *flags, char *temp, int *arrondi)
+{
+	long long int	intpart;
+	int		size_limit[2];
+
+	size_limit[1] = 6;
+	if (flags->bw_flags & PRECIS)
+		size_limit[1] = flags->precision_val;
+	intpart = doub;
+	if (!size_limit[1] && ((doub - intpart > 0.5 && intpart % 2 == 0) ||
+			       (doub - intpart >= 0.5 && intpart % 2 == 1)))
+	{
+		doub += 0.5;
+		intpart = doub;
+	}
+	size_limit[0] = my_utoa_len(intpart, 10, NULL);
+	write_digit_str(intpart, temp, size_limit[0] - 1);
+	if (!size_limit[1])
+		return (size_limit[0]);
+	temp[size_limit[0]++] = '.';
+	return (write_double_decipart(doub - intpart, size_limit, temp, arrondi));
+}
+
 int	write_double_expo(long double doub, t_flags *flags, char *temp)
 {
 	int	count;
 	int	size;
 
 	count = 0;
-	while (doub && doub < 1)    //count into condition
-	{	       
+	while (doub && doub < 1 && --count)
 		doub *= 10;
-		count--;
-	}
-	while (doub && doub >= 10)
-	{       
+	while (doub && doub >= 10 && ++count)
 		doub /= 10;
-		count++;
-	}
 	size = write_double_regular(doub, flags, temp, &count);
 	temp[size++] = 'e';
 	if (count < 0)
