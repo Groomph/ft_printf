@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 22:20:24 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 22:22:00 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void		write_g(va_list *param, t_flags *flags)
         int     isneg;
         char    temp[100];
 	int	exponent;
-	int	limit;
 	int	intpartsize;
 
 	exponent = 0;
