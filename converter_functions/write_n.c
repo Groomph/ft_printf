@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 22:13:10 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 22:20:24 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void		write_g(va_list *param, t_flags *flags)
                 doub *= -1;
         }
         sizetoprint = write_double_expo(doub, flags, temp, &exponent);
+	if (!(flags->bw_flags & PRECIS))
+	{	
+		flags->bw_flags |= PRECIS;
+		flags->precision_val = 6;
+	}
 	if (exponent >= flags->precision_val || exponent < -4)
 	{
 		flags->precision_val--;
@@ -69,13 +74,7 @@ void		write_g(va_list *param, t_flags *flags)
 	{
 		
 		intpartsize = my_utoa_len(doub, 10, NULL);
-		if (!(flags->bw_flags & PRECIS))
-		{	
-			flags->bw_flags |= PRECIS;
-			flags->precision_val = 6;
-
-		}
-		else if (flags->precision_val == 0)
+		if (flags->precision_val == 0)
 			flags->precision_val = 1;
 		if (intpartsize >= flags->precision_val)
 		{
