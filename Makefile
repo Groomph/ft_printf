@@ -5,14 +5,15 @@ SRCS	= ft_printf.c \
 	  ft_printf_parsing.c \
 	  parsing_functions.c \
 	  ${WRITE_PATH}lobby_write.c \
+	  ${WRITE_PATH}write_utils.c \
 	  ${WRITE_PATH}write_cspct.c \
 	  ${WRITE_PATH}write_p.c \
 	  ${WRITE_PATH}write_di.c \
 	  ${WRITE_PATH}write_ouxx.c \
 	  ${WRITE_PATH}write_n.c \
-	  ${WRITE_PATH}write_f.c \
+	  ${WRITE_PATH}float_parsing.c \
 	  ${WRITE_PATH}write_e.c \
-	  ${WRITE_PATH}write_utils.c
+	  ${WRITE_PATH}write_f.c
 
 OBJS	= ${SRCS:.c=.o}
 

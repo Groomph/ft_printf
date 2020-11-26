@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/25 20:39:05 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 01:39:42 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,25 @@ void				unsigned_noboun(t_flags *flags,
 
 void				write_base_recurs(unsigned long long pt, char *base,
 						int sizeb, int sizetopr);
+void    			write_digit_str(unsigned long long int intpart,
+								char *pt, int i);
+
 int				my_my_strlen(char *str);
 int				my_utoa_len(unsigned long long nb, int sizebase,
 								t_flags *flags);
+int				write_double_expo(long double doub, t_flags *flags,
+									char *temp);
+int				write_double_regular(long double doub,
+						t_flags *flags, char *temp, int *arrondi);
+
+int				ft_is_signed(long double lf);
+
+
+
+
+
+
+int digit_str_rounder(char *str, int i);
+int     shift_add_digit_str(char *str, char c, int i);
 
 #endif
