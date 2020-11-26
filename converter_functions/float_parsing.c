@@ -6,13 +6,13 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 02:24:45 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 20:22:04 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-static int	shift_add_digit_str(char *str, char c, int i)
+static int	shift_add_digit_str(char *str, char c, int i, int movepoint)
 {
 	char	tmp;
 
@@ -24,14 +24,14 @@ static int	shift_add_digit_str(char *str, char c, int i)
 		str[i + 1] = '\0';
 		return (i + 1);
 	}
-	if (str[i] != '.' && str[i] != '-' && str[i] != '+')
+	if ((movepoint || str[i] != '.') && str[i] != '-' && str[i] != '+')
 	{
 		tmp = str[i];
 		str[i] = c;
 	}
 	else
 		tmp = c;
-	return (shift_add_digit_str(str, tmp, i + 1));
+	return (shift_add_digit_str(str, tmp, i + 1, movepoint));
 }
 
 static int	digit_str_rounder(char *str, int i)
@@ -48,7 +48,7 @@ static int	digit_str_rounder(char *str, int i)
 	return (0);
 }
 
-static int	write_double_decipart(long double doub, int *limit, char *temp, int *arrondi)
+static int	write_double_decipart(long double doub, int *limit, char *temp, int *exponent)
 {
 	int	i;
 	int	size;
@@ -63,18 +63,22 @@ static int	write_double_decipart(long double doub, int *limit, char *temp, int *
 		temp[size + i++] = intpart + '0';
 		doub -= intpart;
 	}
+	temp[size + i] = '\0';
 	if (doub >= 0.5)
 	{
 		if (digit_str_rounder(temp, i + size - 1))
 		{
-			shift_add_digit_str(temp, '1', 0);
-			(*arrondi)++;
+			shift_add_digit_str(temp, '1', 0, exponent ? 0 : 1);
+			if (exponent)
+				(*exponent)++;
+			else
+				size++;
 		}
 	}
 	return (size + i);
 }
 
-int	write_double_regular(long double doub, t_flags *flags, char *temp, int *arrondi)
+int	write_double_regular(long double doub, t_flags *flags, char *temp, int *exponent)
 {
 	long long int	intpart;
 	int		size_limit[2];
@@ -92,31 +96,36 @@ int	write_double_regular(long double doub, t_flags *flags, char *temp, int *arro
 	size_limit[0] = my_utoa_len(intpart, 10, NULL);
 	write_digit_str(intpart, temp, size_limit[0] - 1);
 	if (!size_limit[1])
+	{
+		temp[size_limit[0]] = '\0';
 		return (size_limit[0]);
+	}
 	temp[size_limit[0]++] = '.';
-	return (write_double_decipart(doub - intpart, size_limit, temp, arrondi));
+	return (write_double_decipart(doub - intpart, size_limit, temp, exponent));
 }
 
-int	write_double_expo(long double doub, t_flags *flags, char *temp)
+int	write_double_expo(long double doub, t_flags *flags, char *temp, int *exponent)
 {
-	int	count;
 	int	size;
+	int positiver;
 
-	count = 0;
-	while (doub && doub < 1 && --count)
+	*exponent = 0;
+	positiver = 1;
+	while (doub && doub < 1 && --(*exponent))
 		doub *= 10;
-	while (doub && doub >= 10 && ++count)
+	while (doub && doub >= 10 && ++(*exponent))
 		doub /= 10;
-	size = write_double_regular(doub, flags, temp, &count);
+	size = write_double_regular(doub, flags, temp, exponent);
 	temp[size++] = 'e';
-	if (count < 0)
+	if (*exponent < 0)
 	{
 		temp[size++] = '-';
-		count *= -1;
+		positiver *= -1;
 	}
 	else
 		temp[size++] = '+';
-	temp[size++] = "0123456789"[count / 10];
-	temp[size++] = "0123456789"[count % 10];
+	temp[size++] = "0123456789"[*exponent * positiver / 10];
+	temp[size++] = "0123456789"[*exponent * positiver % 10];
+	temp[size] = '\0';
 	return (size);
 }

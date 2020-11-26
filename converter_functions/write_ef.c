@@ -6,13 +6,13 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 01:54:30 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 20:20:56 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-static void	write_double_pos(t_flags *flags, int sizetoprint, char *temp)
+void	write_double_pos(t_flags *flags, int sizetoprint, char *temp)
 {
 	if (flags->bw_flags & MINUS)
 	{
@@ -47,7 +47,7 @@ static void	write_double_neg_nobound(t_flags *flags, int sizetoprint, char *temp
 	write_str_buffer(temp, sizetoprint);
 }
 
-static void	write_double_neg(t_flags *flags, int sizetoprint, char *temp)
+void	write_double_neg(t_flags *flags, int sizetoprint, char *temp)
 {
 	int	space_toprint;
 	
@@ -68,6 +68,7 @@ void	write_e(va_list *param, t_flags *flags)
 	int	sizetoprint;
 	int	isneg;
 	char	temp[100];
+	int	exponent;
 
 	doub = va_arg(*param, double);
 	isneg = 0;
@@ -76,7 +77,7 @@ void	write_e(va_list *param, t_flags *flags)
 		isneg = 1;
 		doub *= -1;
 	}		
-	sizetoprint = write_double_expo(doub, flags, temp);
+	sizetoprint = write_double_expo(doub, flags, temp, &exponent);
 	if (isneg)
 		write_double_neg(flags, sizetoprint, temp);
 	else	
