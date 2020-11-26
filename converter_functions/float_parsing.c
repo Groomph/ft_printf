@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 20:22:04 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 00:48:25 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ int	write_double_expo(long double doub, t_flags *flags, char *temp, int *exponen
 	}
 	else
 		temp[size++] = '+';
-	temp[size++] = "0123456789"[*exponent * positiver / 10];
-	temp[size++] = "0123456789"[*exponent * positiver % 10];
+	temp[size++] = *exponent * positiver / 10 + '0';
+	temp[size++] = *exponent * positiver % 10 + '0';
 	temp[size] = '\0';
 	return (size);
 }
