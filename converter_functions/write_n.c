@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 22:22:00 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 22:44:06 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void		write_g(va_list *param, t_flags *flags)
 		//write(1, "test\n", 5);	
 		//printf("doub: %lld\nprecis: %d\n", (long long int)doub, flags->precision_val);
 		//write(1, "test", 4);	
-		if ((long long int)doub == 0 && flags->precision_val == 0)
-			flags->precision_val = 1;
+		if ((long long int)doub == 0)// && flags->precision_val == 0)
+			flags->precision_val += 1;
 		sizetoprint = write_double_regular(doub, flags, temp, NULL);
 		clean_zero(temp, &sizetoprint);
 	}
