@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 01:39:42 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 01:56:13 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,5 @@ int				write_double_regular(long double doub,
 						t_flags *flags, char *temp, int *arrondi);
 
 int				ft_is_signed(long double lf);
-
-
-
-
-
-
-int digit_str_rounder(char *str, int i);
-int     shift_add_digit_str(char *str, char c, int i);
 
 #endif

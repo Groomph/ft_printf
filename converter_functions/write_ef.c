@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   write_e.c                                          :+:      :+:    :+:   */
+/*   write_ef.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 00:57:20 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/26 01:54:30 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,27 @@ void	write_e(va_list *param, t_flags *flags)
 		doub *= -1;
 	}		
 	sizetoprint = write_double_expo(doub, flags, temp);
+	if (isneg)
+		write_double_neg(flags, sizetoprint, temp);
+	else	
+		write_double_pos(flags, sizetoprint, temp);
+}
+
+void	write_f(va_list *param, t_flags *flags)
+{
+        double  doub;
+        int     sizetoprint;
+	int	isneg;
+	char	temp[100];
+
+        doub = va_arg(*param, double);
+	isneg = 0;
+	if (doub <= 0.0 && ft_is_signed(doub))
+	{
+		isneg = 1;
+		doub *= -1;
+	}		
+	sizetoprint = write_double_regular(doub, flags, temp, NULL);
 	if (isneg)
 		write_double_neg(flags, sizetoprint, temp);
 	else	
