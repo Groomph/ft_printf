@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 09:28:19 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 09:32:27 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	redo_write_regular(long double doub, char *temp, t_flags *flags)
 	intpart = doub;
 	if (intpart == 0)// && flags->precision_val == 0)
 		flags->precision_val += 1;
+	flags->convert_char = 'F';
 	size_toprint = write_double_regular(doub, flags, temp, &exponent);
 	if (!(flags->bw_flags & CROISI))
 		clean_zero(temp, &size_toprint);
@@ -59,6 +60,7 @@ static int	redo_write_expo(long double doub, char *temp, t_flags *flags)
 	int	size_toprint;
 
 	flags->precision_val--;
+	flags->convert_char = 'E';
         size_toprint = write_double_expo(doub, flags, temp, &exponent);
 	if (!(flags->bw_flags & CROISI))
 	{

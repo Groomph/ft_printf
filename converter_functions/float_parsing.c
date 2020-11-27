@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 09:29:14 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 10:05:56 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	shift_add_digit_str(char *str, char c, int i, int movepoint)
 	return (shift_add_digit_str(str, tmp, i + 1, movepoint));
 }
 
-static int	digit_str_rounder(long double doub, int *ptsize, char *str,
+static int	digit_str_rounder(long double doub, int *ptsize, char *temp,
 								t_flags *flags)
 {
 	int	size;
@@ -42,24 +42,24 @@ static int	digit_str_rounder(long double doub, int *ptsize, char *str,
 
 	size = *ptsize - 1;
 	movepoint = 0;
-	while (size >= 0 && (str[size] == '9' || str[size] == '.'))
+	while (size >= 0 && (temp[size] == '9' || temp[size] == '.'))
 	{
-		if (str[size] == '9')
-			str[size] = '0';
+		if (temp[size] == '9')
+			temp[size] = '0';
 		size--;
 	}
-	if (flags->converter_char == 'e' || flags->converter_char == 'E')
+	if (flags->convert_char == 'e' || flags->convert_char == 'E')
 		movepoint = 1;
 	if (size < 0 && doub >= 0.5)
 	{
 		shift_add_digit_str(temp, '1', 0, movepoint);
-		if (flags->converter_char == 'e' || flags->converter_char == 'E')
+		if (flags->convert_char == 'e' || flags->convert_char == 'E')
 			return (1);
-		else if (flags->converter_char == 'f')
+		else if (flags->convert_char == 'f')
 			(*ptsize)++;
 	}
 	else
-		str[i]++;
+		temp[size]++;
 	return (0);
 }
 
@@ -89,7 +89,7 @@ int	write_double_regular(long double doub, t_flags *flags, char *temp,
 	int		size;
 
 	intpart = doub;
-	if (flags->precision_val && ((doub - intpart > 0.5 && intpart % 2 == 0)
+	if (!flags->precision_val && ((doub - intpart > 0.5 && intpart % 2 == 0)
 			|| (doub - intpart >= 0.5 && intpart % 2 == 1)))
 	{
 		doub += 0.5;
@@ -101,12 +101,13 @@ int	write_double_regular(long double doub, t_flags *flags, char *temp,
 	{
 		if (flags->bw_flags & CROISI)
 			temp[size++] = '.';
-		temp[size_limit[0]] = '\0';
-		return (size_limit[0]);
+		temp[size] = '\0';
+		return (size);
 	}
 	doub -= intpart;
 	size = write_double_decipart(&doub, size, temp, flags);
 	*exponent += digit_str_rounder(doub, &size, temp, flags);
+	return (size);
 }
 
 int	write_double_expo(long double doub, t_flags *flags, char *temp,
