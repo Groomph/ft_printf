@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 08:04:01 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 08:13:18 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,16 @@ void		write_g(va_list *param, t_flags *flags)
         char    temp[100];
 	int	exponent[3];
 
-	exponent[2] = 1;
-	exponent[1] = 0;
+	exponent[1] = 1;
+	exponent[2] = 0;
 	doub = va_arg(*param, double);
-        positiv = 1;
-        if (doub <= 0.0 && ft_is_signed(doub))
-        	positiv = -1;
+        positiv = doub <= 0.0 && ft_is_signed(doub) ? 1 : -1;
 	write_double_expo(doub * positiv, flags, temp, exponent);
-	if (!(flags->bw_flags & PRECIS) && flags->precision_val = 6)
+	if (!(flags->bw_flags & PRECIS))
+	{
 		flags->bw_flags |= PRECIS;
+		flags->precision_val = 6;
+	}
 	if (exponent[0] >= flags->precision_val || exponent[0] < -4)
 		size_toprint = redo_write_expo(doub * positiv, temp, flags);
 	else
