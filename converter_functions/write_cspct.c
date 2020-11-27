@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 04:17:41 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 05:20:42 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ void		write_s(va_list *param, t_flags *flags)
 	write_string(flags, va_arg(*param, char*), "(null)");
 }
 
-void		write_pct(t_flags *flags)
+void		write_pct(va_list *param, t_flags *flags)
 {
 	if (flags->precision_val == 0 && flags->bw_flags & PRECIS)
 		flags->precision_val = 1;
-	write_string(flags, "%", "");
+	if (param)
+		write_string(flags, "%", "");
 }

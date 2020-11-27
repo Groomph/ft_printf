@@ -6,11 +6,29 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 15:03:22 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 06:12:49 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+	
+static void	erase_conflicting_flags(t_flags *flags)
+{
+	if (flags->bw_flags & PLUS && flags->bw_flags & SPACE)
+	{
+		flags->bw_flags &= ~(SPACE);
+	/*	write(1, "test", 4);
+		if (flags->bw_flags & SPACE)
+			write(1, "\nSPACE encore présent, erreur\n", 30);
+		else
+			write(1, "SPACE bien delete\n", 18);
+		if (flags->bw_flags & PLUS)
+			write(1, "PLUS toujours présent, parfait\n", 32);
+*/
+	}
+	if (flags->bw_flags & MINUS && flags->bw_flags & ZERO)
+		flags->bw_flags &= ~(ZERO);
+}
 
 static int	second_flags(const char *str, int i, t_flags *flags, va_list *param)
 {
@@ -18,8 +36,6 @@ static int	second_flags(const char *str, int i, t_flags *flags, va_list *param)
 		i += field_width(flags, param, &str[i]);
 	else if (str[i] == '.')
 		i += precision(flags, param, &str[i]);
-	else if (str[i] == ' ')
-		i++;
 	else
 		return (i);
 	return (second_flags(str, i, flags, param));
@@ -31,6 +47,12 @@ static int	first_flags(const char *str, int i, t_flags *flags)
 		flags->bw_flags |= MINUS;
 	else if (str[i] == '0')
 		flags->bw_flags |= ZERO;
+	else if (str[i] == ' ')
+		flags->bw_flags |= SPACE;
+	else if (str[i] == '+')
+		flags->bw_flags |= PLUS;
+	else if (str[i] == '#')
+		flags->bw_flags |= CROISI;
 	else
 		return (i);
 	return (first_flags(str, i + 1, flags));
@@ -54,6 +76,7 @@ int			ft_printf_parsing(const char *str, va_list *param)
 	va_copy(param2, *param);
 	i = first_flags(str, 1, &flags);
 	i += second_flags(&str[i], 0, &flags, &param2);
+	erase_conflicting_flags(&flags);
 	if (str[i])
 			flags.convert_char = str[i++];
 	if (!lobby_write_buffer(&param2, &flags))

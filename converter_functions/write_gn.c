@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 04:07:48 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 07:50:32 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ static int	redo_write_regular(long double doub, char *temp, t_flags *flags)
 {
 	long long int	intpart;
 	int	size_toprint;
-	
+	int	exponent[3];
+
 	intpart = my_utoa_len(doub, 10, NULL);
+	exponent[1] = 0;
+	exponent[2] = 1;
 	if (flags->precision_val == 0)
 		flags->precision_val = 1;
 	if (intpart >= flags->precision_val)
@@ -49,32 +52,36 @@ static int	redo_write_regular(long double doub, char *temp, t_flags *flags)
 	intpart = doub;
 	if (intpart == 0)// && flags->precision_val == 0)
 		flags->precision_val += 1;
-	size_toprint = write_double_regular(doub, flags, temp, NULL);
-	clean_zero(temp, &size_toprint);
+	size_toprint = write_double_regular(doub, flags, temp, exponent);
+	if (!(flags->bw_flags & CROISI))
+		clean_zero(temp, &size_toprint);
 	return (size_toprint);
 }
 
 static int	redo_write_expo(long double doub, char *temp, t_flags *flags)
 {
-	int	exponent;
+	int	exponent[3];
 	int	size_toprint;
 
 	flags->precision_val--;
-        size_toprint = write_double_expo(doub, flags, temp, &exponent);
-	size_toprint -= 4;
-	if (/*temp[sizetoprint] == 'e' &&*/ exponent != 0)
+	exponent[1] = 1;
+	exponent[2] = 1;
+        size_toprint = write_double_expo(doub, flags, temp, exponent);
+	if (!(flags->bw_flags & CROISI))
 	{
+		size_toprint -= 4;
 		clean_zero(temp, &size_toprint);
-		temp[size_toprint++] = 'e'; 
-		temp[size_toprint++] = exponent < 0 ? '-' : '+';
-		if (exponent < 0)
-			exponent = -exponent;
-		temp[size_toprint++] = exponent / 10 + '0';
-		temp[size_toprint++] = exponent % 10 + '0';
-		temp[size_toprint] = '\0'; 
+		if (/*temp[sizetoprint] == 'e' &&*/ exponent[0] != 0)
+		{
+			temp[size_toprint++] = 'e'; 
+			temp[size_toprint++] = exponent < 0 ? '-' : '+';
+			if (exponent[0] < 0)
+				exponent[0] = -exponent[0];
+			temp[size_toprint++] = exponent[0] / 10 + '0';
+			temp[size_toprint++] = exponent[0] % 10 + '0';
+			temp[size_toprint] = '\0';
+		}
 	}
-	else
-		clean_zero(temp, &size_toprint);
 	return (size_toprint);
 }
 
@@ -84,19 +91,21 @@ void		write_g(va_list *param, t_flags *flags)
 	int	positiv;
 	int     size_toprint;
         char    temp[100];
-	int	exponent;
+	int	exponent[3];
 
-        doub = va_arg(*param, double);
+	exponent[2] = 1;
+	exponent[1] = 0;
+	doub = va_arg(*param, double);
         positiv = 1;
         if (doub <= 0.0 && ft_is_signed(doub))
         	positiv = -1;
-	write_double_expo(doub * positiv, flags, temp, &exponent);
+	write_double_expo(doub * positiv, flags, temp, exponent);
 	if (!(flags->bw_flags & PRECIS))
 	{	
 		flags->bw_flags |= PRECIS;
 		flags->precision_val = 6;
 	}
-	if (exponent >= flags->precision_val || exponent < -4)
+	if (exponent[0] >= flags->precision_val || exponent[0] < -4)
 		size_toprint = redo_write_expo(doub * positiv, temp, flags);
 	else
 		size_toprint = redo_write_regular(doub * positiv, temp, flags);

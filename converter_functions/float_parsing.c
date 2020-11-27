@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 03:58:44 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 07:46:49 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ static int	write_double_decipart(long double doub, int *limit, char *temp,
 	temp[size + i] = '\0';
 	if (doub >= 0.5 && digit_str_rounder(temp, i + size - 1))
 	{
-		shift_add_digit_str(temp, '1', 0, exponent ? 0 : 1);
-		if (exponent)
-			(*exponent)++;
-		else
+		shift_add_digit_str(temp, '1', 0, exponent[1] == 1  ? 0 : 1);
+		if (exponent[1] == 1)
+			exponent[0]++;
+		else if (exponent[1] == 0 && exponent[2] == 0)
 			size++;
 	}
 	return (size + i);
@@ -96,6 +96,8 @@ int	write_double_regular(long double doub, t_flags *flags, char *temp,
 	write_digit_str(intpart, temp, size_limit[0] - 1);
 	if (!size_limit[1])
 	{
+		if (flags->bw_flags & CROISI)
+			temp[size_limit[0]++] = '.';
 		temp[size_limit[0]] = '\0';
 		return (size_limit[0]);
 	}
