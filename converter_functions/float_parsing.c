@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 00:48:25 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 03:58:44 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int	digit_str_rounder(char *str, int i)
 	return (0);
 }
 
-static int	write_double_decipart(long double doub, int *limit, char *temp, int *exponent)
+static int	write_double_decipart(long double doub, int *limit, char *temp,
+								int *exponent)
 {
 	int	i;
 	int	size;
@@ -64,21 +65,19 @@ static int	write_double_decipart(long double doub, int *limit, char *temp, int *
 		doub -= intpart;
 	}
 	temp[size + i] = '\0';
-	if (doub >= 0.5)
+	if (doub >= 0.5 && digit_str_rounder(temp, i + size - 1))
 	{
-		if (digit_str_rounder(temp, i + size - 1))
-		{
-			shift_add_digit_str(temp, '1', 0, exponent ? 0 : 1);
-			if (exponent)
-				(*exponent)++;
-			else
-				size++;
-		}
+		shift_add_digit_str(temp, '1', 0, exponent ? 0 : 1);
+		if (exponent)
+			(*exponent)++;
+		else
+			size++;
 	}
 	return (size + i);
 }
 
-int	write_double_regular(long double doub, t_flags *flags, char *temp, int *exponent)
+int	write_double_regular(long double doub, t_flags *flags, char *temp,
+								int *exponent)
 {
 	long long int	intpart;
 	int		size_limit[2];
@@ -101,10 +100,12 @@ int	write_double_regular(long double doub, t_flags *flags, char *temp, int *expo
 		return (size_limit[0]);
 	}
 	temp[size_limit[0]++] = '.';
-	return (write_double_decipart(doub - intpart, size_limit, temp, exponent));
+	doub -= intpart;
+	return (write_double_decipart(doub, size_limit, temp, exponent));
 }
 
-int	write_double_expo(long double doub, t_flags *flags, char *temp, int *exponent)
+int	write_double_expo(long double doub, t_flags *flags, char *temp,
+								int *exponent)
 {
 	int	size;
 	int positiver;
@@ -120,7 +121,7 @@ int	write_double_expo(long double doub, t_flags *flags, char *temp, int *exponen
 	if (*exponent < 0)
 	{
 		temp[size++] = '-';
-		positiver *= -1;
+		positiver = -1;
 	}
 	else
 		temp[size++] = '+';

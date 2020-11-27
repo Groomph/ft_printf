@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/24 02:57:55 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/11/27 04:17:41 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ static void	write_char_null(t_flags *flags)
 	{
 		write_char_buffer('\0', 1);
 		write_char_buffer(' ', flags->field_width_val - 1);
+		return ;
 	}
-	else
-	{
-		if (flags->bw_flags & ZERO)
-			write_char_buffer('0', flags->field_width_val - 1);
-		else	
-			write_char_buffer(' ', flags->field_width_val - 1);
-		write_char_buffer('\0', 1);
-	}
+	if (flags->bw_flags & ZERO)
+		write_char_buffer('0', flags->field_width_val - 1);
+	else	
+		write_char_buffer(' ', flags->field_width_val - 1);
+	write_char_buffer('\0', 1);
 }
 
 static void	write_string(t_flags *flags, char *str, char *strnull)
@@ -44,15 +42,13 @@ static void	write_string(t_flags *flags, char *str, char *strnull)
 	{
 		write_str_buffer(str, sizetoprint);
 		write_char_buffer(' ', spacing);
+		return ;
 	}
+	if (flags->bw_flags & ZERO)
+		write_char_buffer('0', spacing);
 	else
-	{
-		if (flags->bw_flags & ZERO)
-			write_char_buffer('0', spacing);
-		else
-			write_char_buffer(' ', spacing);
-		write_str_buffer(str, sizetoprint);
-	}
+		write_char_buffer(' ', spacing);
+	write_str_buffer(str, sizetoprint);
 }
 
 void		write_c(va_list *param, t_flags *flags)
