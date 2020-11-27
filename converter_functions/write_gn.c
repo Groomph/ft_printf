@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 07:50:32 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 08:04:01 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,8 @@ static int	redo_write_regular(long double doub, char *temp, t_flags *flags)
 		flags->precision_val = 1;
 	if (intpart >= flags->precision_val)
 	{
-		while (intpart > flags->precision_val)
-		{
+		while (intpart > flags->precision_val && intpart--)
 			doub /= 10;
-			intpart--;
-		}
 		flags->precision_val = 0;
 	}
 	else if (intpart < flags->precision_val)
@@ -100,11 +97,8 @@ void		write_g(va_list *param, t_flags *flags)
         if (doub <= 0.0 && ft_is_signed(doub))
         	positiv = -1;
 	write_double_expo(doub * positiv, flags, temp, exponent);
-	if (!(flags->bw_flags & PRECIS))
-	{	
+	if (!(flags->bw_flags & PRECIS) && flags->precision_val = 6)
 		flags->bw_flags |= PRECIS;
-		flags->precision_val = 6;
-	}
 	if (exponent[0] >= flags->precision_val || exponent[0] < -4)
 		size_toprint = redo_write_expo(doub * positiv, temp, flags);
 	else
