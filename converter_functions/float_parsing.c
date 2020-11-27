@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 10:21:07 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 10:23:59 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static int	shift_add_digit_str(char *str, char c, int i, int movepoint)
 	return (shift_add_digit_str(str, tmp, i + 1, movepoint));
 }
 
-static int	digit_str_rounder(long double doub, int *ptsize, char *temp,
-								t_flags *flags)
+static int	digit_str_rounder(int *ptsize, char *temp, t_flags *flags)
 {
 	int	size;
 	int	movepoint;
@@ -107,7 +106,7 @@ int	write_double_regular(long double doub, t_flags *flags, char *temp,
 	doub -= intpart;
 	size = write_double_decipart(&doub, size, temp, flags);
 	if (doub >= 0.5)
-		*exponent += digit_str_rounder(doub, &size, temp, flags);
+		*exponent += digit_str_rounder(&size, temp, flags);
 	return (size);
 }
 
