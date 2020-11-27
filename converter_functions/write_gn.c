@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 08:13:18 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 08:15:44 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void		write_g(va_list *param, t_flags *flags)
 	exponent[1] = 1;
 	exponent[2] = 0;
 	doub = va_arg(*param, double);
-        positiv = doub <= 0.0 && ft_is_signed(doub) ? 1 : -1;
+        positiv = doub <= 0.0 && ft_is_signed(doub) ? -1 : 1;
 	write_double_expo(doub * positiv, flags, temp, exponent);
 	if (!(flags->bw_flags & PRECIS))
 	{
