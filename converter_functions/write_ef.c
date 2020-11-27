@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 07:51:46 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 09:26:23 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,21 @@ void	write_e(va_list *param, t_flags *flags)
 	int	size_toprint;
 	int	is_neg;
 	char	temp[100];
-	int	exponent[3];
+	int	exponent;
 
 	doub = va_arg(*param, double);
 	is_neg = 0;
-	exponent[1] = 1;
-	exponent[2] = 0;
 	if (doub <= 0.0 && ft_is_signed(doub))
 	{
 		is_neg = 1;
 		doub *= -1;
 	}		
-	size_toprint = write_double_expo(doub, flags, temp, exponent);
+        if (!(flags->bw_flags & PRECIS))
+	{
+		flags->bw_flags |= PRECIS;
+		flags->precision_val = 6;
+	}
+	size_toprint = write_double_expo(doub, flags, temp, &exponent);
 	if (is_neg)
 		write_double_neg(flags, size_toprint, temp);
 	else	
@@ -92,18 +95,21 @@ void	write_f(va_list *param, t_flags *flags)
         int     size_toprint;
 	int	is_neg;
 	char	temp[100];
-	int	exponent[3];
+	int	exponent;
 
         doub = va_arg(*param, double);
 	is_neg = 0;
-	exponent[1] = 0;
-	exponent[2] = 0;
 	if (doub <= 0.0 && ft_is_signed(doub))
 	{
 		is_neg = 1;
 		doub *= -1;
 	}		
-	size_toprint = write_double_regular(doub, flags, temp, exponent);
+        if (!(flags->bw_flags & PRECIS))
+	{
+		flags->bw_flags |= PRECIS;
+		flags->precision_val = 6;
+	}
+	size_toprint = write_double_regular(doub, flags, temp, &exponent);
 	if (is_neg)
 		write_double_neg(flags, size_toprint, temp);
 	else	

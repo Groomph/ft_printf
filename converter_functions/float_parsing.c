@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:58:57 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 07:46:49 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/27 09:29:14 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,51 @@ static int	shift_add_digit_str(char *str, char c, int i, int movepoint)
 	return (shift_add_digit_str(str, tmp, i + 1, movepoint));
 }
 
-static int	digit_str_rounder(char *str, int i)
+static int	digit_str_rounder(long double doub, int *ptsize, char *str,
+								t_flags *flags)
 {
-	while (i >= 0 && (str[i] == '9' || str[i] == '.'))
+	int	size;
+	int	movepoint;
+
+	size = *ptsize - 1;
+	movepoint = 0;
+	while (size >= 0 && (str[size] == '9' || str[size] == '.'))
 	{
-		if (str[i] == '9')
-			str[i] = '0';
-		i--;
+		if (str[size] == '9')
+			str[size] = '0';
+		size--;
 	}
-	if (i < 0)
-		return (1);
-	str[i]++;
+	if (flags->converter_char == 'e' || flags->converter_char == 'E')
+		movepoint = 1;
+	if (size < 0 && doub >= 0.5)
+	{
+		shift_add_digit_str(temp, '1', 0, movepoint);
+		if (flags->converter_char == 'e' || flags->converter_char == 'E')
+			return (1);
+		else if (flags->converter_char == 'f')
+			(*ptsize)++;
+	}
+	else
+		str[i]++;
 	return (0);
 }
 
-static int	write_double_decipart(long double doub, int *limit, char *temp,
-								int *exponent)
+static int	write_double_decipart(long double *doub, int size, char *temp,
+								t_flags *flags)
 {
 	int	i;
-	int	size;
 	int	intpart;
 
 	i = 0;
-	size = limit[0];
-	while (i < limit[1])
+	temp[size++] = '.';
+	while (i < flags->precision_val)
 	{
-		doub *= 10;
-		intpart = doub;
+		*doub *= 10;
+		intpart = *doub;
 		temp[size + i++] = intpart + '0';
-		doub -= intpart;
+		*doub -= intpart;
 	}
 	temp[size + i] = '\0';
-	if (doub >= 0.5 && digit_str_rounder(temp, i + size - 1))
-	{
-		shift_add_digit_str(temp, '1', 0, exponent[1] == 1  ? 0 : 1);
-		if (exponent[1] == 1)
-			exponent[0]++;
-		else if (exponent[1] == 0 && exponent[2] == 0)
-			size++;
-	}
 	return (size + i);
 }
 
@@ -80,30 +86,27 @@ int	write_double_regular(long double doub, t_flags *flags, char *temp,
 								int *exponent)
 {
 	long long int	intpart;
-	int		size_limit[2];
+	int		size;
 
-	size_limit[1] = 6;
-	if (flags->bw_flags & PRECIS)
-		size_limit[1] = flags->precision_val;
 	intpart = doub;
-	if (!size_limit[1] && ((doub - intpart > 0.5 && intpart % 2 == 0) ||
-			       (doub - intpart >= 0.5 && intpart % 2 == 1)))
+	if (flags->precision_val && ((doub - intpart > 0.5 && intpart % 2 == 0)
+			|| (doub - intpart >= 0.5 && intpart % 2 == 1)))
 	{
 		doub += 0.5;
 		intpart = doub;
 	}
-	size_limit[0] = my_utoa_len(intpart, 10, NULL);
-	write_digit_str(intpart, temp, size_limit[0] - 1);
-	if (!size_limit[1])
+	size = my_utoa_len(intpart, 10, NULL);
+	write_digit_str(intpart, temp, size - 1);
+	if (!flags->precision_val)
 	{
 		if (flags->bw_flags & CROISI)
-			temp[size_limit[0]++] = '.';
+			temp[size++] = '.';
 		temp[size_limit[0]] = '\0';
 		return (size_limit[0]);
 	}
-	temp[size_limit[0]++] = '.';
 	doub -= intpart;
-	return (write_double_decipart(doub, size_limit, temp, exponent));
+	size = write_double_decipart(&doub, size, temp, flags);
+	*exponent += digit_str_rounder(doub, &size, temp, flags);
 }
 
 int	write_double_expo(long double doub, t_flags *flags, char *temp,
