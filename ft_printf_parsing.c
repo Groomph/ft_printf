@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 15:03:22 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/01 11:44:29 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ static int	first_flags(const char *str, int i, t_flags *flags)
 		flags->bw_flags |= MINUS;
 	else if (str[i] == '0')
 		flags->bw_flags |= ZERO;
+	else if (str[i] == ' ')
+		flags->bw_flags |= SPACE;
+	else if (str[i] == '#')
+		flags->bw_flags |= CROISI;
+	else if (str[i] == '+')
+		flags->bw_flags |= PLUS;
 	else
 		return (i);
 	return (first_flags(str, i + 1, flags));
