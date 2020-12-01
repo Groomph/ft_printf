@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 05:21:21 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/01 01:31:52 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ static t_converter	g_tab_function[] =
 	{&write_x, 'x'},
 	{&write_xx, 'X'},
 	{&write_n, 'n'},
-	{&write_f, 'f'},
 	{&write_e, 'e'},
+	{&write_f, 'f'},
 	{&write_g, 'g'},
-	{&write_pct, '%'},
 	{NULL, -1}
 };
 
@@ -43,6 +42,11 @@ int		lobby_write_buffer(va_list *param, t_flags *flags)
 			g_tab_function[i].pt_function(param, flags);
 			return (1);
 		}
+	}
+	if (flags->convert_char == '%')
+	{
+		write_pct(flags);
+		return (1);
 	}
 	return (0);
 }

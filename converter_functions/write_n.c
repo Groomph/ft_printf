@@ -6,12 +6,12 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/27 09:32:27 by romain           ###   ########.fr       */
+/*   Updated: 2020/11/29 20:08:01 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
-
+/*
 static int	clean_zero(char *str, int *size)
 {
 	while (--*size >= 0 && str[*size] == '0')
@@ -29,28 +29,27 @@ static int	clean_zero(char *str, int *size)
 
 static int	redo_write_regular(long double doub, char *temp, t_flags *flags)
 {
-	long long int	intpart;
+	int	intpart_size;
 	int	size_toprint;
-	int	exponent;
-
-	intpart = my_utoa_len(doub, 10, NULL);
+	
+	intpart_size = my_utoa_len(doub, 10, NULL);
 	if (flags->precision_val == 0)
 		flags->precision_val = 1;
-	if (intpart >= flags->precision_val)
+	if (intpart_size >= flags->precision_val)
 	{
-		while (intpart > flags->precision_val && intpart--)
+		while (intpart_size > flags->precision_val)
+		{
 			doub /= 10;
+			intpart_size--;
+		}
 		flags->precision_val = 0;
 	}
-	else if (intpart < flags->precision_val)
-		flags->precision_val -= intpart;
-	intpart = doub;
-	if (intpart == 0)// && flags->precision_val == 0)
+	else if (intpart_size < flags->precision_val)
+		flags->precision_val -= intpart_size;
+	if ((long long int)doub == 0)// && flags->precision_val == 0)
 		flags->precision_val += 1;
-	flags->convert_char = 'F';
-	size_toprint = write_double_regular(doub, flags, temp, &exponent);
-	if (!(flags->bw_flags & CROISI))
-		clean_zero(temp, &size_toprint);
+	size_toprint = write_double_regular(doub, flags, temp, NULL);
+	clean_zero(temp, &size_toprint);
 	return (size_toprint);
 }
 
@@ -60,58 +59,59 @@ static int	redo_write_expo(long double doub, char *temp, t_flags *flags)
 	int	size_toprint;
 
 	flags->precision_val--;
-	flags->convert_char = 'E';
         size_toprint = write_double_expo(doub, flags, temp, &exponent);
-	if (!(flags->bw_flags & CROISI))
+	size_toprint -= 4;
+	if (exponent != 0)//&& temp[sizetoprint] == 'e')
 	{
-		size_toprint -= 4;
 		clean_zero(temp, &size_toprint);
-		if (/*temp[sizetoprint] == 'e' &&*/ exponent != 0)
-		{
-			temp[size_toprint++] = 'e'; 
-			temp[size_toprint++] = exponent < 0 ? '-' : '+';
-			if (exponent < 0)
-				exponent = -exponent;
-			temp[size_toprint++] = exponent / 10 + '0';
-			temp[size_toprint++] = exponent % 10 + '0';
-			temp[size_toprint] = '\0';
-		}
+		temp[size_toprint++] = 'e'; 
+		temp[size_toprint++] = exponent < 0 ? '-' : '+';
+		if (exponent < 0)
+			exponent = -exponent;
+		temp[size_toprint++] = exponent / 10 + '0';
+		temp[size_toprint++] = exponent % 10 + '0';
+		temp[size_toprint] = '\0'; 
 	}
+	else
+		clean_zero(temp, &size_toprint);
 	return (size_toprint);
 }
 
 void		write_g(va_list *param, t_flags *flags)
 {
 	long double  doub;
-	int	positiv;
+	long double	doubtemp;
 	int     size_toprint;
         char    temp[100];
 	int	exponent;
 
-	doub = va_arg(*param, double);
-        positiv = doub <= 0.0 && ft_is_signed(doub) ? -1 : 1;
-	write_double_expo(doub * positiv, flags, temp, &exponent);
+        doub = va_arg(*param, double);
+        doubtemp = doub;
+        if (doub <= 0.0 && ft_is_signed(doub))
+        	doubtemp = -doub;
+	size_toprint = write_double_expo(doubtemp, flags, temp, &exponent);
 	if (!(flags->bw_flags & PRECIS))
-	{
+	{	
 		flags->bw_flags |= PRECIS;
 		flags->precision_val = 6;
 	}
 	if (exponent >= flags->precision_val || exponent < -4)
-		size_toprint = redo_write_expo(doub * positiv, temp, flags);
+		size_toprint = redo_write_expo(doubtemp, temp, flags);
 	else
-		size_toprint = redo_write_regular(doub * positiv, temp, flags);
-        if (positiv == -1)
+		size_toprint = redo_write_regular(doubtemp, temp, flags);
+        if (doub <= 0.0 && ft_is_signed(doub))
                	write_double_neg(flags, size_toprint, temp);
         else
                	write_double_pos(flags, size_toprint, temp);
 }
-
+*/
 void		write_n(va_list *param, t_flags *flags)
 {
 	int	*pt;
 	
-	pt = NULL;
-	pt = va_arg(*param, int*);
-	if (pt && flags)
+	if (flags)
+	{
+		pt = va_arg(*param, int*);
 		*pt = send_totalsize();
+	}
 }

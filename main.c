@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/11/25 22:55:14 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/01 11:07:09 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,54 +40,126 @@ int main(void)
 */
 	int	i = -2.9999999;
 	int	i2 = -2.40;
-	double test = -9.99999999987;
-	    i = printf("printf:    %e\n", 3, test);
-	i2 = ft_printf("ft_printf: %e\n", 3, test);
-	printf("printf: %d    ft_printf: %d\n\n", i, i2);
-
-	test = 5.548545545;
-	    i = printf("printf:    %.0e\n", test);
-	i2 = ft_printf("ft_printf: %.0e\n", test);
+	double test = -129083211111.12366666;
+	    i = printf("printf:    %.15g\n", test);
+	i2 = ft_printf("ft_printf: %.15g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
-	test = 5.7848744;
-	    i = printf("printf:    %011.4e\n", test);
-	i2 = ft_printf("ft_printf: %011.4e\n", test);
+	test = 3.001;
+	    i = printf("printf:    %-4.3g\n", test);
+	i2 = ft_printf("ft_printf: %-4.3g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 3.601;
+	    i = printf("printf:    %-4.4g\n", test);
+	i2 = ft_printf("ft_printf: %-4.4g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 3.601;
+	    i = printf("printf:    %-4.*g\n", 8, test);
+	i2 = ft_printf("ft_printf: %-4.*g\n", 8, test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 1.20026416000;
+	    i = printf("printf:    %-4.*g\n", 8, test);
+	i2 = ft_printf("ft_printf: %-4.*g\n", 8, test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 0.600013;
+	    i = printf("printf:    %-4.4g\n", test);
+	i2 = ft_printf("ft_printf: %-4.4g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 0.6000001367;
+	    i = printf("printf:    %-4g\n", test);
+	i2 = ft_printf("ft_printf: %-4g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 3.0;
+	    i = printf("printf:    %-4.2g\n", test);
+	i2 = ft_printf("ft_printf: %-4.2g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 3.00030003000300025;
+	    i = printf("printf:    %-4.16e\n", test);
+	i2 = ft_printf("ft_printf: %-4.16e\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 1000000000000000000000.2;
+	    i = printf("printf:    %.1g\n", test);
+	i2 = ft_printf("ft_printf: %.1g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = 9999999999999999.2;
+	    i = printf("printf:    %.1g\n", test);
+	i2 = ft_printf("ft_printf: %.1g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+test = -1797693134862315708145418276846754670.88889;
+//	test = 555555555555222222222222222222222222222222222222222299999999999999999999999999999999999999999999999999999999999999.2;
+	    i = printf("printf:    %g\n", test);
+	i2 = ft_printf("ft_printf: %g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+	test = -3.6004;
+	    i = printf("printf:    %4.3g\n", test);
+	i2 = ft_printf("ft_printf: %4.3g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+
+	test = -5.7848744;
+	    i = printf("printf:    %11.*g\n", -1, test);
+	i2 = ft_printf("ft_printf: %11.*g\n", -1, test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 222.50000;
-	    i = printf("printf:    %020.10e\n", test);
-	i2 = ft_printf("ft_printf: %020.10e\n", test);
+	    i = printf("printf:    %20.10g\n", test);
+	i2 = ft_printf("ft_printf: %20.10g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 223.50000;
-	    i = printf("printf:    %-4.8e\n", test);
-	i2 = ft_printf("ft_printf: %-4.8e\n", test);
+	    i = printf("printf:    %-15.8g\n", test);
+	i2 = ft_printf("ft_printf: %-15.8g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 0.000000;
-	    i = printf("printf:    %0.e\n", test);
-	i2 = ft_printf("ft_printf: %0.e\n", test);
+	    i = printf("printf:    %.g\n", test);
+	i2 = ft_printf("ft_printf: %.g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = -0.500000;
-	    i = printf("printf:    %00.e\n", test);
-	i2 = ft_printf("ft_printf: %00.e\n", test);
+	    i = printf("printf:    %.g\n", test);
+	i2 = ft_printf("ft_printf: %.g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 303.37647788;
-	    i = printf("printf:    %-4.3e\n", test);
-	i2 = ft_printf("ft_printf: %-4.3e\n", test);
+	    i = printf("printf:    %-4.3g\n", test);
+	i2 = ft_printf("ft_printf: %-4.3g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 3444444444444403.37647788;
-	    i = printf("printf:    %-4.4e\n", test);
-	i2 = ft_printf("ft_printf: %-4.4e\n", test);
+	    i = printf("printf:    %-4.4g\n", test);
+	i2 = ft_printf("ft_printf: %-4.4g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 303.376477444488;
-	    i = printf("printf:    %-4.5e\n", test);
-	i2 = ft_printf("ft_printf: %-4.5e\n", test);
+	    i = printf("printf:    %-4.5g\n", test);
+	i2 = ft_printf("ft_printf: %-4.5g\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+	test = 123.1234550000000000000000000000000000000000000000000000000000000000000000000;
+	    i = printf("printf:    %-4.5f\n", test);
+	i2 = ft_printf("ft_printf: %-4.5f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+	test = 5.55555;
+	double test3 = 4.55555;
+	double test2 = test - 0.10000;
+	double test4 = (test * 10 - 1) / 10;
+	    i = printf("printf:    %#-4.20g\n", test);
+	    i = printf("printf:    %#-4.20g\n", test3);
+	    i = printf("printf:    %#-4.20g\n", test2);
+	    i = printf("printf:    %020.10e\n", test4);
+	i2 = ft_printf("ft_printf: %020.10e\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	
@@ -103,7 +175,9 @@ int main(void)
 	
 	
 	
-
+	
+	
+	
 	
 /*	
 	

@@ -10,9 +10,15 @@ SRCS	= ft_printf.c \
 	  ${WRITE_PATH}write_p.c \
 	  ${WRITE_PATH}write_di.c \
 	  ${WRITE_PATH}write_ouxx.c \
-	  ${WRITE_PATH}write_gn.c \
-	  ${WRITE_PATH}float_parsing.c \
-	  ${WRITE_PATH}write_ef.c
+	  ${WRITE_PATH}write_n.c \
+	  ${WRITE_PATH}write_float.c \
+	  ${WRITE_PATH}/float_parsing/float_parsing.c \
+	  ${WRITE_PATH}/float_parsing/float_operation.c \
+	  ${WRITE_PATH}/float_parsing/float_utils.c \
+	  ${WRITE_PATH}/float_parsing/write_e.c \
+	  ${WRITE_PATH}/float_parsing/write_f.c \
+	  ${WRITE_PATH}/float_parsing/write_gE.c \
+	  ${WRITE_PATH}/float_parsing/write_gF.c 
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -26,7 +32,7 @@ RM	= rm -f
 
 $(NAME):	${OBJS}
 			${CC} ${CFLAGS} -c ${SRCS}
-			ar rc ${NAME} ${OBJS} ft_printf.h
+			ar rc ${NAME} ${OBJS} ft_printf.h ${WRITE_PATH}/float_parsing/float_parsing.h \
 
 all:		${NAME}
 
