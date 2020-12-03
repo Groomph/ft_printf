@@ -1,24 +1,17 @@
-WRITE_PATH	= converter_functions/
 
 SRCS	= ft_printf.c \
 	  ft_print_buffer.c \
-	  ft_printf_parsing.c \
-	  parsing_functions.c \
-	  ${WRITE_PATH}lobby_write.c \
-	  ${WRITE_PATH}write_utils.c \
-	  ${WRITE_PATH}write_cspct.c \
-	  ${WRITE_PATH}write_p.c \
-	  ${WRITE_PATH}write_di.c \
-	  ${WRITE_PATH}write_ouxx.c \
-	  ${WRITE_PATH}write_n.c \
-	  ${WRITE_PATH}write_float.c \
-	  ${WRITE_PATH}/float_parsing/float_parsing.c \
-	  ${WRITE_PATH}/float_parsing/float_operation.c \
-	  ${WRITE_PATH}/float_parsing/float_utils.c \
-	  ${WRITE_PATH}/float_parsing/write_e.c \
-	  ${WRITE_PATH}/float_parsing/write_f.c \
-	  ${WRITE_PATH}/float_parsing/write_gE.c \
-	  ${WRITE_PATH}/float_parsing/write_gF.c 
+	  parsing_compo/ft_printf_parsing.c \
+	  parsing_compo/parsing_functions.c \
+	  converter_functions/lobby_write.c \
+	  converter_functions/write_utils.c \
+	  converter_functions/write_cspct.c \
+	  converter_functions/write_diuxx.c \
+	  converter_functions/write_efg.c \
+	  converter_functions/write_nop.c \
+	  float_parsing/float_parsing.c \
+	  float_parsing/float_operation.c \
+	  float_parsing/float_utils.c
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -32,7 +25,7 @@ RM	= rm -f
 
 $(NAME):	${OBJS}
 			${CC} ${CFLAGS} -c ${SRCS}
-			ar rc ${NAME} ${OBJS} ft_printf.h ${WRITE_PATH}/float_parsing/float_parsing.h \
+			ar rc ${NAME} ${OBJS} ft_printf.h float_parsing/float_parsing.h \
 
 all:		${NAME}
 

@@ -6,76 +6,54 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/24 02:57:55 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/03 13:46:11 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-static void	write_char_null(t_flags *flags)
+static void	set_comp_cs(t_pars *pars)
 {
-	if (flags->bw_flags & MINUS)
-	{
-		write_char_buffer('\0', 1);
-		write_char_buffer(' ', flags->field_width_val - 1);
-	}
-	else
-	{
-		if (flags->bw_flags & ZERO)
-			write_char_buffer('0', flags->field_width_val - 1);
-		else	
-			write_char_buffer(' ', flags->field_width_val - 1);
-		write_char_buffer('\0', 1);
-	}
+	if (pars->bw_flags & PRECIS && pars->size_str > pars->precision_val)
+		pars->size_str = pars->precision_val;
+	pars->field_width_val -= pars->size_str;
+	if (pars->field_width_val)
+		fill_width(pars, pars->field_width_val);
 }
 
-static void	write_string(t_flags *flags, char *str, char *strnull)
+void		write_c(va_list *param, t_pars *pars)
 {
-	int	sizetoprint;
-	int	spacing;
+	char		c;
 
-	if (!str)
-		str = strnull;
-	sizetoprint = my_my_strlen(str);
-	if (flags->bw_flags & PRECIS && sizetoprint > flags->precision_val)
-		sizetoprint = flags->precision_val;
-	spacing = flags->field_width_val - sizetoprint;
-	if (flags->bw_flags & MINUS)
-	{
-		write_str_buffer(str, sizetoprint);
-		write_char_buffer(' ', spacing);
-	}
-	else
-	{
-		if (flags->bw_flags & ZERO)
-			write_char_buffer('0', spacing);
-		else
-			write_char_buffer(' ', spacing);
-		write_str_buffer(str, sizetoprint);
-	}
+	if (pars->precision_val == 0 && pars->bw_flags & PRECIS)
+		pars->precision_val = 1;
+	c = (char)va_arg(*param, int);
+	pars->str = &c;
+	pars->size_str = 1;
+	set_comp_cs(pars);
+	write_into_buffer(pars);
 }
 
-void		write_c(va_list *param, t_flags *flags)
+void		write_s(va_list *param, t_pars *pars)
 {
-	char		c[2];
-
-	c[0] = (char)va_arg(*param, int);
-	c[1] = '\0';
-	if (c[0] == '\0')
-		return (write_char_null(flags));
-	if (flags->precision_val == 0 && flags->bw_flags & PRECIS)
-		flags->precision_val = 1;
-	write_string(flags, c, "");
+	pars->str = va_arg(*param, char*);
+	if (!pars->str)
+		pars->str = "(null)";
+	pars->size_str = my_my_strlen(pars->str);
+	set_comp_cs(pars);
+	write_into_buffer(pars);
 }
 
-void		write_s(va_list *param, t_flags *flags)
+void		write_pct(va_list *param, t_pars *pars)
 {
-	write_string(flags, va_arg(*param, char*), "(null)");
-}
+	char	c;
 
-void		write_pct(t_flags *flags)
-{
-	if (flags->precision_val == 0 && flags->bw_flags & PRECIS)
-		flags->precision_val = 1;
-	write_string(flags, "%", "");
+	if (pars->precision_val == 0 && pars->bw_flags & PRECIS)
+		pars->precision_val = 1;
+	c = '%';
+	pars->str = &c;
+	pars->size_str = 1;
+	if (param)
+		set_comp_cs(pars);
+	write_into_buffer(pars);
 }

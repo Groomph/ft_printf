@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/01 05:24:30 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/03 09:51:39 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,40 +62,40 @@ static void	init_decimal(t_doub *ptdoub, long double doub)
 	ptdoub->size = i + ptdoub->point;
 }
 
-void	init_longlong_intpart(t_doub *ptdoub)
+void	init_longlong_intpart(t_doub *doub)
 {
 	int	intpart;
 	long double	temp_doub;
 	int		i;
 	int		j;
 
-	temp_doub = ptdoub->doub;
+	temp_doub = doub->doub;
 	i = 0;
 	j = 0;
-	while (ptdoub->doub >= 10.0 && ++i)
-		ptdoub->doub /= 10;
-	ptdoub->strdoub[i + 1] = '\0';
+	while (doub->doub >= 10.0 && ++i)
+		doub->doub /= 10;
+	doub->strdoub[i + 1] = '\0';
 	while (j <= i)
 	{
-		intpart = ptdoub->doub;
-		ptdoub->strdoub[j++] = intpart + '0';
-		ptdoub->doub -= intpart;
+		intpart = doub->doub;
+		doub->strdoub[j++] = intpart + '0';
+		doub->doub -= intpart;
 		if (j <= i)
-			ptdoub->doub *= 10;
+			doub->doub *= 10;
 	}
-	ptdoub->point = j;
-	ptdoub->strdoub[ptdoub->point] = '\0';
-	init_decimal(ptdoub, ptdoub->doub);
-	ptdoub->doub = temp_doub;
+	doub->point = j;
+	doub->strdoub[doub->point] = '\0';
+	init_decimal(doub, doub->doub);
+	doub->doub = temp_doub;
 }
 
-void	init_struct_double(t_doub *ptdoub)
+void	init_struct_double(t_doub *doub)
 {
 	long long int	intpart;
 
 /*	long	l;
-	ptdoub->doub *= 3.33333333333;
-	l = *(long *)&ptdoub->doub;
+	doub->doub *= 3.33333333333;
+	l = *(long *)&doub->doub;
 	    if (l == 0x7F800000) // +inf
 		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
     if (l == 0xFF800000) // -inf
@@ -103,37 +103,37 @@ void	init_struct_double(t_doub *ptdoub)
     if (l == 0x7FFFFFFF) // NaN
 		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
 */
-	ptdoub->sign = '+';
-	if (ptdoub->doub <= 0.0 && ft_is_signed(ptdoub->doub))
+	doub->sign = '+';
+	if (doub->doub <= 0.0 && ft_is_signed(doub->doub))
 	{
-		ptdoub->sign = '-';
-		ptdoub->doub *= -1;
+		doub->sign = '-';
+		doub->doub *= -1;
 	}
 /*
-	if (ptdoub->doub <= FLT_MAX)
+	if (doub->doub <= FLT_MAX)
 	{
-	       if (ptdoub->doub >= -FLT_MAX)
+	       if (doub->doub >= -FLT_MAX)
 		write(1, "ok", 0);
 		else
 		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
 	}
 	else
 	{
-		if (ptdoub->doub > 0)
+		if (doub->doub > 0)
 		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
 	}*/
-	if (ptdoub->doub > 1000000000000000000.0)	
-		init_longlong_intpart(ptdoub);
+	if (doub->doub > 1000000000000000000.0)	
+		init_longlong_intpart(doub);
 	else
 	{
-		intpart = ptdoub->doub;
-		ptdoub->point = my_utoa_len(intpart, 10, NULL);
-		write_digit_str(intpart, ptdoub->strdoub, ptdoub->point - 1);
-		ptdoub->strdoub[ptdoub->point] = '\0';
-		init_decimal(ptdoub, ptdoub->doub - intpart);
+		intpart = doub->doub;
+		doub->point = my_utoa_len(intpart, 10);
+		write_digit_str(intpart, doub->strdoub, doub->point - 1);
+		doub->strdoub[doub->point] = '\0';
+		init_decimal(doub, doub->doub - intpart);
 	}
-	ptdoub->exponent = 0;
-	ptdoub->isnull = 0;
-	if (ptdoub->doub == 0.0 || ptdoub->doub == -0.0)
-		ptdoub->isnull = 1;
+	doub->exponent = 0;
+	doub->isnull = 0;
+	if (doub->doub == 0.0 || doub->doub == -0.0)
+		doub->isnull = 1;
 }

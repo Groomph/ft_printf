@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/11/29 17:43:58 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/03 14:57:48 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,36 @@ typedef	struct	s_buffer
 	char		bufstr[BUFFER_SIZE];
 }				t_buffer;
 
-typedef struct	s_flags
+typedef struct	s_pars
 {
 	unsigned int		bw_flags;
 	int			precision_val;
 	int			field_width_val;
-	char		convert_char;
-}				t_flags;
+	char			convert_char;
+/**/
+	short			space_before;
+	char			*extra_before;
+	short			zero_before;
+	char			sign;
+	char			*str;
+	short			zero_after;
+	char			*extra_after;
+	short			space_after;
+	short			print_sign;
+	short			size_str;
+	short			size_extra;
+}				t_pars;
 
 typedef struct	s_converter
 {
-	void			(*pt_function)(va_list *param, t_flags *flags);
+	void			(*pt_function)(va_list *param, t_pars *pars);
 	char			c;
 }				t_converter;
 
 int				ft_printf(const char *str, ...);
 int				ft_printf_parsing(const char *str, va_list *param);
 int				lobby_write_buffer(va_list *param,
-								t_flags *flags);
-void    write_g2(va_list *param, t_flags *flags);
-
+								t_pars *pars);
 /*
 ****************   buffer   ****************
 */
@@ -68,31 +78,36 @@ int				send_totalsize(void);
 void				init_buffer(void);
 
 /*
-****************   parsing_functions.c   ****************
+****************   parsing & composition   ****************
 */
 
-int				field_width(t_flags *flags, va_list *param, const char *str);
-int				precision(t_flags *flags, va_list *param, const char *str);
+int				field_width(t_pars *pars, va_list *param, const char *str);
+int				precision(t_pars *pars, va_list *param, const char *str);
+void            		fill_width(t_pars *pars, int remains);
+void            		add_sign_numeric(t_pars *pars, char sign);
+
 
 /*
-****************   print_iduxXcs%p.c   ****************
+****************   print_efgidouxXpcs%.c   ****************
 */
 
-void				write_di(va_list *param, t_flags *flags);
-void				write_u(va_list *param, t_flags *flags);
-void				write_x(va_list *param, t_flags *flags);
-void				write_xx(va_list *param, t_flags *flags);
-void				write_c(va_list *param, t_flags *flags);
-void				write_s(va_list *param, t_flags *flags);
-void				write_pct(t_flags *flags);
-void				write_p(va_list *param, t_flags *flags);
-void				write_o(va_list *param, t_flags *flags);
-void				write_n(va_list *param, t_flags *flags);
-void				write_e(va_list *param, t_flags *flags);
-void				write_f(va_list *param, t_flags *flags);
-void				write_g(va_list *param, t_flags *flags);
-void				unsigned_noboun(t_flags *flags,
-				       unsigned long nb, char *base, int sizeb);
+void    lobby_numeric_converter(unsigned long long int nb, char *base,
+                                                 t_pars *pars, int sizeb);
+void				set_comp_num(t_pars *pars);
+void				write_into_buffer(t_pars *pars);
+void				write_di(va_list *param, t_pars *pars);
+void				write_u(va_list *param, t_pars *pars);
+void				write_x(va_list *param, t_pars *pars);
+void				write_xx(va_list *param, t_pars *pars);
+void				write_c(va_list *param, t_pars *pars);
+void				write_s(va_list *param, t_pars *pars);
+void				write_pct(va_list *param, t_pars *pars);
+void				write_p(va_list *param, t_pars *pars);
+void				write_o(va_list *param, t_pars *pars);
+void				write_n(va_list *param, t_pars *pars);
+void				write_e(va_list *param, t_pars *pars);
+void				write_f(va_list *param, t_pars *pars);
+void				write_g(va_list *param, t_pars *pars);
 /*
 ****************   write_utils.c   ****************
 */
@@ -103,11 +118,7 @@ void    			write_digit_str(unsigned long long int intpart,
 								char *pt, int i);
 
 int				my_my_strlen(char *str);
-int				my_utoa_len(unsigned long long nb, int sizebase,
-								t_flags *flags);
+int				my_utoa_len(unsigned long long nb, int sizebase);
 int				ft_is_signed(long double lf);
-int				write_double_expo(long double doub, t_flags *flags,
-								char *temp, int *exponent);
-int				write_double_regular(long double doub,
-						t_flags *flags, char *temp, int *exponent);
+
 #endif

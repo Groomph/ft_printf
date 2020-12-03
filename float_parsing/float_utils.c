@@ -6,13 +6,13 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:12:29 by romain            #+#    #+#             */
-/*   Updated: 2020/12/01 11:12:48 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/02 15:18:33 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "float_parsing.h"
 
-void    write_exponent(int exponent)
+void    write_exponent(int exponent, char *tab)
 {
         char    sign;
 
@@ -22,10 +22,10 @@ void    write_exponent(int exponent)
                 sign = '-';
                 exponent *= -1;
         }
-        write_char_buffer('e', 1);
-        write_char_buffer(sign, 1);
-        write_char_buffer(exponent / 10 + '0', 1);
-        write_char_buffer(exponent % 10 + '0', 1);
+	tab[0] = 'e';
+	tab[1] = sign;
+	tab[2] = exponent / 10 + '0';
+	tab[3] = exponent % 10 + '0';
 }
 
 int	count_clean_zero(t_doub *doub, int index, int count_clean)
@@ -39,6 +39,7 @@ int	count_clean_zero(t_doub *doub, int index, int count_clean)
 			i++;
 		return (i);
 	}
+	return (i);
 }
 
 void	round_float(t_doub *doub, int index)

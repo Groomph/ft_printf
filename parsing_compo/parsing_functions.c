@@ -6,11 +6,36 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 15:02:24 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/03 14:41:10 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../ft_printf.h"
+
+void		fill_width(t_pars *pars, int remains)
+{
+	if (pars->bw_flags & MINUS)
+		pars->space_after += remains;
+	else if (pars->bw_flags & ZERO)
+		pars->zero_before += remains;
+	else    
+		pars->space_before += remains;
+}
+
+void		add_sign_numeric(t_pars *pars, char sign)
+{
+	if (sign == '-' || (pars->bw_flags & PLUS && sign))
+	{
+		pars->sign = sign;
+		pars->print_sign = 1;
+		pars->field_width_val--;
+	}
+	else if (sign == '+' && pars->bw_flags & SPACE)
+	{       
+		pars->space_before++;
+		pars->field_width_val--;
+	}
+}
 
 static int	my_atoi(const char *str, int *i)
 {
@@ -33,26 +58,26 @@ static int	my_atoi(const char *str, int *i)
 	return (nb * neg);
 }
 
-int	field_width(t_flags *flags, va_list *param, const char *str)
+int	field_width(t_pars *pars, va_list *param, const char *str)
 {
 	int	i;
 
 	i = 0;
 	if (str[i] == '*')
 	{	
-		flags->field_width_val = va_arg(*param, int);
-		if (flags->field_width_val < 0)
+		pars->field_width_val = va_arg(*param, int);
+		if (pars->field_width_val < 0)
 		{
-			flags->bw_flags |= MINUS;
-			flags->field_width_val *= -1;
+			pars->bw_flags |= MINUS;
+			pars->field_width_val *= -1;
 		}
 		return (1);
 	}
-	flags->field_width_val = my_atoi(str, &i);
+	pars->field_width_val = my_atoi(str, &i);
 	return (i);
 }
 
-int	precision(t_flags *flags, va_list *param, const char *str)
+int	precision(t_pars *pars, va_list *param, const char *str)
 {
 	int	i;
 
@@ -60,13 +85,13 @@ int	precision(t_flags *flags, va_list *param, const char *str)
 	if (str[i] == '*')
 	{
 		i++;
-		flags->precision_val = va_arg(*param, int);
+		pars->precision_val = va_arg(*param, int);
 	}
 	else
-		flags->precision_val = my_atoi(str, &i);
-	if (flags->precision_val >= 0)
-		flags->bw_flags |= PRECIS;
+		pars->precision_val = my_atoi(str, &i);
+	if (pars->precision_val >= 0)
+		pars->bw_flags |= PRECIS;
 	else
-		flags->precision_val = 0;
+		pars->precision_val = 0;
 	return (i);
 }

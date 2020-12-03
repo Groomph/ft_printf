@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:17:09 by romain            #+#    #+#             */
-/*   Updated: 2020/11/26 01:15:32 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/03 07:26:11 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ int		my_my_strlen(char *str)
 	return (i);
 }
 
-int		my_utoa_len(unsigned long long nb, int sizebase, t_flags *flags)
+int		my_utoa_len(unsigned long long nb, int sizebase)
 {
 	int	i;
 
-	if (flags && flags->bw_flags & PRECIS && flags->precision_val == 0 && nb == 0)
-		return (0);
 	i = 1;
 	while (nb /= sizebase)
 		i++;
