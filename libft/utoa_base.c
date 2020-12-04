@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   utoa_base.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/13 06:22:19 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 14:03:31 by rsanchez         ###   ########.fr       */
+/*   Created: 2020/12/04 07:37:35 by romain            #+#    #+#             */
+/*   Updated: 2020/12/04 09:16:43 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *str, ...)
+int	utoa_base(unsigned long long int nb, char *dest, char *base, int sizebase)
 {
-	int		i;
-	int		i2;
-	va_list	param;
-	
-	init_buffer();
-	i = 0;
-	i2 = 0;
-	va_start(param, str);
-	while (str && str[i])
+	int	size;
+	int	i;
+
+	if (!sizebase)
+		sizebase = string_len(base);
+	size = utoa_len(nb, sizebase);
+	i = size;
+	dest[i] = '\0';
+	while (--i >= 0)
 	{
-		while (str[i] && str[i] != '%')
-			i++;
-		write_str_buffer(&str[i2], i - i2);
-		if (str[i] == '%')
-			i += ft_printf_parsing(&str[i], &param);
-		i2 = i;
+		dest[i] = base[nb % sizebase];
+		nb /= sizebase;
 	}
-	va_end(param);
-	print_buffer(1);
-	return (send_totalsize());
+	return (size);
 }

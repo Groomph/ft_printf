@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_functions.c                                :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/12/03 14:41:10 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 09:05:14 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 void		fill_width(t_pars *pars, int remains)
 {
@@ -37,7 +37,7 @@ void		add_sign_numeric(t_pars *pars, char sign)
 	}
 }
 
-static int	my_atoi(const char *str, int *i)
+static int	atoi_pars(const char *str, int *i)
 {
 	unsigned int	nb;
 	int				neg;
@@ -73,7 +73,7 @@ int	field_width(t_pars *pars, va_list *param, const char *str)
 		}
 		return (1);
 	}
-	pars->field_width_val = my_atoi(str, &i);
+	pars->field_width_val = atoi_pars(str, &i);
 	return (i);
 }
 
@@ -88,7 +88,7 @@ int	precision(t_pars *pars, va_list *param, const char *str)
 		pars->precision_val = va_arg(*param, int);
 	}
 	else
-		pars->precision_val = my_atoi(str, &i);
+		pars->precision_val = atoi_pars(str, &i);
 	if (pars->precision_val >= 0)
 		pars->bw_flags |= PRECIS;
 	else

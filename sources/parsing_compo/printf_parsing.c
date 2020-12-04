@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_parsing.c                                :+:      :+:    :+:   */
+/*   printf_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/12/03 14:41:00 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 09:27:10 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 static void	erase_conflicting_flags(t_pars *pars)
 {
@@ -18,6 +18,27 @@ static void	erase_conflicting_flags(t_pars *pars)
 		pars->bw_flags &= ~(SPACE);
 	if (pars->bw_flags & MINUS && pars->bw_flags & ZERO)
 		pars->bw_flags &= ~(ZERO);
+}
+
+static int	third_pars(const char *str, int i, t_pars *pars)
+{
+	if (str[i] == 'l' && str[i + 1] == 'l')
+	{
+		i++;
+		pars->bw_flags |= LLLL;
+	}	
+	else if (str[i] == 'h' && str[i + 1] == 'h')
+	{
+		i++;
+		pars->bw_flags |= HHHH;
+	}	
+	else if (str[i] == 'l')
+		pars->bw_flags |= LL;
+	else if (str[i] == 'h')
+		pars->bw_flags |= HH;
+	else
+		return (i);
+	return (third_pars(str, i + 1, pars));
 }
 
 static int	second_pars(const char *str, int i, t_pars *pars, va_list *param)
@@ -48,33 +69,17 @@ static int	first_pars(const char *str, int i, t_pars *pars)
 	return (first_pars(str, i + 1, pars));
 }
 
-static void	init_pars_struct(t_pars *pars)
-{
-	pars->bw_flags = 0;
-	pars->precision_val = 0;
-	pars->field_width_val = 0;
-	pars->convert_char = 0;
-	pars->space_before = 0;
-	pars->extra_before = NULL;
-        pars->zero_before = 0;
-        pars->sign = 0;
-        pars->zero_after = 0;
-	pars->extra_after = NULL;
-        pars->space_after = 0;
-        pars->print_sign = 0;
-	pars->size_extra = 0;
-}
-
 int			ft_printf_parsing(const char *str, va_list *param)
 {
 	int		i;
 	va_list		param2;
 	t_pars		pars;
 	
-	init_pars_struct(&pars);
+	init_zero(&pars, sizeof(pars));
 	va_copy(param2, *param);
 	i = first_pars(str, 1, &pars);
 	i += second_pars(&str[i], 0, &pars, &param2);
+	i += third_pars(&str[i], 0, &pars);
 	erase_conflicting_flags(&pars);	
 	if (str[i])
 			pars.convert_char = str[i++];

@@ -1,59 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_buffer.c                                  :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 06:22:19 by romain            #+#    #+#             */
-/*   Updated: 2020/11/23 14:06:09 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/04 05:23:50 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "buffer.h"
 
-static t_buffer	buf;
-
-void		print_buffer(int fd)
+int	ft_printf(const char *str, ...)
 {
-		write(fd, buf.bufstr, buf.i);
-		buf.totalsize += buf.i;
-		buf.i = 0;
-}
-
-void		write_str_buffer(const char *str, int size)
-{
-	int	i2;
-
+	int		i;
+	int		i2;
+	va_list	param;
+	
+	init_buffer();
+	i = 0;
 	i2 = 0;
-	while (i2 < size)
+	va_start(param, str);
+	while (str && str[i])
 	{
-		buf.bufstr[buf.i++] = str[i2++];
-		if (buf.i == BUFFER_SIZE)
-			print_buffer(1);
+		while (str[i] && str[i] != '%')
+			i++;
+		write_str_buffer(&str[i2], i - i2);
+		if (str[i] == '%')
+			i += ft_printf_parsing(&str[i], &param);
+		i2 = i;
 	}
-}
-
-void		write_char_buffer(char c, int nb)
-{
-	int	i2;
-
-	i2 = 0;
-	while (i2++ < nb)
-	{
-		buf.bufstr[buf.i++] = c;
-		if (buf.i == BUFFER_SIZE)
-			print_buffer(1);
-	}
-}
-
-int		send_totalsize(void)
-{
-	return (buf.totalsize + buf.i);
-}
-
-void	init_buffer(void)
-{
-	buf.i = 0;
-	buf.totalsize = 0;
+	va_end(param);
+	print_buffer(1);
+	return (send_totalsize());
 }

@@ -6,11 +6,12 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/03 07:17:53 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 14:17:09 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
+#include "buffer.h"
 
 static t_converter	g_tab_function[] =
 {
@@ -21,11 +22,11 @@ static t_converter	g_tab_function[] =
 	{&write_p, 'p'},
 	{&write_s, 's'},
 	{&write_u, 'u'},
-	{&write_x, 'x'},
+	{&write_xx, 'x'},
 	{&write_xx, 'X'},
 	{&write_n, 'n'},
-	{&write_e, 'e'},
-	{&write_f, 'f'},
+	{&write_ef, 'e'},
+	{&write_ef, 'f'},
 	{&write_g, 'g'},
 	{&write_pct, '%'},
 	{NULL, -1}

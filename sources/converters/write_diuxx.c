@@ -6,11 +6,11 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/12/03 13:44:15 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 14:13:30 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 void	set_comp_num(t_pars *pars)
 {
@@ -31,7 +31,6 @@ void	lobby_numeric_converter(unsigned long long int nb, char *base,
 							t_pars *pars, int sizeb)
 {
 	char	tab[50];
-	int	i;
 
 	if (pars->bw_flags & ZERO && pars->bw_flags & PRECIS)
 		pars->bw_flags &= ~(ZERO);
@@ -43,86 +42,79 @@ void	lobby_numeric_converter(unsigned long long int nb, char *base,
 	pars->str = tab;
 	pars->size_str = 0;
 	if (!((pars->bw_flags & PRECIS) && pars->precision_val == 0 && nb == 0))
-		pars->size_str = my_utoa_len(nb, sizeb);
-	i = pars->size_str;
-	while (--i >= 0)
-	{
-		tab[i] = base[nb % sizeb];
-		nb /= sizeb;
-	}
+		pars->size_str = utoa_base(nb, tab, base, sizeb);
 	set_comp_num(pars);
 }
 
 void	write_di(va_list *param, t_pars *pars)
 {
-	int	nb;
+	long long int	nb;
 
-	nb = va_arg(*param, int);
+	if (pars->bw_flags & LLLL)
+		nb = va_arg(*param, long long int);
+	else if (pars->bw_flags & LL)
+		nb = va_arg(*param, long int);
+	else
+		nb = va_arg(*param, int);
+	if (pars->bw_flags & HHHH)
+		nb = (char)nb;
+	else if (pars->bw_flags & HH)
+		nb = (short)nb;
 	if (nb < 0)
 	{
 		pars->sign = '-';
-		lobby_numeric_converter((unsigned int)-nb,
+		lobby_numeric_converter((unsigned long long int)-nb,
 						"0123456789", pars, 10);
 	}
 	else
 	{
 		if (pars->bw_flags & SPACE || pars->bw_flags & PLUS)
 			pars->sign = '+';
-		lobby_numeric_converter((unsigned int)nb,
+		lobby_numeric_converter((unsigned long long int)nb,
 						"0123456789", pars, 10);
 	}
 }
 
-void	write_u(va_list *param, t_pars *pars)
+unsigned long long int	get_unsigned_param(va_list *param, t_pars *pars)
 {
-	unsigned int	nb;
-	
-	nb = va_arg(*param, unsigned int);
-/*	if (nb && pars->bw_flags & PLUS)
-		pars->space_before++;
-*/	lobby_numeric_converter(nb, "0123456789", pars, 10);
+	unsigned long long int nb;
+
+	if (pars->bw_flags & LLLL)
+		nb = va_arg(*param, unsigned long long int);
+	else if (pars->bw_flags & LL)
+		nb = va_arg(*param, unsigned long int);
+	else
+		nb = va_arg(*param, unsigned int);
+	if (pars->bw_flags & HHHH)
+		nb = (unsigned char)nb;
+	else if (pars->bw_flags & HH)
+		nb = (unsigned short)nb;
+	return (nb);
 }
 
-void	write_x(va_list *param, t_pars *pars)
+void	write_u(va_list *param, t_pars *pars)
 {
-	unsigned int	nb;
-	char		tab[2];
-	
-	nb = va_arg(*param, unsigned int);
-	if (nb && pars->bw_flags & CROISI)	
-	{
-		tab[0] = '0';
-		tab[1] = 'x';
-		pars->extra_before = tab;
-		pars->size_extra = 2;
-	}
-/*	else if (nb && ((pars->bw_flags & SPACE) || (pars->bw_flags & PLUS)))
-	{
-		pars->space_before++;
-		if (pars->bw_flags & SPACE)
-			pars->field_width_val--;
-	}
-*/	lobby_numeric_converter(nb, "0123456789abcdef", pars, 16);
+	unsigned long long int	nb;
+
+	nb = get_unsigned_param(param, pars);
+	lobby_numeric_converter(nb, "0123456789", pars, 10);
 }
 
 void	write_xx(va_list *param, t_pars *pars)
 {
-	unsigned int	nb;
+	unsigned long long int	nb;
 	char		tab[2];
 
-	nb = va_arg(*param, unsigned int);
+	nb = get_unsigned_param(param, pars);
 	if (nb && pars->bw_flags & CROISI)	
 	{
 		tab[0] = '0';
-		tab[1] = 'X';
+		tab[1] = pars->convert_char;
 		pars->extra_before = tab;
 		pars->size_extra = 2;
 	}
-/*	else if (nb && ((pars->bw_flags & SPACE) || (pars->bw_flags & PLUS)))
-	{
-		pars->space_before++;
-		if (pars->bw_flags & SPACE)
-			pars->field_width_val--;
-	}	
-*/	lobby_numeric_converter(nb, "0123456789ABCDEF", pars, 16);
+	if (pars->convert_char == 'X')
+		lobby_numeric_converter(nb, "0123456789ABCDEF", pars, 16);
+	else
+		lobby_numeric_converter(nb, "0123456789abcdef", pars, 16);
 }

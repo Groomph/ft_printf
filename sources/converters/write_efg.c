@@ -6,11 +6,39 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 23:34:27 by romain            #+#    #+#             */
-/*   Updated: 2020/12/03 14:51:05 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 13:55:47 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../float_parsing/float_parsing.h"
+#include "ft_printf.h"
+#include "float.h"
+
+static int     check_float_coherence(t_pars *pars, long double doub)
+{
+        int     inf;
+
+        if (is_NaN(doub))
+                pars->str = "nan";
+        else if ((inf = is_infinite(doub)) != 0)
+        {
+                pars->sign = '-';
+                if (doub < 0)
+                        pars->str = "inf";
+                else
+                {   
+                        pars->str = "inf";
+                        pars->sign = '+';
+                }   
+        }
+        else
+                return (0);
+        if (pars->bw_flags & ZERO)
+                pars->bw_flags &= ~(ZERO);
+        pars->precision_val = 0;
+        pars->size_str = 3;
+        set_comp_num(pars);
+        return (1);
+}
 
 static void     set_comp_g(t_doub *doub, t_pars *pars)
 {
@@ -18,7 +46,7 @@ static void     set_comp_g(t_doub *doub, t_pars *pars)
 	if (pars->size_str > pars->precision_val)
 		pars->size_str = pars->precision_val;
 	if (!(pars->bw_flags & CROISI))
-		pars->size_str -= count_clean_zero(doub, pars->size_str - 1, 1);
+		pars->size_str -= count_trailing_zero(doub, pars->size_str - 1);
 	pars->str[pars->size_str] = '\0';
 	if (pars->size_str > doub->point ||
 		(pars->size_str == doub->point && pars->bw_flags & CROISI))
@@ -56,6 +84,9 @@ void	write_g(va_list *param, t_pars *pars)
 	t_doub	doub;
 	t_doub	temp;
 
+	doub.doub = va_arg(*param, double);
+	if (check_float_coherence(pars, doub.doub))
+		return ;
 	if (!(pars->bw_flags & PRECIS))
 	{
 		pars->bw_flags |= PRECIS;
@@ -63,7 +94,6 @@ void	write_g(va_list *param, t_pars *pars)
 	}
 	else if (pars->precision_val == 0)
 		pars->precision_val = 1;
-	doub.doub = va_arg(*param, double);	
 	init_struct_double(&doub);
 	temp = find_exponent(doub, pars->precision_val);
 	if (temp.exponent >= pars->precision_val || temp.exponent < -4)
@@ -100,39 +130,30 @@ static void     set_comp_ef(t_doub *doub, t_pars *pars)
 	fill_width(pars, pars->field_width_val);
 }
 
-void	write_e(va_list *param, t_pars *pars)
+void	write_ef(va_list *param, t_pars *pars)
 {
 	t_doub		doub;
 	char		expo[4];
 
+	doub.doub = va_arg(*param, double);
+	if (check_float_coherence(pars, doub.doub))
+		return ;
 	if (!(pars->bw_flags & PRECIS))
         {
 	        pars->bw_flags |= PRECIS;
               pars->precision_val = 6;
 	}
-	pars->field_width_val -= 4;
-	doub.doub = va_arg(*param, double);
 	init_struct_double(&doub);
-	doub = find_exponent(doub, pars->precision_val + 1);
+	if (pars->convert_char == 'e')
+	{
+		pars->field_width_val -= 4;
+		doub = find_exponent(doub, pars->precision_val + 1);
+		pars->extra_after = expo;
+		pars->size_extra = 4;
+		write_exponent(doub.exponent, expo);
+	}
+	else
+        	round_float(&doub, doub.point + pars->precision_val);
 	set_comp_ef(&doub, pars);
-	pars->extra_after = expo;
-	pars->size_extra = 4;
-	write_exponent(doub.exponent, expo);
 	write_into_buffer(pars);
-}
-
-void    write_f(va_list *param, t_pars *pars)
-{
-        t_doub          doub;
-
-        if (!(pars->bw_flags & PRECIS))
-        {
-                pars->bw_flags |= PRECIS;
-              pars->precision_val = 6;
-        }
-        doub.doub = va_arg(*param, double);
-        init_struct_double(&doub);
-        round_float(&doub, doub.point + pars->precision_val);
-        set_comp_ef(&doub, pars);
-        write_into_buffer(pars);
 }

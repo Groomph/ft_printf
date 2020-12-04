@@ -6,36 +6,40 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/03 09:51:39 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 12:07:00 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "float_parsing.h"
+#include "ft_printf.h"
+#include "float.h"
 #include <float.h>
+
+void    write_exponent(int exponent, char *tab)
+{
+        char    sign;
+
+        sign = '+';
+        if (exponent < 0)
+        {
+                sign = '-';
+                exponent *= -1;
+        }
+	tab[0] = 'e';
+	tab[1] = sign;
+	tab[2] = exponent / 10 + '0';
+	tab[3] = exponent % 10 + '0';
+}
 
 t_doub	find_exponent(t_doub doub, int precision)
 {
-	int superior;
 
 	while (doub.point > 1)
 		divide_str_double(&doub);
 	while (doub.strdoub[0] == '0' && !doub.isnull)
 		multiply_str_double(&doub);
-	superior = 0;
-	if (precision < doub.size - 1)
-		superior = is_roundable_bynb(doub, precision);
-	if (superior && precision == 1)
-	{
- 		if ((doub.strdoub[0] % 2 == 0 && superior == 1)
-                        || (doub.strdoub[0] % 2 && superior))
-                {
-			if (digit_str_rounder(&doub, 0))
-				divide_str_double(&doub);
-		}
-	}
-	else if (superior)
-		if (digit_str_rounder(&doub, precision - 1))
-			divide_str_double(&doub);
+	round_float(&doub, precision);
+	if (doub.point > 1)
+		divide_str_double(&doub);
 	return (doub);
 }
 
@@ -93,42 +97,18 @@ void	init_struct_double(t_doub *doub)
 {
 	long long int	intpart;
 
-/*	long	l;
-	doub->doub *= 3.33333333333;
-	l = *(long *)&doub->doub;
-	    if (l == 0x7F800000) // +inf
-		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
-    if (l == 0xFF800000) // -inf
-		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
-    if (l == 0x7FFFFFFF) // NaN
-		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
-*/
 	doub->sign = '+';
-	if (doub->doub <= 0.0 && ft_is_signed(doub->doub))
+	if (doub->doub <= 0.0 && is_double_signed(doub->doub))
 	{
 		doub->sign = '-';
 		doub->doub *= -1;
 	}
-/*
-	if (doub->doub <= FLT_MAX)
-	{
-	       if (doub->doub >= -FLT_MAX)
-		write(1, "ok", 0);
-		else
-		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
-	}
-	else
-	{
-		if (doub->doub > 0)
-		write(1, "inf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10);
-	}*/
 	if (doub->doub > 1000000000000000000.0)	
 		init_longlong_intpart(doub);
 	else
 	{
 		intpart = doub->doub;
-		doub->point = my_utoa_len(intpart, 10);
-		write_digit_str(intpart, doub->strdoub, doub->point - 1);
+		doub->point = utoa_base(intpart, doub->strdoub, "0123456789", 10);
 		doub->strdoub[doub->point] = '\0';
 		init_decimal(doub, doub->doub - intpart);
 	}

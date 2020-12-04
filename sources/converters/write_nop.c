@@ -6,21 +6,30 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/03 12:41:03 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 14:16:58 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
+#include "buffer.h"
 
 void		write_n(va_list *param, t_pars *pars)
 {
-	int	*pt;
+	void	*pt;
+	int	tmp;
 
-	if (pars)
-	{
-		pt = va_arg(*param, int*);
-		*pt = send_totalsize();
-	}
+	pt = va_arg(*param, void*);
+	tmp = send_totalsize();
+	if (pars->bw_flags & HHHH)
+		*(char*)pt = (char)tmp;
+        else if (pars->bw_flags & HH)
+		*(short*)pt = (short)tmp;
+        else if (pars->bw_flags & LLLL)
+		*(long long int*)pt = tmp;
+        else if (pars->bw_flags & LL)
+		*(long int*)pt = tmp;
+        else
+		*(int*)pt = tmp;
 }
 
 void			write_p(va_list *param, t_pars *pars)
@@ -44,12 +53,12 @@ void			write_p(va_list *param, t_pars *pars)
 
 void    write_o(va_list *param, t_pars *pars)
 {
-        unsigned int    nb;
+        unsigned long long int    nb;
         char            zero;
-
-        nb = va_arg(*param, unsigned int);
+	
+	nb = get_unsigned_param(param, pars);
         if (pars->bw_flags & CROISI &&
-                        my_utoa_len(nb, 8) > pars->precision_val)
+                        utoa_len(nb, 8) > pars->precision_val)
         {
                 zero = '0';
                 pars->extra_before = &zero;

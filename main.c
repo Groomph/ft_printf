@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/12/03 13:27:48 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 14:00:23 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,18 @@ int main(void)
 		
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 */
-
+#include <math.h>
 
 	int	i = -2.9999999;
 	int	i2 = -2.40;
-
-	    i = printf("printf:    % 050.100s\n", str);
+int chart = 49281;
+	char 	buf[3];
+	buf[0] = -61;
+	buf[1] = -87;
+	buf[2] = '\n';
+	write(1, "printf:     ", 12);	
+	write(1, buf, 3);
+//	    i = printf("printf:    %lc\n", chart);
 	i2 = ft_printf("ft_printf: % 050.100s\n", str);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 		
@@ -55,12 +61,17 @@ int main(void)
 	i2 = ft_printf("ft_printf %: %+ 050.100%\n", str);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 		
-/*	double test = -129083211111.12366666;
-	    i = printf("printf:    % 0.p\n", NULL);
-	i2 = ft_printf("ft_printf: % 0.p\n", NULL);
+	double test = -1291;
+	    i = printf("printf:    %i\n", test);
+	i2 = ft_printf("ft_printf: %i\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
-	test = 0.600132;
+	test = -12999999999999999999999999089.12311111111111111111111111111111111111111111111111169999999999999999999999999999999996666;
+	    i = printf("printf:    %10.6f\n", test);
+	i2 = ft_printf("ft_printf: %10.6f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+/*	test = 0.600132;
 	    i = printf("printf:    %020.4p\n", &test);
 	i2 = ft_printf("ft_printf: %020.4p\n", &test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);

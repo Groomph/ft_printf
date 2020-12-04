@@ -6,11 +6,11 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/03 13:46:11 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 12:27:05 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 static void	set_comp_cs(t_pars *pars)
 {
@@ -39,7 +39,7 @@ void		write_s(va_list *param, t_pars *pars)
 	pars->str = va_arg(*param, char*);
 	if (!pars->str)
 		pars->str = "(null)";
-	pars->size_str = my_my_strlen(pars->str);
+	pars->size_str = string_len(pars->str);
 	set_comp_cs(pars);
 	write_into_buffer(pars);
 }
