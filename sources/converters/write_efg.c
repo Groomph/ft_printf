@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 23:34:27 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 14:33:06 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 08:42:51 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static void    lobby_write_gE(t_doub *doub, t_pars *pars)
 	}
 	pars->str = doub->strdoub;
 	set_comp_g(doub, pars);
-	write_into_buffer(pars);
 }
 
 void	write_g(va_list *param, t_pars *pars)
