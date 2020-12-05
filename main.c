@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 14:00:23 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 07:29:14 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,12 @@ int main(void)
 
 	int	i = -2.9999999;
 	int	i2 = -2.40;
-int chart = 49281;
-	char 	buf[3];
-	buf[0] = -61;
-	buf[1] = -87;
-	buf[2] = '\n';
-	write(1, "printf:     ", 12);	
-	write(1, buf, 3);
-//	    i = printf("printf:    %lc\n", chart);
-	i2 = ft_printf("ft_printf: % 050.100s\n", str);
+	    i = printf("printf c:    %lc\n", 0xc30a);
+	i2 = ft_printf("ft_printf c: %lc\n", 0xc30a);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+		
+	    i = printf("printf:    %+ 050.100s%\n", str);
+	i2 = ft_printf("ft_printf: %+ 050.100s\n", str);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 		
 	    i = printf("printf c:    %- 050.100c\n", '\0');

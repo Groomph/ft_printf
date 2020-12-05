@@ -6,13 +6,12 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 12:07:00 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 15:05:34 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "float.h"
-#include <float.h>
 
 void    write_exponent(int exponent, char *tab)
 {

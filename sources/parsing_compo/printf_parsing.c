@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 09:27:10 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/04 15:54:58 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,32 @@ static int	third_pars(const char *str, int i, t_pars *pars)
 	return (third_pars(str, i + 1, pars));
 }
 
-static int	second_pars(const char *str, int i, t_pars *pars, va_list *param)
+static int	second_pars(const char *s, int i, t_pars *pars, va_list *param)
 {
-	if (str[i] == '*' || (str[i] <= '9' && str[i] >= '1'))
-		i += field_width(pars, param, &str[i]);
-	else if (str[i] == '.')
-		i += precision(pars, param, &str[i]);
+	if (s[i] == '*' || (s[i] <= '9' && s[i] >= '1'))
+		i += field_width(pars, param, &s[i]);
+	else if (s[i] == '.')
+		i += precision(pars, param, &s[i]);
 	else
-		return (i);
-	return (second_pars(str, i, pars, param));
+		return (third_pars(s, i, pars));
+	return (second_pars(s, i, pars, param));
 }
 
-static int	first_pars(const char *str, int i, t_pars *pars)
+static int	first_pars(const char *s, int i, t_pars *pars, va_list *param)
 {
-	if (str[i] == '-')
+	if (s[i] == '-')
 		pars->bw_flags |= MINUS;
-	else if (str[i] == '0')
+	else if (s[i] == '0')
 		pars->bw_flags |= ZERO;
-	else if (str[i] == ' ')
+	else if (s[i] == ' ')
 		pars->bw_flags |= SPACE;
-	else if (str[i] == '#')
+	else if (s[i] == '#')
 		pars->bw_flags |= CROISI;
-	else if (str[i] == '+')
+	else if (s[i] == '+')
 		pars->bw_flags |= PLUS;
 	else
-		return (i);
-	return (first_pars(str, i + 1, pars));
+		return (second_pars(s, i, pars, param));
+	return (first_pars(s, i + 1, pars, param));
 }
 
 int			ft_printf_parsing(const char *str, va_list *param)
@@ -77,9 +77,7 @@ int			ft_printf_parsing(const char *str, va_list *param)
 	
 	init_zero(&pars, sizeof(pars));
 	va_copy(param2, *param);
-	i = first_pars(str, 1, &pars);
-	i += second_pars(&str[i], 0, &pars, &param2);
-	i += third_pars(&str[i], 0, &pars);
+	i = first_pars(str, 1, &pars, &param2);
 	erase_conflicting_flags(&pars);	
 	if (str[i])
 			pars.convert_char = str[i++];

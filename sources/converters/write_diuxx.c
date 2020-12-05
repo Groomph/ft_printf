@@ -6,7 +6,7 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/12/04 14:13:30 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 07:32:43 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,12 @@ void	write_di(va_list *param, t_pars *pars)
 		pars->sign = '-';
 		lobby_numeric_converter((unsigned long long int)-nb,
 						"0123456789", pars, 10);
+		return ;
 	}
-	else
-	{
-		if (pars->bw_flags & SPACE || pars->bw_flags & PLUS)
-			pars->sign = '+';
-		lobby_numeric_converter((unsigned long long int)nb,
+	if (pars->bw_flags & SPACE || pars->bw_flags & PLUS)
+		pars->sign = '+';
+	lobby_numeric_converter((unsigned long long int)nb,
 						"0123456789", pars, 10);
-	}
 }
 
 unsigned long long int	get_unsigned_param(va_list *param, t_pars *pars)
