@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 09:35:29 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 09:58:35 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	is_roundable_bynb(t_doub doub, int index)
 	return (0);
 }
 
-void	round_float(t_doub *doub, int index)
+void	round_float(t_doub *doub, int index, int preci_zero)
 {
 	int     superior;
 
@@ -114,7 +114,8 @@ void	round_float(t_doub *doub, int index)
 	if (superior && index <= doub->point)
 	{
 		if ((doub->strdoub[index - 1] % 2 == 0 && superior == 1)
-				|| (doub->strdoub[doub->point -1] % 2 && superior))
+				|| doub->strdoub[doub->point -1] % 2
+				|| (preci_zero && doub.point == 1))
 			digit_str_rounder(doub, index - 1);
 	}
 	else if (superior)

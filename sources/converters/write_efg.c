@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 23:34:27 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 08:42:51 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 09:58:58 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,39 @@ static void     set_comp_g(t_doub *doub, t_pars *pars)
 	write_into_buffer(pars);
 }
 
-static void    lobby_write_gE(t_doub *doub, t_pars *pars)
+static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f,
+								int preci_zero)
 {
 	char	expo[4];
 
-	if (!(doub->isnull))
+	if (e_or_f == 'e')
 	{
-		write_exponent(doub->exponent, expo);
-		pars->field_width_val -= 4;
-		pars->extra_after = expo;
-		pars->size_extra = 4;
+		if (!(doub->isnull))
+		{
+			write_exponent(doub->exponent, expo);
+			pars->field_width_val -= 4;
+			pars->extra_after = expo;
+			pars->size_extra = 4;
+		}
+	}
+	else
+	{	
+		if (doub.strdoub[0] == '0' && doub.point == 1 && doub.strdoub[1])
+			pars->precision_val++;
+		round_float(&doub, pars->precision_val, preci_zero);
 	}
 	pars->str = doub->strdoub;
-	set_comp_g(doub, pars);
+	set_comp_g(&doub, pars);
 }
 
 void	write_g(va_list *param, t_pars *pars)
 {
 	t_doub	doub;
 	t_doub	temp;
+	int	preci_zero;
 
 	doub.doub = va_arg(*param, double);
+	preci_zero = 0;
 	if (check_float_coherence(pars, doub.doub))
 		return ;
 	if (!(pars->bw_flags & PRECIS))
@@ -93,19 +105,16 @@ void	write_g(va_list *param, t_pars *pars)
 		pars->precision_val = 6;
 	}
 	else if (pars->precision_val == 0)
-		pars->precision_val = 1;
-	init_struct_double(&doub);
-	temp = find_exponent(doub, pars->precision_val);
-	if (temp.exponent >= pars->precision_val || temp.exponent < -4)
 	{
-		lobby_write_gE(&temp, pars);
-		return ;
+		preci_zero = 1;
+		pars->precision_val = 1;
 	}
-	if (doub.strdoub[0] == '0' && doub.point == 1 && doub.strdoub[1])
-		pars->precision_val++;
-	round_float(&doub, pars->precision_val);
-	pars->str = doub.strdoub;
-	set_comp_g(&doub, pars);
+	init_struct_double(&doub);
+	temp = find_exponent(doub, pars->precision_val, preci_zero);
+	if (temp.exponent >= pars->precision_val || temp.exponent < -4)
+		lobby_write_gE(&temp, pars, 'e', preci_zero);
+	else
+		lobby_write_gE(&doub, pars, 'f', preci_zero);
 }
 
 static void     set_comp_ef(t_doub *doub, t_pars *pars)
