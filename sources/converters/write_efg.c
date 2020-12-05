@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 23:34:27 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 09:58:58 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 10:02:54 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f,
 	}
 	else
 	{	
-		if (doub.strdoub[0] == '0' && doub.point == 1 && doub.strdoub[1])
+		if (doub->strdoub[0] == '0' && doub->point == 1 && doub->strdoub[1])
 			pars->precision_val++;
-		round_float(&doub, pars->precision_val, preci_zero);
+		round_float(doub, pars->precision_val, preci_zero);
 	}
 	pars->str = doub->strdoub;
-	set_comp_g(&doub, pars);
+	set_comp_g(doub, pars);
 }
 
 void	write_g(va_list *param, t_pars *pars)
@@ -112,9 +112,9 @@ void	write_g(va_list *param, t_pars *pars)
 	init_struct_double(&doub);
 	temp = find_exponent(doub, pars->precision_val, preci_zero);
 	if (temp.exponent >= pars->precision_val || temp.exponent < -4)
-		lobby_write_gE(&temp, pars, 'e', preci_zero);
+		lobby_write_gEF(&temp, pars, 'e', preci_zero);
 	else
-		lobby_write_gE(&doub, pars, 'f', preci_zero);
+		lobby_write_gEF(&doub, pars, 'f', preci_zero);
 }
 
 static void     set_comp_ef(t_doub *doub, t_pars *pars)
@@ -155,13 +155,13 @@ void	write_ef(va_list *param, t_pars *pars)
 	if (pars->convert_char == 'e')
 	{
 		pars->field_width_val -= 4;
-		doub = find_exponent(doub, pars->precision_val + 1);
+		doub = find_exponent(doub, pars->precision_val + 1, 0);
 		pars->extra_after = expo;
 		pars->size_extra = 4;
 		write_exponent(doub.exponent, expo);
 	}
 	else
-        	round_float(&doub, doub.point + pars->precision_val);
+        	round_float(&doub, doub.point + pars->precision_val, 0);
 	set_comp_ef(&doub, pars);
 	write_into_buffer(pars);
 }

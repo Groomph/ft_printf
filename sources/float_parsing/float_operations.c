@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 09:58:35 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 10:03:20 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	round_float(t_doub *doub, int index, int preci_zero)
 	{
 		if ((doub->strdoub[index - 1] % 2 == 0 && superior == 1)
 				|| doub->strdoub[doub->point -1] % 2
-				|| (preci_zero && doub.point == 1))
+				|| (preci_zero && doub->point == 1))
 			digit_str_rounder(doub, index - 1);
 	}
 	else if (superior)
