@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 23:34:27 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 10:02:54 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 11:28:17 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ static void     set_comp_g(t_doub *doub, t_pars *pars)
 	write_into_buffer(pars);
 }
 
-static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f,
-								int preci_zero)
+static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f)
 {
 	char	expo[4];
+	int	i;
 
 	if (e_or_f == 'e')
 	{
-		if (!(doub->isnull))
+	       if (!(doub->isnull))
 		{
 			write_exponent(doub->exponent, expo);
 			pars->field_width_val -= 4;
@@ -80,10 +80,12 @@ static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f,
 		}
 	}
 	else
-	{	
-		if (doub->strdoub[0] == '0' && doub->point == 1 && doub->strdoub[1])
+	{
+		i = 0;
+		while (doub->strdoub[0] == '0' && doub->point == 1
+			&& doub->strdoub[i] == '0' && i++ < doub->size)
 			pars->precision_val++;
-		round_float(doub, pars->precision_val, preci_zero);
+		round_float(doub, pars->precision_val);
 	}
 	pars->str = doub->strdoub;
 	set_comp_g(doub, pars);
@@ -110,11 +112,11 @@ void	write_g(va_list *param, t_pars *pars)
 		pars->precision_val = 1;
 	}
 	init_struct_double(&doub);
-	temp = find_exponent(doub, pars->precision_val, preci_zero);
+	temp = find_exponent(doub, pars->precision_val);
 	if (temp.exponent >= pars->precision_val || temp.exponent < -4)
-		lobby_write_gEF(&temp, pars, 'e', preci_zero);
+		lobby_write_gEF(&temp, pars, 'e');
 	else
-		lobby_write_gEF(&doub, pars, 'f', preci_zero);
+		lobby_write_gEF(&doub, pars, 'f');
 }
 
 static void     set_comp_ef(t_doub *doub, t_pars *pars)
@@ -155,13 +157,13 @@ void	write_ef(va_list *param, t_pars *pars)
 	if (pars->convert_char == 'e')
 	{
 		pars->field_width_val -= 4;
-		doub = find_exponent(doub, pars->precision_val + 1, 0);
+		doub = find_exponent(doub, pars->precision_val + 1);
 		pars->extra_after = expo;
 		pars->size_extra = 4;
 		write_exponent(doub.exponent, expo);
 	}
 	else
-        	round_float(&doub, doub.point + pars->precision_val, 0);
+        	round_float(&doub, doub.point + pars->precision_val);
 	set_comp_ef(&doub, pars);
 	write_into_buffer(pars);
 }

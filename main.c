@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 09:05:24 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 11:26:57 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,147 +63,147 @@ int main(void)
 	i2 = ft_printf("ft_printf: %i\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
-	test = 7.4555;
-	    i = printf("printf:    %7.10f\n", test);
-	i2 = ft_printf("ft_printf: %7.10f\n", test);
+	test = 0.0894255;
+	    i = printf("printf:    %g\n", test);
+	i2 = ft_printf("ft_printf: %g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
-	test = 0.600132;
-	    i = printf("printf:    %020.4f\n", &test);
-	i2 = ft_printf("ft_printf: %020.4f\n", &test);
+	test = -0.00032;
+	    i = printf("printf:    %.1g\n", test);
+	i2 = ft_printf("ft_printf: %.1g\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	test = 0.87650894255;
 
 	test = 198;
-	    i = printf("printf:    % -4.4f\n", &test);
-	i2 = ft_printf("ft_printf: % -4.4f\n", &test);
+	    i = printf("printf:    % -4.4f\n", test);
+	i2 = ft_printf("ft_printf: % -4.4f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	test = 0.87650894255;
 
-	i = printf("printf:    %-20.35f\n", &test);
-	i2 = ft_printf("ft_printf: %-20.35f\n", &test);
+	i = printf("printf:    %-20.35f\n", test);
+	i2 = ft_printf("ft_printf: %-20.35f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 0.87650894255;
-	    i = printf("printf:    %-20.10f\n", &test);
-	i2 = ft_printf("ft_printf: %-20.10f\n", &test);
+	    i = printf("printf:    %-20.10f\n", test);
+	i2 = ft_printf("ft_printf: %-20.10f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 3.001;
-	    i = printf("printf:    %-4.3f\n", &test);
-	i2 = ft_printf("ft_printf: %-4.3f\n", &test);
+	    i = printf("printf:    %-4.3f\n", test);
+	i2 = ft_printf("ft_printf: %-4.3f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 3.601;
-	    i = printf("printf:    %-4.4f\n", &test);
-	i2 = ft_printf("ft_printf: %-4.4f\n", &test);
+	    i = printf("printf:    %-4.4f\n", test);
+	i2 = ft_printf("ft_printf: %-4.4f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 3.601;
-	    i = printf("printf:    %-4.*f\n", 8, &test);
-	i2 = ft_printf("ft_printf: %-4.*f\n", 8, &test);
+	    i = printf("printf:    %-4.*f\n", 8, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 8, test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 1.20026416000;
-	    i = printf("printf:    %-4.*f\n", 8, &test);
-	i2 = ft_printf("ft_printf: %-4.*f\n", 8, &test);
+	    i = printf("printf:    %-4.*f\n", 8, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 8, test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 0.600013;
-	    i = printf("printf:    %-4.4f\n", &test);
-	i2 = ft_printf("ft_printf: %-4.4f\n", &test);
+	    i = printf("printf:    %-4.4f\n", test);
+	i2 = ft_printf("ft_printf: %-4.4f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 0.6000001367;
-	    i = printf("printf:    %-4f\n", &test);
-	i2 = ft_printf("ft_printf: %-4f\n", &test);
+	    i = printf("printf:    %-4f\n", test);
+	i2 = ft_printf("ft_printf: %-4f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 3.0;
-	    i = printf("printf:    %-4.2f\n", &test);
-	i2 = ft_printf("ft_printf: %-4.2f\n", &test);
+	    i = printf("printf:    %-4.2f\n", test);
+	i2 = ft_printf("ft_printf: %-4.2f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 3.00030003000300025;
-	    i = printf("printf:    %-4.16f\n", &test);
-	i2 = ft_printf("ft_printf: %-4.16f\n", &test);
+	    i = printf("printf:    %-4.16f\n", test);
+	i2 = ft_printf("ft_printf: %-4.16f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 1000000000000000000000.2;
-	    i = printf("printf:    %.1f\n", &test);
-	i2 = ft_printf("ft_printf: %.1f\n", &test);
+	    i = printf("printf:    %.1f\n", test);
+	i2 = ft_printf("ft_printf: %.1f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 9999999999999999.2;
-	    i = printf("printf:    %.1f\n", &test);
-	i2 = ft_printf("ft_printf: %.1f\n", &test);
+	    i = printf("printf:    %.1f\n", test);
+	i2 = ft_printf("ft_printf: %.1f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 test = -1797693134862315708145418276846754670.88889;
 //	test = 555555555555222222222222222222222222222222222222222299999999999999999999999999999999999999999999999999999999999999.2;
-	    i = printf("printf:    %f\n", &test);
-	i2 = ft_printf("ft_printf: %f\n", &test);
+	    i = printf("printf:    %f\n", test);
+	i2 = ft_printf("ft_printf: %f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = -3.6004;
-	    i = printf("printf:    %-4.3f\n", &test);
-	i2 = ft_printf("ft_printf: %-4.3f\n", &test);
+	    i = printf("printf:    %-4.3f\n", test);
+	i2 = ft_printf("ft_printf: %-4.3f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = -5.7848744;
-	    i = printf("printf:    %+11.*f\n", -1, &test);
-	i2 = ft_printf("ft_printf: %+11.*f\n", -1, &test);
+	    i = printf("printf:    %+11.*f\n", -1, test);
+	i2 = ft_printf("ft_printf: %+11.*f\n", -1, test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 222.50000;
-	    i = printf("printf:    % 20.10f\n", &test);
-	i2 = ft_printf("ft_printf: % 20.10f\n", &test);
+	    i = printf("printf:    % 20.10f\n", test);
+	i2 = ft_printf("ft_printf: % 20.10f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 223.50000;
-	    i = printf("printf:    %-15.8f\n", &test);
-	i2 = ft_printf("ft_printf: %-15.8f\n", &test);
+	    i = printf("printf:    %-15.8f\n", test);
+	i2 = ft_printf("ft_printf: %-15.8f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 0.000000;
-	    i = printf("printf:    %  #.f\n", &test);
-	i2 = ft_printf("ft_printf: %  #.f\n", &test);
+	    i = printf("printf:    %  #.f\n", test);
+	i2 = ft_printf("ft_printf: %  #.f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = -0.500000;
-	    i = printf("printf:    %#010.f\n", &test);
-	i2 = ft_printf("ft_printf: %#010.f\n", &test);
+	    i = printf("printf:    %#010.f\n", test);
+	i2 = ft_printf("ft_printf: %#010.f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 
 	test = 303.37647788;
-	    i = printf("printf:    %# 10.5f\n", &test);
-	i2 = ft_printf("ft_printf: %# 10.5f\n", &test);
+	    i = printf("printf:    %# 10.5f\n", test);
+	i2 = ft_printf("ft_printf: %# 10.5f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 3444444444444403.37647788;
-	    i = printf("printf:    %-4.4f\n", &test);
-	i2 = ft_printf("ft_printf: %-4.4f\n", &test);
+	    i = printf("printf:    %-4.4f\n", test);
+	i2 = ft_printf("ft_printf: %-4.4f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 303.376477444488;
-	    i = printf("printf:    %# 4.4f\n", &test);
-	i2 = ft_printf("ft_printf: %# 4.4f\n", &test);
+	    i = printf("printf:    %# 4.4f\n", test);
+	i2 = ft_printf("ft_printf: %# 4.4f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 123.1234550000000000000000000000000000000000000000000000000000000000000000000;
-	    i = printf("printf:    %#-4.5f\n", &test);
-	i2 = ft_printf("ft_printf: %#-4.5f\n", &test);
+	    i = printf("printf:    %#-4.5f\n", test);
+	i2 = ft_printf("ft_printf: %#-4.5f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	test = 5.55555;
 	int test3 = 4.55555;
 	int test2 = test - 0.10000;
 	int test4 = (test * 10 - 1) / 10;
-	    i = printf("printf:    %#-4.20f\n", &test);
+	    i = printf("printf:    %#-4.20f\n", test);
 	    i = printf("printf:    %#-4.20f\n", test3);
 	    i = printf("printf:    %#-4.20f\n", test2);
 	    i = printf("printf:    %020.10f\n", test4);
-	i2 = ft_printf("ft_printf: %020.10f\n", &test);
+	i2 = ft_printf("ft_printf: %020.10f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
 	
@@ -228,28 +228,28 @@ test = -1797693134862315708145418276846754670.88889;
 	
 
 	test = -2.8137310073157007;
-	i = printf("printf:    %-4.*f\n", 16, &test);
-	i2 = ft_printf("ft_printf: %-4.*f\n", 16, &test);
+	i = printf("printf:    %-4.*f\n", 16, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 16, test);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
 	test = -2.8137310073157007000;
-	i = printf("printf:    %-4.*f\n", 17, &test);
-	i2 = ft_printf("ft_printf: %-4.*f\n", 17, &test);
+	i = printf("printf:    %-4.*f\n", 17, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 17, test);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
 	test = -2.813731007310567899999999999;
-	i = printf("printf:    %-4.*f\n", 20, &test);
-	i2 = ft_printf("ft_printf: %-4.*f\n", 20, &test);
+	i = printf("printf:    %-4.*f\n", 20, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 20, test);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
 	test = 0;
-	i = printf("printf:    %-4.*f\n", 40, &test);
-	i2 = ft_printf("ft_printf: %-4.*f\n", 40, &test);
+	i = printf("printf:    %-4.*f\n", 40, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 40, test);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
 	test = -0;
-	i = printf("printf:    %-4.*f\n", 4, &test);
-	i2 = ft_printf("ft_printf: %-4.*f\n", 4, &test);
+	i = printf("printf:    %-4.*f\n", 4, test);
+	i2 = ft_printf("ft_printf: %-4.*f\n", 4, test);
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 
 	test = -0;

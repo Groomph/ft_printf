@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 09:57:53 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 11:19:12 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ void    write_exponent(int exponent, char *tab)
 	tab[3] = exponent % 10 + '0';
 }
 
-t_doub	find_exponent(t_doub doub, int precision, int preci_zero)
+t_doub	find_exponent(t_doub doub, int precision)
 {
 
 	while (doub.point > 1)
 		divide_str_double(&doub);
 	while (doub.strdoub[0] == '0' && !doub.isnull)
 		multiply_str_double(&doub);
-	round_float(&doub, precision, preci_zero);
+	round_float(&doub, precision);
 	if (doub.point > 1)
 		divide_str_double(&doub);
 	return (doub);

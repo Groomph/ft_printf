@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 22:51:17 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 10:01:44 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 11:16:54 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ typedef struct  s_double
 int     digit_str_rounder(t_doub *doub, int i);
 void    divide_str_double(t_doub *doub);
 void    multiply_str_double(t_doub *doub);
-t_doub     find_exponent(t_doub doub, int index, int preci_zero);
+t_doub     find_exponent(t_doub doub, int index);
 void    init_struct_double(t_doub *doub);
 int	is_roundable_bynb(t_doub doub, int index);
-void    round_float(t_doub *doub, int index, int preci_zero);
+void    round_float(t_doub *doub, int index);
 int     count_trailing_zero(t_doub *doub, int index);
 void	write_exponent(int exponent, char *tab);
 
