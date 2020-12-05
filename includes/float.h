@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 22:51:17 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 13:59:40 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/05 09:06:08 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 typedef struct  s_double
 {
-	double doub;
+	long double doub;
         char    strdoub[150];
         short     point;
 	short	size;
