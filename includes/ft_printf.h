@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 14:16:14 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/06 07:09:15 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void				write_n(va_list *param, t_pars *pars);
 void				write_ef(va_list *param, t_pars *pars);
 void				write_g(va_list *param, t_pars *pars);
 void				set_comp_num(t_pars *pars);
-void				write_into_buffer(t_pars *pars);
+void				write_into_buffer(t_pars *pars, wchar_t *wstr);
 unsigned long long int  	get_unsigned_param(va_list *param,
 								t_pars *pars);
 void				lobby_numeric_converter(

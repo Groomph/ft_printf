@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 23:34:27 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 11:28:17 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/06 07:10:50 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void     set_comp_g(t_doub *doub, t_pars *pars)
 	pars->field_width_val -= (pars->size_str + pars->zero_after);
 	if (pars->field_width_val > 0)
 		fill_width(pars, pars->field_width_val);
-	write_into_buffer(pars);
+	write_into_buffer(pars, 0);
 }
 
 static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f)
@@ -165,5 +165,5 @@ void	write_ef(va_list *param, t_pars *pars)
 	else
         	round_float(&doub, doub.point + pars->precision_val);
 	set_comp_ef(&doub, pars);
-	write_into_buffer(pars);
+	write_into_buffer(pars, 0);
 }

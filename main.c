@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 11:26:57 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/06 08:07:07 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,24 @@ int main(void)
 	printf("printf: %d    ft_printf: %d\n", i, i2);
 */
 #include <math.h>
+#include <wchar.h>
+#include <locale.h>
 
+    setlocale(LC_ALL, "");
+	wchar_t truc[] = {'è','ù','é','ô', 0};
+	wchar_t truc2 = 'è';
 	int	i = -2.9999999;
 	int	i2 = -2.40;
-	    i = printf("printf c:    %lc\n", 0xc30a);
-	i2 = ft_printf("ft_printf c: %lc\n", 0xc30a);
+	    
+	       i = printf("printf c:    %1.3lc\n", truc2);
+	i2 = ft_printf("ft_printf c: %1.3lc\n", truc2);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+               i = printf("printf c:    %30.5ls\n", truc);
+	i2 = ft_printf("ft_printf c: %30.5ls\n", truc);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 		
-	    i = printf("printf:    %+ 050.100s%\n", str);
+	    i = printf("printf:    %+ 050.100s\n", str);
 	i2 = ft_printf("ft_printf: %+ 050.100s\n", str);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 		

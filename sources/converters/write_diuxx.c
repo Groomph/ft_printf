@@ -6,7 +6,7 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/12/05 07:32:43 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/06 07:11:12 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	set_comp_num(t_pars *pars)
 	add_sign_numeric(pars, pars->sign);
 	if (pars->field_width_val > 0)
 		fill_width(pars, pars->field_width_val);
-	write_into_buffer(pars);
+	write_into_buffer(pars, 0);
 }
 
 void	lobby_numeric_converter(unsigned long long int nb, char *base,

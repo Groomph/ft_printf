@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 06:22:19 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 05:23:20 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/06 07:54:32 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static t_buffer	buf;
 
 void		print_buffer(int fd)
 {
-		write(fd, buf.bufstr, buf.i);
-		buf.totalsize += buf.i;
-		buf.i = 0;
+	write(fd, buf.bufstr, buf.i);
+	buf.totalsize += buf.i;
+	buf.i = 0;
 }
 
 void		write_str_buffer(const char *str, int size)
@@ -45,6 +45,31 @@ void		write_char_buffer(char c, int nb)
 		if (buf.i == BUFFER_SIZE)
 			print_buffer(1);
 	}
+}
+
+int		write_widechar_buffer(wchar_t c, int size)
+{
+	if (size-- > 0 && c <= 0x7F)
+		write_char_buffer(c, 1); 
+	else if (size-- > 0 && c <= 0x7FF)
+	{
+		write_char_buffer((c >> 6) + 0xC0, 1); 
+		write_char_buffer((c & 0x3F) + 0x80, 1); 
+	}
+	else if (size-- > 0 && c <= 0xFFFF)
+	{
+		write_char_buffer((c >> 12) + 0xE0, 1); 
+		write_char_buffer(((c >> 6) & 0x3F) + 0x80, 1); 
+		write_char_buffer((c & 0x3F) + 0x80, 1); 
+	}
+	else if (size-- > 0 && c <= 0x10FFFF)
+	{
+		write_char_buffer((c >> 18) + 0xF0, 1); 
+		write_char_buffer(((c >> 12) & 0x3F) + 0x80, 1); 
+		write_char_buffer(((c >> 6) & 0x3F) + 0x80, 1); 
+		write_char_buffer((c & 0x3F) + 0x80, 1); 
+	}
+	return (size);
 }
 
 int		send_totalsize(void)
