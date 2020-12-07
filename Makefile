@@ -6,7 +6,7 @@
 #    By: romain <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/04 06:05:16 by romain            #+#    #+#              #
-#    Updated: 2020/12/07 06:51:02 by romain           ###   ########.fr        #
+#    Updated: 2020/12/07 07:05:48 by romain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,10 +70,10 @@ norme:
 	norminette $(DIR_S)/
 
 run:
-	gcc -o runtest -I $(HEADER) sources/*/*.c sources/*.c main.c libft/*.[ch]
+	gcc -o runtest -I $(HEADER) $(SRCS) main.c libft/*.[ch]
 
 runhardmode:
-	$(CC) $(FLAGSHARD) -o runtesthardmode -I $(HEADER) $(SRCS) sources/*/*.c sources/*.c main.c libft/*.[ch]
+	$(CC) $(FLAGSHARD) -I $(HEADER) $(SRCS) main.c libft/*.[ch]
 
 clean:
 	rm -f $(OBJS)
