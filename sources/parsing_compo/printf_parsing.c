@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 15:54:58 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/07 06:44:05 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,29 @@ static int	first_pars(const char *s, int i, t_pars *pars, va_list *param)
 		return (second_pars(s, i, pars, param));
 	return (first_pars(s, i + 1, pars, param));
 }
-
+#include <stdio.h>
 int			ft_printf_parsing(const char *str, va_list *param)
 {
 	int		i;
 	va_list		param2;
 	t_pars		pars;
-	
+	char		tab[12];
+
 	init_zero(&pars, sizeof(pars));
 	va_copy(param2, *param);
 	i = first_pars(str, 1, &pars, &param2);
 	erase_conflicting_flags(&pars);	
-	if (str[i])
+	if (str[i] && str[i] != '{')
 			pars.convert_char = str[i++];
+	else if (i == 1 && str[i] == '{')
+	{
+		i = 0;
+		while (++i < 11 && str[i] && str[i] != '}')
+			tab[i - 1] = str[i];
+		tab[i - 1] = str[i];
+		tab[i++] = '\0';
+		pars.str = tab;
+	}
 	if (!lobby_write_buffer(&param2, &pars))
 		write_str_buffer(str, i);
 	else

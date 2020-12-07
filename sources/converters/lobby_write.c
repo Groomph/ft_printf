@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/06 07:50:17 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/07 06:49:45 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ int		lobby_write_buffer(va_list *param, t_pars *pars)
 			return (1);
 		}
 	}
+	if (pars->str && coloring_bonus(pars->str))
+		return (1);
 	return (0);
 }

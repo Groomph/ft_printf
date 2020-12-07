@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/06 08:10:03 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/07 06:10:19 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	set_comp_cs(t_pars *pars)
 		fill_width(pars, pars->field_width_val);
 }
 
-int		widestring_len(wchar_t *str, int precision)
+int		widestring_len(wchar_t *str, t_pars *pars)
 {
 	int	i;
 	int	j;
@@ -41,7 +41,8 @@ int		widestring_len(wchar_t *str, int precision)
 			jtemp = 3;
 		else if (str[i] <= 0x10FFFF)
 			jtemp = 4;
-		if (j + jtemp <= precision)
+		if (j + jtemp <= pars->precision_val ||
+						!(pars->bw_flags & PRECIS))
 			j += jtemp;
 		else
 			return (j);
@@ -59,14 +60,14 @@ void		handle_wchar(va_list *param, t_pars *pars)
 		wchar[0] = va_arg(*param, wint_t);
 		wchar[1] = 0;
 		wstr = wchar;
-		pars->size_str = widestring_len(wstr, 4);
 		if (pars->bw_flags & PRECIS)
-			pars->precision_val = pars->size_str;
+			pars->precision_val = 4;
+		pars->size_str = widestring_len(wstr, pars);
 	}
 	else
 	{
 		wstr = va_arg(*param, wchar_t*);
-		pars->size_str = widestring_len(wstr, pars->precision_val);
+		pars->size_str = widestring_len(wstr, pars);
 	}
 	set_comp_cs(pars);
 	write_into_buffer(pars, wstr);

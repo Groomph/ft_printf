@@ -1,17 +1,72 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   write_nop.c                                        :+:      :+:    :+:   */
+/*   write_nopcol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 14:16:58 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/07 06:50:26 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "buffer.h"
+
+static int		coloring_next(char *str)
+{
+	if (!str_comp("{Fblack}", str, 8))
+		write_str_buffer("\033[40m", 6);
+	else if (!str_comp("{Fred}", str, 6))
+		write_str_buffer("\033[41m", 6);
+	else if (!str_comp("{Fgreen}", str, 8))
+		write_str_buffer("\033[42m", 6);
+	else if (!str_comp("{Fyellow}", str, 9))
+		write_str_buffer("\033[43m", 6);
+	else if (!str_comp("{Fblue}", str, 7))
+		write_str_buffer("\033[44m", 6);
+	else if (!str_comp("{Fmagenta}", str, 10))
+		write_str_buffer("\033[45m", 6);
+	else if (!str_comp("{Fcyan}", str, 7))
+		write_str_buffer("\033[46m", 6);
+	else if (!str_comp("{Fwhite}", str, 8))
+		write_str_buffer("\033[47m", 6);
+	else if (!str_comp("{Fblack2}", str, 9))
+		write_str_buffer("\033[48m", 6);
+	else if (!str_comp("{Fdefault}", str, 10))
+		write_str_buffer("\033[49m", 6);
+	else
+		return (0);
+	return (1);
+}
+
+int		coloring_bonus(char *str)
+{
+	print_buffer(1);
+	if (!str_comp("{black}", str, 7))
+		write_str_buffer("\033[30m", 6);
+	else if (!str_comp("{red}", str, 5))
+		write_str_buffer("\033[31m", 6);
+	else if (!str_comp("{green}", str, 7))
+		write_str_buffer("\033[32m", 6);
+	else if (!str_comp("{yellow}", str, 8))
+		write_str_buffer("\033[33m", 6);
+	else if (!str_comp("{blue}", str, 6))
+		write_str_buffer("\033[34m", 6);
+	else if (!str_comp("{magenta}", str, 9))
+		write_str_buffer("\033[35m", 6);
+	else if (!str_comp("{cyan}", str, 6))
+		write_str_buffer("\033[36m", 6);
+	else if (!str_comp("{white}", str, 7))
+		write_str_buffer("\033[37m", 6);
+	else if (!str_comp("{black2}", str, 8))
+		write_str_buffer("\033[38m", 6);
+	else if (!str_comp("{default}", str, 9))
+		write_str_buffer("\033[39m", 6);
+	else
+		return (coloring_next(str));
+	return (1);
+}
 
 void		write_n(va_list *param, t_pars *pars)
 {

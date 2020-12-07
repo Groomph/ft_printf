@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/12/06 08:07:07 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/07 06:47:20 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int main(void)
 	int	i = -2.9999999;
 	int	i2 = -2.40;
 	    
-	       i = printf("printf c:    %1.3lc\n", truc2);
-	i2 = ft_printf("ft_printf c: %1.3lc\n", truc2);
+	       i = printf("printf c:    %lc\n", truc2);
+	i2 = ft_printf("ft_printf c: %lc\n", truc2);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
-               i = printf("printf c:    %30.5ls\n", truc);
-	i2 = ft_printf("ft_printf c: %30.5ls\n", truc);
+               i = printf("printf c:    %ls\n", truc);
+	i2 = ft_printf("ft_printf c: %{Fmagenta}%ls%{cyan}\n", truc);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 		
 	    i = printf("printf:    %+ 050.100s\n", str);
