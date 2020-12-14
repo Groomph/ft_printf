@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/07 06:50:39 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 21:59:53 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void				write_o(va_list *param, t_pars *pars);
 void				write_n(va_list *param, t_pars *pars);
 void				write_ef(va_list *param, t_pars *pars);
 void				write_g(va_list *param, t_pars *pars);
+void				write_b(va_list *param, t_pars *pars);
 int				coloring_bonus(char *str);
 void				set_comp_num(t_pars *pars);
 void				write_into_buffer(t_pars *pars, wchar_t *wstr);

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/12/07 06:44:05 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:01:45 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	first_pars(const char *s, int i, t_pars *pars, va_list *param)
 		return (second_pars(s, i, pars, param));
 	return (first_pars(s, i + 1, pars, param));
 }
-#include <stdio.h>
+
 int			ft_printf_parsing(const char *str, va_list *param)
 {
 	int		i;

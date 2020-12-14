@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/07 09:05:07 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:07:44 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,22 @@ void    write_o(va_list *param, t_pars *pars)
                 pars->size_extra = 1;
         }
 	lobby_numeric_converter(nb, "01234567", pars, 8);
+}
+
+void	write_b(va_list	*param, t_pars *pars)
+{
+	unsigned int	nb;
+	long int	tmp;
+
+        if (pars->bw_flags & CROISI && pars->bw_flags & MINUS)
+	{
+		tmp = va_arg(*param, int);
+		nb = -tmp;
+		pars->sign = '-';
+		pars->print_sign = 1;
+        	pars->bw_flags &= ~(MINUS);
+	}
+	else
+		nb = va_arg(*param, unsigned int);
+	lobby_numeric_converter(nb, "01", pars, 2);
 }

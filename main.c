@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/12/07 06:47:20 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:09:24 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,28 @@ int main(void)
 	wchar_t truc2 = 'è';
 	int	i = -2.9999999;
 	int	i2 = -2.40;
-	    
-	       i = printf("printf c:    %lc\n", truc2);
-	i2 = ft_printf("ft_printf c: %lc\n", truc2);
+unsigned long teterere = 42;	
+printf("printf \t| decimal \t| %%0o | %020d bonjour %20-0d\n", teterere, 15);
+
+	       i = ft_printf("printf c:    %#-20.5b\n", -512);
+	       i = ft_printf("printf c:    %+20.5b\n", 512);
+	       i = ft_printf("printf c:    % 20.5b\n", 512);
+	       i = ft_printf("printf c:    %0 20.5b\n", 512);
+	       i = ft_printf("printf c:    %+ 20.5b\n", 512);
+	       i = ft_printf("printf c:    %- 20.5b\n", 512);
+	       i = ft_printf("printf c:    %0-+20.5b\n", 512);
+	       i = ft_printf("printf c:    %20.5b\n", 512);
+	       i = ft_printf("printf c:    %20.5b\n", 512);
+	i2 = ft_printf("ft_printf c: %lc\n", 512);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
                i = printf("printf c:    %ls\n", truc);
 	i2 = ft_printf("ft_printf c: %{Fmagenta}%ls%{cyan}\n", truc);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
-		
+               
+	       i = printf("printf c:    %ls\n", L"ο Δικαιοπολις εν αγρω εστιν");
+	i2 = ft_printf("ft_printf c: %ls\n", L"ο Δικαιοπολις εν αγρω εστιν");
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	    i = printf("printf:    %+ 050.100s\n", str);
 	i2 = ft_printf("ft_printf: %+ 050.100s\n", str);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
@@ -200,11 +213,36 @@ test = -1797693134862315708145418276846754670.88889;
 	i2 = ft_printf("ft_printf: %# 4.4f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
-	test = 123.1234550000000000000000000000000000000000000000000000000000000000000000000;
-	    i = printf("printf:    %#-4.5f\n", test);
-	i2 = ft_printf("ft_printf: %#-4.5f\n", test);
+	test = 123.12345584846516545525555525555550000000000000000000000000000000000000000000000000000000000000000000;
+	    i = printf("printf:    %#-4.20f\n", test);
+	i2 = ft_printf("ft_printf: %#-4.20f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
+	test = 123.123455464161641654651616516146468500000000000000000000000000000000000000000000000000;
+	    i = printf("printf:    %#-4.20f\n", test);
+	i2 = ft_printf("ft_printf: %#-4.20f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+	test = 123.1234550000000000000004684165165146516164646410000000000000000000000000000000000000000000000000000;
+	    i = printf("printf:    %#-4.20f\n", test);
+	i2 = ft_printf("ft_printf: %#-4.20f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+	test = 123.1234550000000000641654684516541515000000000000000000000000000000000000000000000000000000000;
+	    i = printf("printf:    %#-4.20f\n", test);
+	i2 = ft_printf("ft_printf: %#-4.20f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+	test = 123.1234550000000006465415616515150000000000000000000000000000000000000000000000000000000000;
+	    i = printf("printf:    %#-4.20f\n", test);
+	i2 = ft_printf("ft_printf: %#-4.20f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+	
+	test = 123.12345500000006065465156165165146515600000000000000000000000000000000000000000000000000000000000;
+	    i = printf("printf:    %#-4.20f\n", test);
+	i2 = ft_printf("ft_printf: %#-4.20f\n", test);
+	printf("printf: %d    ft_printf: %d\n\n", i, i2);
+/*	
 	test = 5.55555;
 	int test3 = 4.55555;
 	int test2 = test - 0.10000;
@@ -215,7 +253,7 @@ test = -1797693134862315708145418276846754670.88889;
 	    i = printf("printf:    %020.10f\n", test4);
 	i2 = ft_printf("ft_printf: %020.10f\n", test);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
-	
+*/	
 	
 	
 	

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/07 06:49:45 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 21:45:54 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_converter	g_tab_function[] =
 	{&write_ef, 'f'},
 	{&write_g, 'g'},
 	{&write_pct, '%'},
+	{&write_b, 'b'},
 	{NULL, -1}
 };
 
