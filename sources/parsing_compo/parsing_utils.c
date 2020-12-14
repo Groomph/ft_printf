@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 09:05:14 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:39:51 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		fill_width(t_pars *pars, int remains)
 		pars->space_after += remains;
 	else if (pars->bw_flags & ZERO)
 		pars->zero_before += remains;
-	else    
+	else
 		pars->space_before += remains;
 }
 
@@ -31,7 +31,7 @@ void		add_sign_numeric(t_pars *pars, char sign)
 		pars->field_width_val--;
 	}
 	else if (sign == '+' && pars->bw_flags & SPACE)
-	{       
+	{
 		pars->space_before++;
 		pars->field_width_val--;
 	}
@@ -58,13 +58,13 @@ static int	atoi_pars(const char *str, int *i)
 	return (nb * neg);
 }
 
-int	field_width(t_pars *pars, va_list *param, const char *str)
+int			field_width(t_pars *pars, va_list *param, const char *str)
 {
 	int	i;
 
 	i = 0;
 	if (str[i] == '*')
-	{	
+	{
 		pars->field_width_val = va_arg(*param, int);
 		if (pars->field_width_val < 0)
 		{
@@ -77,7 +77,7 @@ int	field_width(t_pars *pars, va_list *param, const char *str)
 	return (i);
 }
 
-int	precision(t_pars *pars, va_list *param, const char *str)
+int			precision(t_pars *pars, va_list *param, const char *str)
 {
 	int	i;
 

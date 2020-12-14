@@ -6,14 +6,14 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 22:07:44 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:58:42 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "buffer.h"
 
-static int		coloring_next(char *str)
+static int	coloring_next(char *str)
 {
 	if (!str_comp("{Fblack}", str, 8))
 		write_str_buffer("\033[40m", 5);
@@ -40,7 +40,7 @@ static int		coloring_next(char *str)
 	return (1);
 }
 
-int		coloring_bonus(char *str)
+int			coloring_bonus(char *str)
 {
 	print_buffer(1);
 	if (!str_comp("{black}", str, 7))
@@ -71,27 +71,27 @@ int		coloring_bonus(char *str)
 void		write_n(va_list *param, t_pars *pars)
 {
 	void	*pt;
-	int	tmp;
+	int		tmp;
 
 	pt = va_arg(*param, void*);
 	tmp = send_totalsize();
 	if (pars->bw_flags & HHHH)
 		*(char*)pt = (char)tmp;
-        else if (pars->bw_flags & HH)
+	else if (pars->bw_flags & HH)
 		*(short*)pt = (short)tmp;
-        else if (pars->bw_flags & LLLL)
+	else if (pars->bw_flags & LLLL)
 		*(long long int*)pt = tmp;
-        else if (pars->bw_flags & LL)
+	else if (pars->bw_flags & LL)
 		*(long int*)pt = tmp;
-        else
+	else
 		*(int*)pt = tmp;
 }
 
-void			write_p(va_list *param, t_pars *pars)
+void		write_p(va_list *param, t_pars *pars)
 {
 	unsigned long	pt;
-	char		tab[3];
-	int		i;
+	char			tab[3];
+	int				i;
 
 	i = 0;
 	pt = va_arg(*param, unsigned long);
@@ -106,34 +106,34 @@ void			write_p(va_list *param, t_pars *pars)
 	lobby_numeric_converter(pt, "0123456789abcdef", pars, 16);
 }
 
-void    write_o(va_list *param, t_pars *pars)
+void		write_o(va_list *param, t_pars *pars)
 {
-        unsigned long long int    nb;
-        char            zero;
-	
+	unsigned long long int	nb;
+	char					zero;
+
 	nb = get_unsigned_param(param, pars);
-        if (pars->bw_flags & CROISI &&
-                        utoa_len(nb, 8) > pars->precision_val)
-        {
-                zero = '0';
-                pars->extra_before = &zero;
-                pars->size_extra = 1;
-        }
+	if (pars->bw_flags & CROISI &&
+			utoa_len(nb, 8) > pars->precision_val)
+	{
+		zero = '0';
+		pars->extra_before = &zero;
+		pars->size_extra = 1;
+	}
 	lobby_numeric_converter(nb, "01234567", pars, 8);
 }
 
-void	write_b(va_list	*param, t_pars *pars)
+void		write_b(va_list *param, t_pars *pars)
 {
 	unsigned int	nb;
-	long int	tmp;
+	long int		tmp;
 
-        if (pars->bw_flags & CROISI && pars->bw_flags & MINUS)
+	if (pars->bw_flags & CROISI && pars->bw_flags & MINUS)
 	{
 		tmp = va_arg(*param, int);
 		nb = -tmp;
 		pars->sign = '-';
 		pars->print_sign = 1;
-        	pars->bw_flags &= ~(MINUS);
+		pars->bw_flags &= ~(MINUS);
 	}
 	else
 		nb = va_arg(*param, unsigned int);

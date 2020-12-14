@@ -6,32 +6,31 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/05 11:19:12 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:22:18 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "float.h"
 
-void    write_exponent(int exponent, char *tab)
+void		write_exponent(int exponent, char *tab)
 {
-        char    sign;
+	char	sign;
 
-        sign = '+';
-        if (exponent < 0)
-        {
-                sign = '-';
-                exponent *= -1;
-        }
+	sign = '+';
+	if (exponent < 0)
+	{
+		sign = '-';
+		exponent *= -1;
+	}
 	tab[0] = 'e';
 	tab[1] = sign;
 	tab[2] = exponent / 10 + '0';
 	tab[3] = exponent % 10 + '0';
 }
 
-t_doub	find_exponent(t_doub doub, int precision)
+t_doub		find_exponent(t_doub doub, int precision)
 {
-
 	while (doub.point > 1)
 		divide_str_double(&doub);
 	while (doub.strdoub[0] == '0' && !doub.isnull)
@@ -44,9 +43,9 @@ t_doub	find_exponent(t_doub doub, int precision)
 
 static void	init_decimal(t_doub *ptdoub, long double doub)
 {
-	int	i;
+	int				i;
 	long long int	intpart;
-	
+
 	i = 0;
 	if (doub == 0.0)
 	{
@@ -65,12 +64,12 @@ static void	init_decimal(t_doub *ptdoub, long double doub)
 	ptdoub->size = i + ptdoub->point;
 }
 
-void	init_longlong_intpart(t_doub *doub)
+void		init_longlong_intpart(t_doub *doub)
 {
-	int	intpart;
+	int			intpart;
 	long double	temp_doub;
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	temp_doub = doub->doub;
 	i = 0;
@@ -92,7 +91,7 @@ void	init_longlong_intpart(t_doub *doub)
 	doub->doub = temp_doub;
 }
 
-void	init_struct_double(t_doub *doub)
+void		init_struct_double(t_doub *doub)
 {
 	long long int	intpart;
 
@@ -102,7 +101,7 @@ void	init_struct_double(t_doub *doub)
 		doub->sign = '-';
 		doub->doub *= -1;
 	}
-	if (doub->doub > 1000000000000000000.0)	
+	if (doub->doub > 1000000000000000000.0)
 		init_longlong_intpart(doub);
 	else
 	{

@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/19 16:37:58 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/12/06 07:11:12 by romain           ###   ########.fr       */
+/*   Created: 2020/12/14 23:07:09 by rsanchez          #+#    #+#             */
+/*   Updated: 2020/12/14 23:07:10 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	set_comp_num(t_pars *pars)
+void					set_comp_num(t_pars *pars)
 {
 	if (pars->precision_val > pars->size_str)
 	{
@@ -27,8 +27,8 @@ void	set_comp_num(t_pars *pars)
 	write_into_buffer(pars, 0);
 }
 
-void	lobby_numeric_converter(unsigned long long int nb, char *base,
-							t_pars *pars, int sizeb)
+void					lobby_numeric_converter(unsigned long long int nb,
+							char *base, t_pars *pars, int sizeb)
 {
 	char	tab[50];
 
@@ -38,7 +38,7 @@ void	lobby_numeric_converter(unsigned long long int nb, char *base,
 	{
 		pars->bw_flags |= PRECIS;
 		pars->precision_val = 1;
-	}		
+	}
 	pars->str = tab;
 	pars->size_str = 0;
 	if (!((pars->bw_flags & PRECIS) && pars->precision_val == 0 && nb == 0))
@@ -46,7 +46,7 @@ void	lobby_numeric_converter(unsigned long long int nb, char *base,
 	set_comp_num(pars);
 }
 
-void	write_di(va_list *param, t_pars *pars)
+void					write_di(va_list *param, t_pars *pars)
 {
 	long long int	nb;
 
@@ -64,13 +64,13 @@ void	write_di(va_list *param, t_pars *pars)
 	{
 		pars->sign = '-';
 		lobby_numeric_converter((unsigned long long int)-nb,
-						"0123456789", pars, 10);
+				"0123456789", pars, 10);
 		return ;
 	}
 	if (pars->bw_flags & SPACE || pars->bw_flags & PLUS)
 		pars->sign = '+';
 	lobby_numeric_converter((unsigned long long int)nb,
-						"0123456789", pars, 10);
+			"0123456789", pars, 10);
 }
 
 unsigned long long int	get_unsigned_param(va_list *param, t_pars *pars)
@@ -90,7 +90,7 @@ unsigned long long int	get_unsigned_param(va_list *param, t_pars *pars)
 	return (nb);
 }
 
-void	write_u(va_list *param, t_pars *pars)
+void					write_u(va_list *param, t_pars *pars)
 {
 	unsigned long long int	nb;
 
@@ -98,13 +98,13 @@ void	write_u(va_list *param, t_pars *pars)
 	lobby_numeric_converter(nb, "0123456789", pars, 10);
 }
 
-void	write_xx(va_list *param, t_pars *pars)
+void					write_xx(va_list *param, t_pars *pars)
 {
 	unsigned long long int	nb;
-	char		tab[2];
+	char					tab[2];
 
 	nb = get_unsigned_param(param, pars);
-	if (nb && pars->bw_flags & CROISI)	
+	if (nb && pars->bw_flags & CROISI)
 	{
 		tab[0] = '0';
 		tab[1] = pars->convert_char;

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:58:50 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 22:01:45 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:39:23 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static int	third_pars(const char *str, int i, t_pars *pars)
 	{
 		i++;
 		pars->bw_flags |= LLLL;
-	}	
+	}
 	else if (str[i] == 'h' && str[i + 1] == 'h')
 	{
 		i++;
 		pars->bw_flags |= HHHH;
-	}	
+	}
 	else if (str[i] == 'l')
 		pars->bw_flags |= LL;
 	else if (str[i] == 'h')
@@ -71,7 +71,7 @@ static int	first_pars(const char *s, int i, t_pars *pars, va_list *param)
 
 int			ft_printf_parsing(const char *str, va_list *param)
 {
-	int		i;
+	int			i;
 	va_list		param2;
 	t_pars		pars;
 	char		tab[12];
@@ -79,9 +79,9 @@ int			ft_printf_parsing(const char *str, va_list *param)
 	init_zero(&pars, sizeof(pars));
 	va_copy(param2, *param);
 	i = first_pars(str, 1, &pars, &param2);
-	erase_conflicting_flags(&pars);	
+	erase_conflicting_flags(&pars);
 	if (str[i] && str[i] != '{')
-			pars.convert_char = str[i++];
+		pars.convert_char = str[i++];
 	else if (i == 1 && str[i] == '{')
 	{
 		i = 0;

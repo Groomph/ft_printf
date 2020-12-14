@@ -6,41 +6,41 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 23:34:27 by romain            #+#    #+#             */
-/*   Updated: 2020/12/06 07:10:50 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:51:06 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "float.h"
 
-static int     check_float_coherence(t_pars *pars, long double doub)
+static int	check_float_coherence(t_pars *pars, long double doub)
 {
-        int     inf;
+	int	inf;
 
-        if (is_NaN(doub))
-                pars->str = "nan";
-        else if ((inf = is_infinite(doub)) != 0)
-        {
-                pars->sign = '-';
-                if (doub < 0)
-                        pars->str = "inf";
-                else
-                {   
-                        pars->str = "inf";
-                        pars->sign = '+';
-                }   
-        }
-        else
-                return (0);
-        if (pars->bw_flags & ZERO)
-                pars->bw_flags &= ~(ZERO);
-        pars->precision_val = 0;
-        pars->size_str = 3;
-        set_comp_num(pars);
-        return (1);
+	if (is_NaN(doub))
+		pars->str = "nan";
+	else if ((inf = is_infinite(doub)) != 0)
+	{
+		pars->sign = '-';
+		if (doub < 0)
+			pars->str = "inf";
+		else
+		{
+			pars->str = "inf";
+			pars->sign = '+';
+		}
+	}
+	else
+		return (0);
+	if (pars->bw_flags & ZERO)
+		pars->bw_flags &= ~(ZERO);
+	pars->precision_val = 0;
+	pars->size_str = 3;
+	set_comp_num(pars);
+	return (1);
 }
 
-static void     set_comp_g(t_doub *doub, t_pars *pars)
+static void	set_comp_g(t_doub *doub, t_pars *pars)
 {
 	pars->size_str = doub->size;
 	if (pars->size_str > pars->precision_val)
@@ -49,7 +49,7 @@ static void     set_comp_g(t_doub *doub, t_pars *pars)
 		pars->size_str -= count_trailing_zero(doub, pars->size_str - 1);
 	pars->str[pars->size_str] = '\0';
 	if (pars->size_str > doub->point ||
-		(pars->size_str == doub->point && pars->bw_flags & CROISI))
+			(pars->size_str == doub->point && pars->bw_flags & CROISI))
 	{
 		pars->size_str = shift_right_add(pars->str, '.', doub->point);
 	}
@@ -64,14 +64,14 @@ static void     set_comp_g(t_doub *doub, t_pars *pars)
 	write_into_buffer(pars, 0);
 }
 
-static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f)
+static void	lobby_write_gef(t_doub *doub, t_pars *pars, char e_or_f)
 {
 	char	expo[4];
-	int	i;
+	int		i;
 
 	if (e_or_f == 'e')
 	{
-	       if (!(doub->isnull))
+		if (!(doub->isnull))
 		{
 			write_exponent(doub->exponent, expo);
 			pars->field_width_val -= 4;
@@ -83,7 +83,7 @@ static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f)
 	{
 		i = 0;
 		while (doub->strdoub[0] == '0' && doub->point == 1
-			&& doub->strdoub[i] == '0' && i++ < doub->size)
+				&& doub->strdoub[i] == '0' && i++ < doub->size)
 			pars->precision_val++;
 		round_float(doub, pars->precision_val);
 	}
@@ -91,11 +91,11 @@ static void    lobby_write_gEF(t_doub *doub, t_pars *pars, char e_or_f)
 	set_comp_g(doub, pars);
 }
 
-void	write_g(va_list *param, t_pars *pars)
+void		write_g(va_list *param, t_pars *pars)
 {
 	t_doub	doub;
 	t_doub	temp;
-	int	preci_zero;
+	int		preci_zero;
 
 	doub.doub = va_arg(*param, double);
 	preci_zero = 0;
@@ -114,44 +114,44 @@ void	write_g(va_list *param, t_pars *pars)
 	init_struct_double(&doub);
 	temp = find_exponent(doub, pars->precision_val);
 	if (temp.exponent >= pars->precision_val || temp.exponent < -4)
-		lobby_write_gEF(&temp, pars, 'e');
+		lobby_write_g(&temp, pars, 'e');
 	else
-		lobby_write_gEF(&doub, pars, 'f');
+		lobby_write_g(&doub, pars, 'f');
 }
 
-static void     set_comp_ef(t_doub *doub, t_pars *pars)
+static void	set_comp_ef(t_doub *doub, t_pars *pars)
 {
-        int     decisize;
+	int	decisize;
 
-        decisize = doub->size - doub->point;
-        pars->str = doub->strdoub;
-        pars->size_str = doub->size;
-        if (decisize > pars->precision_val)
-                pars->size_str = doub->point + pars->precision_val;
-        pars->str[pars->size_str] = '\0';
-        if (pars->precision_val || pars->bw_flags & CROISI)
-                pars->size_str = shift_right_add(pars->str, '.', doub->point);
-        add_sign_numeric(pars, doub->sign);
+	decisize = doub->size - doub->point;
+	pars->str = doub->strdoub;
+	pars->size_str = doub->size;
+	if (decisize > pars->precision_val)
+		pars->size_str = doub->point + pars->precision_val;
+	pars->str[pars->size_str] = '\0';
+	if (pars->precision_val || pars->bw_flags & CROISI)
+		pars->size_str = shift_right_add(pars->str, '.', doub->point);
+	add_sign_numeric(pars, doub->sign);
 	pars->zero_after = pars->precision_val - decisize;
-        if (pars->zero_after < 0)
-                pars->zero_after = 0;
-        pars->field_width_val -= (pars->size_str + pars->zero_after);
+	if (pars->zero_after < 0)
+		pars->zero_after = 0;
+	pars->field_width_val -= (pars->size_str + pars->zero_after);
 	if (pars->field_width_val > 0)
-	fill_width(pars, pars->field_width_val);
+		fill_width(pars, pars->field_width_val);
 }
 
-void	write_ef(va_list *param, t_pars *pars)
+void		write_ef(va_list *param, t_pars *pars)
 {
-	t_doub		doub;
-	char		expo[4];
+	t_doub	doub;
+	char	expo[4];
 
 	doub.doub = va_arg(*param, double);
 	if (check_float_coherence(pars, doub.doub))
 		return ;
 	if (!(pars->bw_flags & PRECIS))
-        {
-	        pars->bw_flags |= PRECIS;
-              pars->precision_val = 6;
+	{
+		pars->bw_flags |= PRECIS;
+		pars->precision_val = 6;
 	}
 	init_struct_double(&doub);
 	if (pars->convert_char == 'e')
@@ -163,7 +163,7 @@ void	write_ef(va_list *param, t_pars *pars)
 		write_exponent(doub.exponent, expo);
 	}
 	else
-        	round_float(&doub, doub.point + pars->precision_val);
+		round_float(&doub, doub.point + pars->precision_val);
 	set_comp_ef(&doub, pars);
 	write_into_buffer(pars, 0);
 }

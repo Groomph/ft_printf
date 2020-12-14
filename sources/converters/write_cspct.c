@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/07 06:10:19 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:53:04 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <wchar.h>
 
 static void	set_comp_cs(t_pars *pars)
-{	
+{
 	if (pars->bw_flags & PRECIS && pars->size_str > pars->precision_val)
 		pars->size_str = pars->precision_val;
 	pars->field_width_val -= pars->size_str;

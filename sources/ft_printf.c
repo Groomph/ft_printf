@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 06:22:19 by romain            #+#    #+#             */
-/*   Updated: 2020/12/10 09:49:37 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 22:36:49 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_printf(const char *str, ...)
 	int		i;
 	int		i2;
 	va_list	param;
-	
+
 	init_buffer();
 	i = 0;
 	i2 = 0;

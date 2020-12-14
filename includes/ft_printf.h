@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 21:59:53 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/14 23:12:27 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 # include "buffer.h"
 # include "../libft/libft.h"
 
-# define MINUS (1U << 1)
-# define ZERO (1U << 2)
-# define PRECIS (1U << 3) 
-# define SPACE (1U << 4)
+enum	bitwize
+{
+# define MINUS (1U << 1),
+# define ZERO (1U << 2),
+# define PRECIS (1U << 3),
+# define SPACE (1U << 4),
 # define CROISI (1U << 5)
 # define PLUS (1U << 6)
 
@@ -28,6 +30,7 @@
 # define LLLL (1U << 11)
 # define HH (1U << 12)
 # define HHHH (1U << 13)
+}
 
 typedef struct	s_pars
 {
@@ -35,7 +38,7 @@ typedef struct	s_pars
 	int			precision_val;
 	int			field_width_val;
 	char			convert_char;
-/**/
+	/**/
 	short			space_before;
 	char			*extra_before;
 	short			zero_before;
@@ -58,10 +61,10 @@ typedef struct	s_converter
 int				ft_printf(const char *str, ...);
 int				ft_printf_parsing(const char *str, va_list *param);
 int				lobby_write_buffer(va_list *param,
-								t_pars *pars);
+		t_pars *pars);
 /*
-****************   parsing & composition   ****************
-*/
+ ****************   parsing & composition   ****************
+ */
 
 int				field_width(t_pars *pars, va_list *param, const char *str);
 int				precision(t_pars *pars, va_list *param, const char *str);
@@ -70,8 +73,8 @@ void            		add_sign_numeric(t_pars *pars, char sign);
 
 
 /*
-****************   print_efgidouxXpcs%.c   ****************
-*/
+ ****************   print_efgidouxXpcs%.c   ****************
+ */
 
 void				write_di(va_list *param, t_pars *pars);
 void				write_u(va_list *param, t_pars *pars);
@@ -89,7 +92,7 @@ int				coloring_bonus(char *str);
 void				set_comp_num(t_pars *pars);
 void				write_into_buffer(t_pars *pars, wchar_t *wstr);
 unsigned long long int  	get_unsigned_param(va_list *param,
-								t_pars *pars);
+		t_pars *pars);
 void				lobby_numeric_converter(
 		unsigned long long int nb, char *base, t_pars *pars, int sizeb);
 
