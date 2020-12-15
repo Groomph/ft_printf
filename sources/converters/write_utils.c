@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 13:11:55 by romain            #+#    #+#             */
-/*   Updated: 2020/12/15 13:35:37 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/15 13:45:05 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "float.h"
 #include <wchar.h>
 
-void			write_b(va_list *param, t_pars *pars)
+void					write_b(va_list *param, t_pars *pars)
 {
 	unsigned int	nb;
 	long int		tmp;
@@ -49,7 +49,7 @@ unsigned long long int	get_unsigned_param(va_list *param, t_pars *pars)
 	return (nb);
 }
 
-int				widestring_len(wchar_t *str, t_pars *pars)
+int						widestring_len(wchar_t *str, t_pars *pars)
 {
 	int	i;
 	int	j;
@@ -77,7 +77,7 @@ int				widestring_len(wchar_t *str, t_pars *pars)
 	return (j);
 }
 
-int				count_trailing_zero(t_doub *doub, int index)
+int						count_trailing_zero(t_doub *doub, int index)
 {
 	int	i;
 
@@ -87,7 +87,7 @@ int				count_trailing_zero(t_doub *doub, int index)
 	return (i);
 }
 
-int				check_float_coherence(t_pars *pars, long double doub)
+int						check_float_coherence(t_pars *pars, long double doub)
 {
 	int	inf;
 

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/15 13:33:48 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/15 13:42:04 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void					write_b(va_list *param, t_pars *pars);
 int						coloring_bonus(char *str);
 void					set_comp_num(t_pars *pars);
 void					write_into_buffer(t_pars *pars, wchar_t *wstr);
-unsigned long long int			get_unsigned_param(va_list *param, t_pars *pars);
+unsigned long long int	get_unsigned_param(va_list *param, t_pars *pars);
 void					lobby_numeric_converter(unsigned long long int nb,
 						char *base, t_pars *pars, int sizeb);
-int                        		widestring_len(wchar_t *str, t_pars *pars);
+int						widestring_len(wchar_t *str, t_pars *pars);
 #endif
