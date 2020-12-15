@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/12/15 14:25:42 by rsanchez          #+#    #+#              #
+#    Updated: 2020/12/15 14:26:23 by rsanchez         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCS	= init_zero.c \
 	  is_double_signed.c \
 	  shift_left_erase.c \
@@ -17,14 +29,13 @@ BOBJS	= ${BSRCS:.c=.o}
 
 NAME	= libft.a
 
-CC	= gcc
+CC	= clang
 
 CFLAGS	= -Wall -Wextra -Werror
 
 RM	= rm -f
 
 $(NAME):	${OBJS}
-			${CC} ${CFLAGS} -c ${SRCS}
 			ar rc ${NAME} ${OBJS} libft.h
 
 all:		${NAME}
@@ -36,8 +47,5 @@ fclean:		clean
 		${RM} ${NAME}
 
 re:			fclean all
-
-so:	
-		gcc -shared -o libft.so -fpic *.c libft.h
 
 .PHONY:		all clean fclean re

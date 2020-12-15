@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/12/15 13:37:29 by romain           ###   ########.fr       */
+/*   Created: 2020/12/15 14:20:00 by rsanchez          #+#    #+#             */
+/*   Updated: 2020/12/15 14:22:23 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "ft_printf.h"
-
 
 int ft_printf(const char *str, ...);
 
