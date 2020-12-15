@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:09:13 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 22:09:24 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/15 13:37:29 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ printf("printf \t| decimal \t| %%0o | %020d bonjour %20-0d\n", teterere, 15);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
 	
                i = printf("printf c:    %ls\n", truc);
-	i2 = ft_printf("ft_printf c: %{Fmagenta}%ls%{cyan}\n", truc);
+	i2 = ft_printf("ft_printf c: %ls\n", truc);
 	printf("printf: %d    ft_printf: %d\n\n", i, i2);
                
 	       i = printf("printf c:    %ls\n", L"ο Δικαιοπολις εν αγρω εστιν");

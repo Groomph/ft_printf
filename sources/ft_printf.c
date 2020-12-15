@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 06:22:19 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 22:36:49 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/15 12:45:29 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ int	ft_printf(const char *str, ...)
 		i2 = i;
 	}
 	va_end(param);
-	print_buffer(1);
-	return (send_totalsize());
+	return (print_buffer(1));
 }

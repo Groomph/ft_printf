@@ -6,7 +6,7 @@
 /*   By: rsanchez </var/mail/rsanchez>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 23:07:09 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/12/14 23:07:10 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/15 13:20:02 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,6 @@ void					write_di(va_list *param, t_pars *pars)
 		pars->sign = '+';
 	lobby_numeric_converter((unsigned long long int)nb,
 			"0123456789", pars, 10);
-}
-
-unsigned long long int	get_unsigned_param(va_list *param, t_pars *pars)
-{
-	unsigned long long int nb;
-
-	if (pars->bw_flags & LLLL)
-		nb = va_arg(*param, unsigned long long int);
-	else if (pars->bw_flags & LL)
-		nb = va_arg(*param, unsigned long int);
-	else
-		nb = va_arg(*param, unsigned int);
-	if (pars->bw_flags & HHHH)
-		nb = (unsigned char)nb;
-	else if (pars->bw_flags & HH)
-		nb = (unsigned short)nb;
-	return (nb);
 }
 
 void					write_u(va_list *param, t_pars *pars)

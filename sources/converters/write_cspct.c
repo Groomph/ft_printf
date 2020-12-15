@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 10:54:04 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 22:53:04 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/15 13:19:03 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,6 @@ static void	set_comp_cs(t_pars *pars)
 	pars->field_width_val -= pars->size_str;
 	if (pars->field_width_val)
 		fill_width(pars, pars->field_width_val);
-}
-
-int		widestring_len(wchar_t *str, t_pars *pars)
-{
-	int	i;
-	int	j;
-	int	jtemp;
-
-	i = -1;
-	j = 0;
-	while (str[++i])
-	{
-		jtemp = 0;
-		if (str[i] <= 0x7F)
-			jtemp = 1;
-		else if (str[i] <= 0x7FF)
-			jtemp = 2;
-		else if (str[i] <= 0xFFFF)
-			jtemp = 3;
-		else if (str[i] <= 0x10FFFF)
-			jtemp = 4;
-		if (j + jtemp <= pars->precision_val ||
-						!(pars->bw_flags & PRECIS))
-			j += jtemp;
-		else
-			return (j);
-	}
-	return (j);
 }
 
 void		handle_wchar(va_list *param, t_pars *pars)

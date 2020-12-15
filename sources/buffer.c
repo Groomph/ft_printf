@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 06:22:19 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 22:34:18 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/15 12:46:30 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 static t_buffer	g_buf;
 
-void	print_buffer(int fd)
+int		print_buffer(int fd)
 {
 	write(fd, g_buf.bufstr, g_buf.i);
 	g_buf.totalsize += g_buf.i;
 	g_buf.i = 0;
+	return (g_buf.totalsize);
 }
 
 void	write_str_buffer(const char *str, int size)
@@ -70,11 +71,6 @@ int		write_widechar_buffer(wchar_t c, int size)
 		write_char_buffer((c & 0x3F) + 0x80, 1);
 	}
 	return (size);
-}
-
-int		send_totalsize(void)
-{
-	return (g_buf.totalsize + g_buf.i);
 }
 
 void	init_buffer(void)

@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 05:19:35 by romain            #+#    #+#             */
-/*   Updated: 2020/12/15 11:54:06 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/15 13:25:54 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ typedef	struct	s_buffer
 	char		bufstr[BUFFER_SIZE];
 }				t_buffer;
 
-void			print_buffer(int fd);
+int				print_buffer(int fd);
 void			write_str_buffer(const char *str, int size);
 void			write_char_buffer(char c, int nb);
 int				write_widechar_buffer(wchar_t c, int size);
-int				send_totalsize(void);
 void			init_buffer(void);
 
 #endif

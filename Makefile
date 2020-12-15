@@ -6,7 +6,7 @@
 #    By: romain <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/04 06:05:16 by romain            #+#    #+#              #
-#    Updated: 2020/12/07 07:05:48 by romain           ###   ########.fr        #
+#    Updated: 2020/12/15 13:23:44 by romain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SOURCES = ft_printf.c \
 	  $(DIR_CONV)/write_diuxx.c \
 	  $(DIR_CONV)/write_nopcol.c \
 	  $(DIR_CONV)/write_efg.c \
+	  $(DIR_CONV)/write_utils.c \
 	  $(DIR_FLO)/float_parsing.c \
 	  $(DIR_FLO)/float_operations.c \
 

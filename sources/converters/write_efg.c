@@ -6,39 +6,12 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 23:34:27 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 22:51:06 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/15 13:35:03 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "float.h"
-
-static int	check_float_coherence(t_pars *pars, long double doub)
-{
-	int	inf;
-
-	if (is_NaN(doub))
-		pars->str = "nan";
-	else if ((inf = is_infinite(doub)) != 0)
-	{
-		pars->sign = '-';
-		if (doub < 0)
-			pars->str = "inf";
-		else
-		{
-			pars->str = "inf";
-			pars->sign = '+';
-		}
-	}
-	else
-		return (0);
-	if (pars->bw_flags & ZERO)
-		pars->bw_flags &= ~(ZERO);
-	pars->precision_val = 0;
-	pars->size_str = 3;
-	set_comp_num(pars);
-	return (1);
-}
 
 static void	set_comp_g(t_doub *doub, t_pars *pars)
 {
@@ -64,7 +37,7 @@ static void	set_comp_g(t_doub *doub, t_pars *pars)
 	write_into_buffer(pars, 0);
 }
 
-static void	lobby_write_gef(t_doub *doub, t_pars *pars, char e_or_f)
+static void	lobby_write_g(t_doub *doub, t_pars *pars, char e_or_f)
 {
 	char	expo[4];
 	int		i;

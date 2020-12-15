@@ -6,22 +6,12 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 14:03:15 by romain            #+#    #+#             */
-/*   Updated: 2020/12/14 22:28:17 by rsanchez         ###   ########.fr       */
+/*   Updated: 2020/12/15 13:28:32 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "float.h"
 #include "ft_printf.h"
-
-int		count_trailing_zero(t_doub *doub, int index)
-{
-	int	i;
-
-	i = 0;
-	while (doub->strdoub[index] == '0' && index-- >= doub->point)
-		i++;
-	return (i);
-}
+#include "float.h"
 
 void	divide_str_double(t_doub *doub)
 {
