@@ -6,15 +6,15 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 10:46:21 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 12:56:20 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/15 12:16:20 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	is_infinite(long double doub)
 {
 	unsigned int	up;
-	float		inf;
-	
+	float			inf;
+
 	up = 0xFF800000;
 	inf = *(float *)&up;
 	if (doub == inf)

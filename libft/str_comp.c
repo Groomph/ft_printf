@@ -6,7 +6,7 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 18:18:19 by romain            #+#    #+#             */
-/*   Updated: 2020/12/07 04:40:36 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/15 12:14:18 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ int	str_comp(char *str, char *str2, int stop)
 		stop--;
 	}
 	if (!stop)
-		return (0);	
+		return (0);
 	return (str[i] - str2[i]);
 }

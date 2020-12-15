@@ -8,7 +8,7 @@ SRCS	= init_zero.c \
 	  utoa_base.c \
 	  utoa_len.c \
 	  is_infinite.c \
-	  is_NaN.c
+	  is_not_number.c
 
 OBJS	= ${SRCS:.c=.o}
 

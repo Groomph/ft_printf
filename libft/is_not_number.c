@@ -6,11 +6,11 @@
 /*   By: romain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 10:43:24 by romain            #+#    #+#             */
-/*   Updated: 2020/12/04 11:29:16 by romain           ###   ########.fr       */
+/*   Updated: 2020/12/15 12:11:57 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	is_NaN(long double doub)
+int	is_not_number(long double doub)
 {
 	return (!(doub == doub));
 }
