@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:33:51 by rsanchez          #+#    #+#             */
-/*   Updated: 2020/12/15 14:33:53 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/01/04 16:23:34 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ static int	third_pars(const char *str, int i, t_pars *pars)
 	else if (str[i] == 'h')
 		pars->bw_flags |= HH;
 	else
+	{
+		erase_conflicting_flags(pars);
 		return (i);
+	}
 	return (third_pars(str, i + 1, pars));
 }
 
@@ -79,7 +82,6 @@ int			ft_printf_parsing(const char *str, va_list *param)
 	init_zero(&pars, sizeof(pars));
 	va_copy(param2, *param);
 	i = first_pars(str, 1, &pars, &param2);
-	erase_conflicting_flags(&pars);
 	if (str[i] && str[i] != '{')
 		pars.convert_char = str[i++];
 	else if (i == 1 && str[i] == '{')
@@ -95,5 +97,6 @@ int			ft_printf_parsing(const char *str, va_list *param)
 		write_str_buffer(str, i);
 	else
 		va_copy(*param, param2);
+	va_end(param2);
 	return (i);
 }

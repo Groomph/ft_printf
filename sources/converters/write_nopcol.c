@@ -6,7 +6,7 @@
 /*   By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:37:44 by rsanchez          #+#    #+#             */
-/*   Updated: 2021/01/04 15:54:11 by rsanchez         ###   ########.fr       */
+/*   Updated: 2021/01/04 16:38:36 by rsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,9 @@ void		write_o(va_list *param, t_pars *pars)
 	char					zero;
 
 	nb = get_unsigned_param(param, pars);
-	if (pars->bw_flags & CROISI && nb != 0 &&
-			utoa_len(nb, 8) >= pars->precision_val)
+	if (pars->bw_flags & CROISI && (
+		(nb != 0 && utoa_len(nb, 8) >= pars->precision_val)
+		|| (nb == 0 && pars->precision_val == 0)))
 	{
 		zero = '0';
 		pars->extra_before = &zero;
