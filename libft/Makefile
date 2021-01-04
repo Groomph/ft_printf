@@ -6,7 +6,7 @@
 #    By: rsanchez <rsanchez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/15 14:25:42 by rsanchez          #+#    #+#              #
-#    Updated: 2020/12/15 14:26:23 by rsanchez         ###   ########.fr        #
+#    Updated: 2021/01/04 15:51:04 by rsanchez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS	= init_zero.c \
 	  shift_right_add.c \
 	  string_len.c \
 	  strjoin_free.c \
+	  str_comp.c \
 	  substr_free.c \
 	  utoa_base.c \
 	  utoa_len.c \
